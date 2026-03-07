@@ -436,7 +436,7 @@
       <input id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password"
         style="width:100%;padding:10px 14px;background:#141824;border:1px solid #2d3550;border-radius:8px;color:#e5e7eb;font-size:0.95rem;outline:none;box-sizing:border-box;"/>
     </div>
-    <button onclick="doLogin()" style="width:100%;padding:11px;background:linear-gradient(135deg,#c8a96e,#a8873e);border:none;border-radius:8px;color:#1a1410;font-weight:700;font-size:0.95rem;cursor:pointer;margin-top:4px;">Anmelden</button>
+    <button id="loginBtn" onclick="doLogin()" style="width:100%;padding:11px;background:linear-gradient(135deg,#c8a96e,#a8873e);border:none;border-radius:8px;color:#1a1410;font-weight:700;font-size:0.95rem;cursor:pointer;margin-top:4px;">Anmelden</button>
     <div id="loginError" style="color:#f87171;font-size:0.82rem;margin-top:10px;text-align:center;min-height:20px;"></div>
     <div style="text-align:center;margin-top:16px;color:#4b5563;font-size:0.75rem;">Nur für autorisierte Benutzer · GALS</div>
   </div>
@@ -1481,7 +1481,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     const email = document.getElementById('loginEmail').value.trim();
     const pass = document.getElementById('loginPassword').value;
     const errEl = document.getElementById('loginError');
-    const btn = document.querySelector('#loginScreen button');
+    const btn = document.getElementById('loginBtn');
     if (!email || !pass) { errEl.textContent = '⚠️ Bitte E-Mail und Passwort eingeben!'; return; }
     
     errEl.style.color = '#c8a96e';

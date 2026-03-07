@@ -2180,14 +2180,15 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
 
       // Detect Buchungssatz table line: contains " / " with konto pattern on at least one side
       // Match lines like "2000 Lieferforderungen ... / 4000 HW-Erlöse ..." or " / 3500 USt ..."
-      const isContinuation = /^\s*\/\s+/.test(line); // line starting with optional space + /
+      const isContinuation = /^\s*\//.test(line); // line starting with optional space + /
       const buchungMatch = isContinuation
-        ? [null, '', line.replace(/^\s*\/\s*/, '').trim()]  // " / 3500 USt..." → soll='', haben='3500...'
-        : trimmed.match(/^(.*?)\s{2,}\/\s{2,}(.*)$/);       // "X  /  Y" with 2+ spaces around /
+        ? [null, '', line.replace(/^\s*\/\s*/, '').trim()]  // "/ 3500 USt..." → soll='', haben='3500...'
+        : trimmed.match(/^(.*?)\s+\/\s+(.*)$/);             // "X / Y" with at least 1 space around /
+      // Only treat as Buchungssatz if: starts with 4-digit Kontonr, OR is a continuation line, OR we're already in a buchung block
       const looksLikeBuchung = buchungMatch && (
-        /^\d{4}/.test(trimmed) ||   // starts with 4-digit konto nr
-        isContinuation ||             // continuation line starting with /
-        inBuchung                     // already in a buchung block
+        /^\d{4}\s/.test(trimmed) ||  // starts with 4-digit konto nr + space
+        isContinuation ||              // continuation line starting with /
+        inBuchung                      // already in a buchung block
       );
 
       if (looksLikeBuchung && buchungMatch) {

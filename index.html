@@ -1461,6 +1461,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
   async function sbFetch(path, method, body, token) {
     const headers = {
       'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + (token || SUPABASE_KEY),
       'Content-Type': 'application/json',
     };
     if (token) headers['Authorization'] = 'Bearer ' + token;
@@ -1482,36 +1483,51 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     const pass = document.getElementById('loginPassword').value;
     const errEl = document.getElementById('loginError');
     const btn = document.getElementById('loginBtn');
-    if (!email || !pass) { errEl.textContent = '⚠️ Bitte E-Mail und Passwort eingeben!'; return; }
-    
+
+    if (!email || !pass) {
+      errEl.style.color = '#f87171';
+      errEl.textContent = '⚠️ Bitte E-Mail und Passwort eingeben!';
+      return;
+    }
+
     errEl.style.color = '#c8a96e';
     errEl.textContent = '⏳ Verbinde mit Server...';
     btn.disabled = true;
     btn.textContent = 'Bitte warten...';
 
-    // Timeout über Promise.race
-    const fetchLogin = fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
-      method: 'POST',
-      headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass })
-    });
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('TIMEOUT')), 12000)
-    );
-
     let data;
     try {
-      const res = await Promise.race([fetchLogin, timeoutPromise]);
-      data = await res.json();
+      const res = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email, password: pass })
+      });
+      const text = await res.text();
+      try {
+        data = JSON.parse(text);
+      } catch(e) {
+        throw new Error('Ungültige Serverantwort: ' + text.substring(0, 100));
+      }
     } catch(e) {
-      btn.disabled = false; btn.textContent = 'Anmelden';
+      btn.disabled = false;
+      btn.textContent = 'Anmelden';
       errEl.style.color = '#f87171';
-      errEl.textContent = e.message === 'TIMEOUT'
-        ? '⏱️ Server antwortet nicht – bitte nochmal versuchen.'
-        : '❌ Verbindungsfehler: ' + e.message;
+      errEl.textContent = '❌ ' + e.message;
       return;
     }
-    btn.disabled = false; btn.textContent = 'Anmelden';
+
+    btn.disabled = false;
+    btn.textContent = 'Anmelden';
+
+    if (!data) {
+      errEl.style.color = '#f87171';
+      errEl.textContent = '❌ Keine Antwort vom Server';
+      return;
+    }
 
     if (data.access_token) {
       currentToken = data.access_token;

@@ -414,6 +414,7 @@
     .quick-actions { grid-template-columns: 1fr; }
     .msg-bubble { max-width: 88%; }
   }
+  .hidden { display: none !important; }
 </style>
 </head>
 <body>
@@ -1534,7 +1535,11 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
       currentUser = data.user;
       errEl.style.color = '#34d399';
       errEl.textContent = '✅ Willkommen!';
-      setTimeout(() => document.getElementById('loginScreen').classList.add('hidden'), 400);
+      setTimeout(() => {
+        const ls = document.getElementById('loginScreen');
+        ls.style.display = 'none';
+        ls.classList.add('hidden');
+      }, 400);
       // Admin-Button einblenden falls Admin
       if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
         document.getElementById('adminMenuBtn').style.display = 'flex';

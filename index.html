@@ -4,28 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bilanz-Bert | HAK/HLW Rechnungswesen © GALS</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0f0e0c;
-    --surface: #1a1916;
-    --surface2: #252320;
-    --border: #2e2c28;
-    --accent: #e8c84a;
-    --accent2: #d4a847;
-    --text: #f0ede6;
-    --text-muted: #8a8578;
-    --text-dim: #5a5750;
-    --green: #4caf7d;
-    --red: #e05c5c;
-    --blue: #6b9fd4;
-    --radius: 8px;
+    --bg: #0a0a0f;
+    --surface: #13131a;
+    --surface2: #1c1c26;
+    --surface3: #22222f;
+    --border: #2a2a3a;
+    --border-light: #333348;
+    --accent: #7c6dfa;
+    --accent2: #6457e8;
+    --accent-glow: rgba(124,109,250,0.15);
+    --accent-soft: rgba(124,109,250,0.08);
+    --text: #eeedf5;
+    --text-muted: #7b7a95;
+    --text-dim: #45445a;
+    --green: #4ade80;
+    --red: #f87171;
+    --blue: #60a5fa;
+    --amber: #fbbf24;
+    --radius: 10px;
+    --radius-lg: 16px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
@@ -52,9 +58,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
-    background: rgba(15,14,12,0.95);
-    backdrop-filter: blur(10px);
+    height: 64px;
+    background: rgba(10,10,15,0.97);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 var(--border), 0 4px 24px rgba(0,0,0,0.3);
   }
 
   .logo {
@@ -64,25 +71,26 @@
   }
 
   .logo-icon {
-    width: 32px; height: 32px;
-    background: var(--accent);
-    border-radius: 6px;
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
+    border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
+    font-size: 18px;
+    box-shadow: 0 0 16px var(--accent-glow);
   }
 
   .logo-text {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Syne', sans-serif;
     font-size: 18px;
     color: var(--text);
     letter-spacing: -0.3px;
   }
 
   .logo-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 400;
-    letter-spacing: 0.5px;
+    font-size: 10px;
+    color: var(--text-dim);
+    font-weight: 500;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
   }
 
@@ -105,13 +113,14 @@
     background: transparent;
     color: var(--text-muted);
     transition: all 0.15s;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   .mode-tab:hover { color: var(--text); }
   .mode-tab.active {
-    background: var(--accent);
-    color: #0f0e0c;
+    background: linear-gradient(135deg, var(--accent), #a78bfa);
+    color: #fff;
+    box-shadow: 0 2px 12px var(--accent-glow);
   }
 
   .main {
@@ -146,14 +155,14 @@
   }
 
   .welcome-block h1 {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Syne', sans-serif;
     font-size: 36px;
     color: var(--text);
     margin-bottom: 10px;
     letter-spacing: -0.5px;
   }
 
-  .welcome-block h1 span { color: var(--accent); font-style: italic; }
+  .welcome-block h1 span { background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-style: italic; }
 
   .welcome-block p {
     color: var(--text-muted);
@@ -179,13 +188,14 @@
     text-align: left;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   .quick-btn:hover {
     border-color: var(--accent);
-    background: var(--surface2);
-    transform: translateY(-1px);
+    background: var(--accent-soft);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px var(--accent-glow);
   }
 
   .quick-btn .qb-icon { font-size: 18px; margin-bottom: 6px; display: block; }
@@ -234,21 +244,21 @@
   }
 
   .message.user .msg-bubble {
-    background: var(--accent);
-    color: #0f0e0c;
+    background: linear-gradient(135deg, var(--accent), #a78bfa);
+    color: #fff;
     font-weight: 500;
     border-radius: var(--radius) var(--radius) 2px var(--radius);
   }
 
   .message.assistant .msg-bubble {
-    background: var(--surface);
-    border: 1px solid var(--border);
+    background: var(--surface2);
+    border: 1px solid var(--border-light);
     color: var(--text);
     border-radius: var(--radius) var(--radius) var(--radius) 2px;
   }
 
   .msg-bubble h3 {
-    font-family: 'DM Serif Display', serif;
+    font-family: 'Syne', sans-serif;
     font-size: 16px;
     color: var(--accent);
     margin-bottom: 8px;
@@ -262,7 +272,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 8px;
     margin: 10px 0;
-    font-family: 'DM Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
   }
 
@@ -280,11 +290,11 @@
   .debit-box .label { color: var(--green); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; }
   .credit-box .label { color: var(--red); font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; }
 
-  .konto { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text); }
-  .betrag { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent); margin-top: 2px; }
+  .konto { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text); }
+  .betrag { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent); margin-top: 2px; }
 
   .buchung-line {
-    font-family: 'DM Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
     background: var(--surface2);
     padding: 8px 12px;
@@ -294,7 +304,7 @@
   }
 
   .msg-bubble code {
-    font-family: 'DM Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     background: var(--surface2);
     padding: 2px 6px;
@@ -344,7 +354,7 @@
     transition: border-color 0.2s;
   }
 
-  .input-wrapper:focus-within { border-color: var(--accent); }
+  .input-wrapper:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
 
   #chatInput {
     flex: 1;
@@ -352,7 +362,7 @@
     border: none;
     outline: none;
     color: var(--text);
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     font-size: 14px;
     resize: none;
     min-height: 22px;
@@ -364,11 +374,12 @@
 
   #sendBtn {
     width: 36px; height: 36px;
-    background: var(--accent);
+    background: linear-gradient(135deg, var(--accent), #a78bfa);
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 12px var(--accent-glow);
     flex-shrink: 0;
     transition: all 0.15s;
     align-self: flex-end;
@@ -395,12 +406,13 @@
     border-radius: 100px;
     cursor: pointer;
     transition: all 0.15s;
-    font-family: 'DM Mono', monospace;
+    font-family: 'JetBrains Mono', monospace;
   }
 
   .hint-pill:hover {
-    color: var(--text-muted);
-    border-color: var(--text-dim);
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
   }
 
   /* Scrollbar */
@@ -484,6 +496,10 @@
         <h1>Hallo! Ich bin <span>Bilanz-Bert</span> 🧾</h1>
         <p>Ich bin dein persönlicher KI-Assistent für Rechnungswesen – frag mich alles zu Buchungssätzen, Konten, Jahresabschluss und mehr. Alles erkläre ich dir Schritt für Schritt!</p>
         <p style="font-size:0.78rem;color:#6b7280;margin-top:4px;">© GALS</p>
+        <div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:8px 14px;background:rgba(124,109,250,0.08);border:1px solid rgba(124,109,250,0.2);border-radius:8px;font-size:0.75rem;color:#7b7a95;max-width:460px;">
+          <span style="font-size:14px;">⚠️</span>
+          <span>Bilanz-Bert ist eine KI und kann Fehler machen. Bitte überprüfe wichtige Antworten immer selbst.</span>
+        </div>
         <div class="quick-actions">
           <button class="quick-btn" onclick="sendQuick('Erkläre mir den Unterschied zwischen Soll und Haben.')">
             <span class="qb-icon">⚖️</span>
@@ -521,6 +537,7 @@
         <span class="hint-pill" onclick="sendQuick('Was ist lineare Abschreibung? Erkläre mir Schritt für Schritt.')">Lin. Abschreibung</span>
         <span class="hint-pill" onclick="sendQuick('Gib mir eine schwierige Buchungsaufgabe mit Lösung.')">Schwere Aufgabe</span>
       </div>
+      <p style="text-align:center;font-size:0.7rem;color:var(--text-dim);padding:6px 0 2px;letter-spacing:0.3px;">⚠️ KI-Assistent · Antworten können Fehler enthalten · Bitte kritisch prüfen</p>
       <div id="aufgabeBar" style="display:none; flex-direction:column; gap:8px; padding:10px 0 4px 0;">
         <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap; margin-bottom:4px;">
           <span style="font-size:12px; color:var(--text-muted); font-weight:600;">Schultyp:</span>
@@ -549,7 +566,111 @@
 </div>
 
 <script>
-  const SYSTEM_PROMPT = `Du bist Bilanz-Bert – ein freundlicher, geduldiger KI-Assistent für Rechnungswesen, speziell für Schüler der HAK (Handelsakademie) und HLW (Höhere Lehranstalt für wirtschaftliche Berufe) in Österreich, entwickelt © GALS. Du kennst den österreichischen Lehrplan genau und erklärst alles Schritt für Schritt.
+  const SYSTEM_PROMPT = `Du bist Bilanz-Bert – ein freundlicher, geduldiger und motivierender KI-Assistent für Rechnungswesen, speziell für Schüler der HAK (Handelsakademie) und HLW (Höhere Lehranstalt für wirtschaftliche Berufe) in Österreich, entwickelt © GALS.
+
+🎯 DEINE PERSÖNLICHKEIT & STIL:
+- Du bist wie ein geduldiger, cooler Nachhilfelehrer – nie genervt, immer ermutigend
+- Du verwendest gerne Emojis (📒 💡 ✅ ⚠️ 🔢 📊 💰 🧮), aber nicht übertrieben
+- Du erklärst IMMER das WARUM hinter den Buchungen, nicht nur das WIE
+- Bei Verständnisproblemen: Erst einfaches Alltagsbeispiel, dann Fachbegriff
+- Du sagst nie "Das ist falsch" sondern "Fast! Hier ist der Unterschied..."
+- Du teilst komplexe Themen in kleine, verdauliche Schritte auf
+- Wenn jemand etwas nicht versteht, erkläre es mit einem anderen Ansatz (Analogie, Bild, Beispiel)
+- Nutze Merksätze und Eselsbrücken wo möglich
+
+📚 DIDAKTISCHE ERKLÄRUNGSSTRATEGIEN:
+
+**Soll & Haben – das Grundprinzip:**
+Eselsbrücke: "Soll ist LINKS, Haben ist RECHTS – wie beim Lesen von links nach rechts"
+Merksatz für Aktivkonten: "Zugang = Soll, Abgang = Haben" (Kasse voll = Soll steigt)
+Merksatz für Passivkonten: "Zugang = Haben, Abgang = Soll" (Schulden steigen = Haben)
+Alltagsanaologie: Denk ans Portemonnaie – wenn du Geld reinlegst (Zugang), steigt dein Kassenbestand (Soll). Wenn du es rausnimmst (Abgang), sinkt er (Haben).
+Merksatz Erfolgskonten: Aufwand = Soll (Geld "geht raus aus dem Erfolg"), Ertrag = Haben (Geld "kommt rein in den Erfolg")
+
+**Doppelte Buchhaltung – warum doppelt?**
+Jede Buchung hat IMMER zwei Seiten – wie eine Waage, die immer im Gleichgewicht sein muss.
+Beispiel: "Ich kaufe eine Maschine um €10.000 bar."
+→ Maschine (0400) STEIGT um €10.000 → Soll
+→ Kasse (2700) SINKT um €10.000 → Haben
+Merksatz: "Jedes Soll hat ein Haben – die Summe ist immer gleich!"
+
+**Abschreibung (AfA) einfach erklärt:**
+Was ist AfA? = Absetzung für Abnutzung. Anlagegüter verlieren jedes Jahr an Wert (wie ein Auto).
+📐 Lineare Abschreibung (NUR diese Methode wird unterrichtet!): Gleichmäßig – wie ein Kuchen, der in gleich große Stücke geschnitten wird.
+  Formel: Jahres-AfA = Anschaffungskosten ÷ Nutzungsdauer
+  Beispiel: Maschine €12.000, Nutzungsdauer 4 Jahre → €3.000 pro Jahr
+  Buchung: 7010 AfA Sachanlagen / an 0400 Maschinen (Anlage sinkt jedes Jahr)
+⚡ GWG (Geringwertige Wirtschaftsgüter): Sofortabschreibung im Jahr der Anschaffung wenn unter Grenzwert
+  Buchung: 7060 Abschreibungen GWG / an 0670 Geringwertige BGA
+
+**Rechnungsabgrenzung – das Kernprinzip:**
+Merksatz: "Jeder Aufwand und Ertrag gehört in das Jahr, in dem er WIRTSCHAFTLICH entsteht – egal wann die Zahlung erfolgt!"
+🗝️ ARA (Aktive Rechnungsabgrenzung – Konto 2900):
+  WANN: Wir bezahlen JETZT, aber die Leistung gehört ins NÄCHSTE Jahr
+  Merkbild: "Ich zahle im Dezember die Miete für Januar → Geld ist weg, aber der Nutzen kommt erst nächstes Jahr"
+  Buchung: 2900 ARA / an Aufwandskonto (Aufwand wird REDUZIERT)
+  Auflösung im nächsten Jahr: Aufwandskonto / an 2900 ARA
+🗝️ PRA (Passive Rechnungsabgrenzung – Konto 3900):
+  WANN: Wir erhalten JETZT Geld, aber die Leistung gehört ins NÄCHSTE Jahr
+  Merkbild: "Ich bekomme im Dezember Miete für Januar → Geld da, aber ich muss noch Leistung erbringen"
+  Buchung: Ertragskonto / an 3900 PRA (Ertrag wird REDUZIERT)
+  Auflösung: 3900 PRA / an Ertragskonto
+Eselsbrücke: A-RA = A-ktivseite der Bilanz (wir haben schon gezahlt, kriegen noch was dafür)
+               P-RA = P-assivseite der Bilanz (wir haben schon kassiert, müssen noch leisten)
+
+**Forderungsbewertung (EWB & PWB):**
+Warum bewerten? → Nicht alle Kunden zahlen! Das Vorsichtsprinzip sagt: Zeig in der Bilanz den realistischen Wert!
+3 Arten von Forderungen:
+  ✅ Einwandfreie Forderungen: Kunde zahlt sicher → voller Wert in Bilanz
+  ⚠️ Zweifelhafte Forderungen: Kunde hat Probleme, zahlt vielleicht → EWB bilden
+  ❌ Uneinbringliche Forderungen: Kunde zahlt sicher nicht → direkt abschreiben
+🔍 EWB (Einzelwertberichtigung – Konto 2080): Für EINZELNE bekannte Problemkunden
+  Berechnung: Forderung NETTO × Ausfallquote (USt wird nicht berichtigt, da Ausfall noch nicht sicher!)
+  Buchung Bildung: 7802 Abschreibungen Forderungen / an 2080 EWB Lieferforderungen
+  Buchung Auflösung: 2080 EWB / an 4... Erträge Auflösung WB
+📊 PWB (Pauschalwertberichtigung – Konto 2090): Für den GESAMTEN einwandfreien Forderungsbestand
+  Basis: Nettoforderungen (ohne USt!) × Erfahrungsprozentsatz
+  WICHTIG: EWB-Forderungen vorher rausrechnen!
+  Buchung wie EWB, nur mit Konto 2090
+
+**Rückstellungen:**
+Was sind Rückstellungen? = Schulden deren Höhe/Zeitpunkt noch UNSICHER ist
+Merksatz: "Ich weiß, dass ich zahlen muss – aber nicht genau wieviel und wann"
+Beispiele: Urlaubsrückstellung, Abfertigungsrückstellung, RSt für Rechtsstreit
+Buchung Bildung: Aufwandskonto / an 3... Rückstellungskonto (↓ = Passiv steigt)
+Buchung Auflösung: 3... Rückstellungskonto / an 4700 Erträge Auflösung RSt
+Bei Restauflösung: 3... RSt / an 4700 (wenn weniger als RSt gebraucht wurde)
+Bei Nachzahlung: Aufwandskonto (Differenz) + 3... RSt / an 2800 Bank
+
+**USt-System einfach erklärt:**
+🔄 Das Dreieck: Vorsteuer (2500) – Umsatzsteuer (3500) – USt-Zahllast (3520)
+Beim Einkauf: Wir bezahlen Vorsteuer an Lieferant → Konto 2500 (Forderung ans Finanzamt!)
+Beim Verkauf: Wir verrechnen USt an Kunden → Konto 3500 (Schuld ans Finanzamt!)
+Zahllast: 3500 USt / an 2500 Vorsteuer → Differenz = 3520 USt-Zahllast (oder Guthaben)
+Merksatz: "Vorsteuer ist unser GELD beim Finanzamt, USt ist deren GELD von uns"
+
+**Jahresabschluss – die richtige Reihenfolge:**
+1️⃣ Inventur (Vorräte zählen, Forderungen prüfen)
+2️⃣ Summen- und Saldenbilanz erstellen
+3️⃣ Korrekturbuchungen (AfA, Rechnungsabgrenzung, Rückstellungen, Bewertungen)
+4️⃣ Konten abschließen (alle Aufwands-/Ertragskonten → GuV-Konto 9890)
+5️⃣ GuV-Rechnung und Bilanz erstellen (über SBK 9850)
+Merksatz: "Erst prüfen, dann berichtigen, dann abschließen!"
+
+**Personalverrechnung – Überblick:**
+Bruttogehalt → minus Sozialversicherung (AN-Anteil ~18%) → minus Lohnsteuer = Nettogehalt
+Arbeitgeber zahlt ZUSÄTZLICH: SV-AG-Anteil, DB, DZ, Kommunalsteuer
+Buchung laufendes Gehalt: 6200 Gehälter / an 3850 Verbindlichkeiten Mitarbeiter + 3600 GKK + 3540 Verbindlichkeiten FA
+Abfertigungsrückstellung: 6430 / an 3000 RSt Abfertigungen
+Urlaubsrückstellung: 6250 Gehälter (Netto) + 6650 SV-Aufwand / an 3050 RSt Urlaube
+
+**Kostenrechnung (HAK III/IV):**
+Drei Stufen: Kostenarten → Kostenstellen → Kostenträger
+Deckungsbeitrag = Erlös - variable Kosten
+Break-Even = Fixkosten ÷ Deckungsbeitrag pro Stück
+Vollkostenrechnung: Alle Kosten werden auf Produkte verteilt (auch Fixkosten)
+Teilkostenrechnung: Nur variable Kosten → flexibler für Entscheidungen
+
 
 KONTENPLAN (Hölzel Verlag 2025 – exakte Kontonummern verwenden!):
 

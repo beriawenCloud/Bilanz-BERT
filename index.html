@@ -428,6 +428,37 @@
     .msg-bubble { max-width: 88%; }
   }
   .hidden { display: none !important; }
+
+  .buchung-table {
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .buchung-table thead { display: none; }
+  .buchung-table tbody td {
+    padding: 5px 16px;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .buchung-table tbody td:nth-child(1) {
+    color: rgba(76,175,125,0.9);
+    text-align: right;
+    padding-right: 20px;
+  }
+  .buchung-table tbody td:nth-child(2) {
+    width: 32px;
+    text-align: center;
+    color: rgba(255,200,80,0.5);
+    padding: 5px 4px;
+    font-size: 15px;
+  }
+  .buchung-table tbody td:nth-child(3) {
+    color: rgba(229,160,80,0.9);
+    padding-left: 20px;
+  }
+  .buchung-table tbody tr:last-child td { border-bottom: none; }
+
 </style>
 </head>
 <body>
@@ -2101,9 +2132,9 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
 
     function closeBuchung() {
       if (inBuchung && buchungRows.length > 0) {
-        html += '<table class="buchung-table"><thead><tr><th>Soll</th><th>Haben</th></tr></thead><tbody>';
+        html += '<table class="buchung-table"><thead><tr><th>Soll</th><th></th><th>Haben</th></tr></thead><tbody>';
         buchungRows.forEach(row => {
-          html += `<tr><td>${inlineFormat(row.soll)}</td><td>${inlineFormat(row.haben)}</td></tr>`;
+          html += `<tr><td>${inlineFormat(row.soll)}</td><td>|</td><td>${inlineFormat(row.haben)}</td></tr>`;
         });
         html += '</tbody></table>';
         inBuchung = false;
@@ -2138,8 +2169,8 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
         if (slashIdx !== -1) {
           const soll = content.slice(0, slashIdx).trim();
           const haben = content.slice(slashIdx + 1).trim();
-          html += '<table class="buchung-table"><thead><tr><th>Soll</th><th>Haben</th></tr></thead><tbody>';
-          html += `<tr><td>${inlineFormat(soll)}</td><td>${inlineFormat(haben)}</td></tr>`;
+          html += '<table class="buchung-table"><thead><tr><th>Soll</th><th></th><th>Haben</th></tr></thead><tbody>';
+          html += `<tr><td>${inlineFormat(soll)}</td><td>|</td><td>${inlineFormat(haben)}</td></tr>`;
           html += '</tbody></table>';
         } else {
           html += `<div class="buchung-line">${inlineFormat(content)}</div>`;

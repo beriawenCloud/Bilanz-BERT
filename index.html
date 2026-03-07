@@ -1964,7 +1964,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     isLoading = true;
     document.getElementById('sendBtn').disabled = true;
     const typingId = addTyping();
-    fetch('/api/proxy', {
+    fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2048, system: SYSTEM_PROMPT, messages: messages })
@@ -2056,7 +2056,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     const typingId = addTyping();
 
     try {
-      const response = await fetch('/api/proxy', {
+      const response = await fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

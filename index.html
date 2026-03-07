@@ -1479,6 +1479,40 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
   // Admin-Email (du!) – hier eintragen
   const ADMIN_EMAIL = 'sandra.gall@hak-reutte.ac.at';
 
+  // Session beim Laden wiederherstellen
+  function restoreSession() {
+    try {
+      const saved = sessionStorage.getItem('bb_session');
+      if (saved) {
+        const session = JSON.parse(saved);
+        if (session.token && session.email) {
+          currentToken = session.token;
+          currentUser = { email: session.email };
+          document.getElementById('loginScreen').style.display = 'none';
+          if (session.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+            document.getElementById('adminMenuBtn').style.display = 'flex';
+          }
+          return true;
+        }
+      }
+    } catch(e) {}
+    return false;
+  }
+
+  // Session speichern nach Login
+  function saveSession(token, email) {
+    try {
+      sessionStorage.setItem('bb_session', JSON.stringify({ token, email }));
+    } catch(e) {}
+  }
+
+  // Beim Laden prüfen
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', restoreSession);
+  } else {
+    restoreSession();
+  }
+
   async function doLogin() {
     const email = document.getElementById('loginEmail').value.trim();
     const pass = document.getElementById('loginPassword').value;
@@ -1533,18 +1567,18 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     if (data.access_token) {
       currentToken = data.access_token;
       currentUser = data.user;
+      saveSession(data.access_token, email);
       errEl.style.color = '#34d399';
       errEl.textContent = '✅ Willkommen!';
       setTimeout(() => {
         const ls = document.getElementById('loginScreen');
         ls.style.display = 'none';
         ls.classList.add('hidden');
-      }, 400);
+      }, 500);
       // Admin-Button einblenden falls Admin
       if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
         document.getElementById('adminMenuBtn').style.display = 'flex';
       }
-      errEl.textContent = '';
     } else {
       errEl.style.color = '#f87171';
       errEl.textContent = '❌ ' + (data.error_description || data.msg || 'E-Mail oder Passwort falsch');
@@ -1595,7 +1629,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     try {
       const data = await sbFetch('/auth/v1/admin/users?per_page=50', 'GET', null, currentToken);
       if (!data || !data.users) {
-        list.innerHTML = '<div style="color:#f87171;font-size:0.85rem;">⚠️ Benutzer konnten nicht geladen werden.<br>Hinweis: Admin-Rechte in Supabase erforderlich.</div>';
+        list.innerHTML = '<div style="color:#9ca3af;font-size:0.83rem;line-height:1.6;">ℹ️ Benutzer können direkt in Supabase angelegt werden:<br><a href="https://supabase.com/dashboard/project/xkixxhcuzkczpgrkzdzu/auth/users" target="_blank" style="color:#c8a96e;">→ Supabase Benutzer öffnen</a></div>';
         return;
       }
       list.innerHTML = data.users.map(u => `
@@ -1607,7 +1641,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
           }
         </div>`).join('');
     } catch(e) {
-      list.innerHTML = '<div style="color:#f87171;font-size:0.85rem;">❌ Fehler: ' + e.message + '</div>';
+      list.innerHTML = '<div style="color:#9ca3af;font-size:0.83rem;line-height:1.6;">ℹ️ Benutzer direkt in Supabase anlegen:<br><a href="https://supabase.com/dashboard/project/xkixxhcuzkczpgrkzdzu/auth/users" target="_blank" style="color:#c8a96e;">→ Supabase Dashboard öffnen</a></div>';
     }
   }
 

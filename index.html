@@ -1590,17 +1590,25 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
   }
 
   async function loadUsers() {
-    const data = await sbFetch('/auth/v1/admin/users?per_page=50', 'GET', null, currentToken);
     const list = document.getElementById('userList');
-    if (!data.users) { list.innerHTML = '<div style="color:#6b7280">Keine Benutzer geladen</div>'; return; }
-    list.innerHTML = data.users.map(u => `
-      <div class="user-item">
-        <span>📧 ${u.email}</span>
-        ${u.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase() ?
-          `<button class="admin-btn del" onclick="deleteUser('${u.id}', '${u.email}')">Löschen</button>` :
-          '<span style="color:#c8a96e;font-size:0.75rem">Admin</span>'
-        }
-      </div>`).join('');
+    list.innerHTML = '<div style="color:#6b7280;font-size:0.85rem;">⏳ Lade Benutzer...</div>';
+    try {
+      const data = await sbFetch('/auth/v1/admin/users?per_page=50', 'GET', null, currentToken);
+      if (!data || !data.users) {
+        list.innerHTML = '<div style="color:#f87171;font-size:0.85rem;">⚠️ Benutzer konnten nicht geladen werden.<br>Hinweis: Admin-Rechte in Supabase erforderlich.</div>';
+        return;
+      }
+      list.innerHTML = data.users.map(u => `
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#141824;border-radius:8px;margin-bottom:6px;color:#d1d5db;font-size:0.88rem;">
+          <span>📧 ${u.email}</span>
+          ${u.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase() ?
+            `<button onclick="deleteUser('${u.id}', '${u.email}')" style="padding:5px 10px;background:#ef4444;color:white;border:none;border-radius:6px;cursor:pointer;font-size:0.82rem;">Löschen</button>` :
+            '<span style="color:#c8a96e;font-size:0.75rem;">Admin</span>'
+          }
+        </div>`).join('');
+    } catch(e) {
+      list.innerHTML = '<div style="color:#f87171;font-size:0.85rem;">❌ Fehler: ' + e.message + '</div>';
+    }
   }
 
   async function deleteUser(id, email) {
@@ -1611,11 +1619,15 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
   }
 
   function openAdmin() {
-    document.getElementById('adminPanel').classList.add('open');
+    const panel = document.getElementById('adminPanel');
+    panel.style.display = 'flex';
+    panel.classList.add('open');
     loadUsers();
   }
   function closeAdmin() {
-    document.getElementById('adminPanel').classList.remove('open');
+    const panel = document.getElementById('adminPanel');
+    panel.style.display = 'none';
+    panel.classList.remove('open');
   }
 
   // ════════════════════════════════════════════════

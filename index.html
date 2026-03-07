@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bilanz-Bert | HAK/HLW Rechnungswesen by GALS</title>
+<title>Bilanz-Bert | HAK/HLW Rechnungswesen © GALS</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -425,7 +425,7 @@
     <div style="text-align:center;margin-bottom:28px;">
       <div style="font-size:2.5rem;">🧾</div>
       <h1 style="color:#e8d5b7;font-size:1.4rem;margin:8px 0 4px;">Bilanz-Bert</h1>
-      <p style="color:#6b7280;font-size:0.8rem;margin:0;">Dein KI-Assistent für Rechnungswesen · by GALS</p>
+      <p style="color:#6b7280;font-size:0.8rem;margin:0;">Dein KI-Assistent für Rechnungswesen · © GALS</p>
     </div>
     <div style="margin-bottom:14px;">
       <label style="display:block;color:#9ca3af;font-size:0.8rem;margin-bottom:6px;">E-Mail</label>
@@ -465,7 +465,7 @@
   <div class="logo">
     <div class="logo-icon">📒</div>
     <div>
-      <div class="logo-text">Bilanz-Bert 🧾 <span style="font-weight:400;opacity:0.6;font-size:0.75em;">by GALS</span></div>
+      <div class="logo-text">Bilanz-Bert 🧾 <span style="font-weight:400;opacity:0.6;font-size:0.75em;">© GALS</span></div>
       <div class="logo-sub">Dein KI-Assistent für Rechnungswesen</div>
       <button id="adminMenuBtn" onclick="openAdmin()" style="display:none;margin-top:6px;padding:4px 10px;background:#2d3550;border:1px solid #3d4560;border-radius:6px;color:#c8a96e;font-size:0.75rem;cursor:pointer;">👤 Benutzer verwalten</button>
     </div>
@@ -483,6 +483,7 @@
       <div class="welcome-block" id="welcomeBlock">
         <h1>Hallo! Ich bin <span>Bilanz-Bert</span> 🧾</h1>
         <p>Ich bin dein persönlicher KI-Assistent für Rechnungswesen – frag mich alles zu Buchungssätzen, Konten, Jahresabschluss und mehr. Alles erkläre ich dir Schritt für Schritt!</p>
+        <p style="font-size:0.78rem;color:#6b7280;margin-top:4px;">© GALS</p>
         <div class="quick-actions">
           <button class="quick-btn" onclick="sendQuick('Erkläre mir den Unterschied zwischen Soll und Haben.')">
             <span class="qb-icon">⚖️</span>
@@ -517,7 +518,7 @@
       <div class="input-hints">
         <span class="hint-pill" onclick="sendQuick('Buchungssatz: Warenverkauf auf Ziel, 5.000€ + 20% USt')">Warenverkauf buchen</span>
         <span class="hint-pill" onclick="sendQuick('Erkläre mir das Umlaufvermögen in der Bilanz.')">Umlaufvermögen</span>
-        <span class="hint-pill" onclick="sendQuick('Was ist Abschreibung? Erkläre linear vs. degressiv.')">Abschreibung</span>
+        <span class="hint-pill" onclick="sendQuick('Was ist lineare Abschreibung? Erkläre mir Schritt für Schritt.')">Lin. Abschreibung</span>
         <span class="hint-pill" onclick="sendQuick('Gib mir eine schwierige Buchungsaufgabe mit Lösung.')">Schwere Aufgabe</span>
       </div>
       <div id="aufgabeBar" style="display:none; flex-direction:column; gap:8px; padding:10px 0 4px 0;">
@@ -543,7 +544,7 @@
 </div>
 
 <script>
-  const SYSTEM_PROMPT = `Du bist Bilanz-Bert – ein freundlicher, geduldiger KI-Assistent für Rechnungswesen, speziell für Schüler der HAK (Handelsakademie) und HLW (Höhere Lehranstalt für wirtschaftliche Berufe) in Österreich, entwickelt by GALS. Du kennst den österreichischen Lehrplan genau und erklärst alles Schritt für Schritt.
+  const SYSTEM_PROMPT = `Du bist Bilanz-Bert – ein freundlicher, geduldiger KI-Assistent für Rechnungswesen, speziell für Schüler der HAK (Handelsakademie) und HLW (Höhere Lehranstalt für wirtschaftliche Berufe) in Österreich, entwickelt © GALS. Du kennst den österreichischen Lehrplan genau und erklärst alles Schritt für Schritt.
 
 KONTENPLAN (Hölzel Verlag 2025 – exakte Kontonummern verwenden!):
 

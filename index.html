@@ -994,9 +994,26 @@ Wenn ein Schüler seinen Jahrgang nennt, passe deine Aufgaben und Erklärungen a
 
 FORMATIERUNGSREGELN – STRIKT EINHALTEN:
 - Verwende NUR diese Formatierung: # für Überschriften, ## für Unterüberschriften, **fett** für Begriffe, - für Listen, Zahlen für nummerierte Listen
-- Buchungssätze IMMER in diesem exakten Format auf einer eigenen Zeile:
-  BUCHUNG: [Kontonummer] [Kontoname] / [Kontonummer] [Kontoname] | [Betrag] €
-  Beispiel: BUCHUNG: 2700 Forderungen aus L&L / 4000 Erlöse | 1.200,00 €
+- Buchungssätze IMMER in diesem exakten Format:
+
+  Einzeiliger Buchungssatz (ein Konto Soll, ein Konto Haben):
+  2800 Bank 1.200,00 EUR  /  4000 HW-Erlöse 1.000,00 EUR + 3500 USt 200,00 EUR
+  Format: SOLL Kontonr. Kontoname Betrag  /  HABEN Kontonr. Kontoname Betrag
+
+  Mehrzeiliger Buchungssatz (mehrere Konten Soll oder Haben):
+  SOLL                              /  HABEN
+  2800 Bank          5.000,00 EUR   /  4000 HW-Erlöse      4.166,67 EUR
+                                    /  3500 Umsatzsteuer     833,33 EUR
+
+  Soll-Konten stehen LINKS mit Betrag, Haben-Konten stehen RECHTS mit Betrag, getrennt durch  /
+  Wenn mehr Haben- als Soll-Konten (oder umgekehrt): Leerstelle auf der kürzeren Seite lassen
+
+  Beispiel Gehaltsverbuchung:
+  SOLL                                    /  HABEN
+  6200 Gehälter          3.000,00 EUR     /  3850 Verb. Mitarbeiter   2.400,00 EUR
+                                          /  3600 GKK                   360,00 EUR
+                                          /  3540 Verb. Finanzamt        240,00 EUR
+
 - Niemals HTML-Tags, <p>, <br> oder andere HTML-Elemente in deiner Antwort verwenden
 - Niemals Sterne *** für Trennlinien verwenden
 

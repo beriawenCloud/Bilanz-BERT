@@ -996,29 +996,21 @@ FORMATIERUNGSREGELN – STRIKT EINHALTEN:
 - Verwende NUR diese Formatierung: # für Überschriften, ## für Unterüberschriften, **fett** für Begriffe, - für Listen, Zahlen für nummerierte Listen
 
 BUCHUNGSSATZ-FORMAT – ABSOLUT ZWINGEND, KEINE AUSNAHMEN:
-Schreibe NIEMALS "SOLL: ..." und "HABEN: ..." untereinander!
-Schreibe NIEMALS "SOLL: 2000 Lieferforderungen / HABEN: 4000 Erlöse" in dieser Form!
+Schreibe Buchungssätze IMMER in diesem Format – jede Zeile enthält genau einen Soll-Eintrag LINKS vom " / " und einen Haben-Eintrag RECHTS davon. Wenn es mehr Haben- als Soll-Konten gibt, bleibt die linke Seite leer.
 
-STATTDESSEN IMMER so – Soll LINKS, Haben RECHTS, getrennt durch " / ":
+Beispiel Warenverkauf auf Ziel (1 Soll, 2 Haben):
+2000 Lieferforderungen Inland 6.000,00 €  /  4000 HW-Erlöse 20% 5.000,00 €
+ /  3500 Umsatzsteuer 1.000,00 €
 
-Einzeiliger Buchungssatz:
-2000 Lieferforderungen Inland 6.000,00 EUR  /  4000 HW-Erlöse 5.000,00 EUR + 3500 USt 1.000,00 EUR
+Beispiel Bankeinzahlung (1:1):
+2800 Bank 1.200,00 €  /  2000 Lieferforderungen 1.200,00 €
 
-Mehrzeiliger Buchungssatz (mehrere Haben-Konten):
-2000 Lieferforderungen Inland  6.000,00 EUR  /  4000 HW-Erlöse 20%     5.000,00 EUR
-                                             /  3500 Umsatzsteuer       1.000,00 EUR
+Beispiel Gehalt (1 Soll, 3 Haben):
+6200 Gehälter 3.000,00 €  /  3850 Verb. Mitarbeiter 2.400,00 €
+ /  3600 GKK 360,00 €
+ /  3540 Verb. Finanzamt 240,00 €
 
-Mehrzeiliger Buchungssatz (mehrere Soll-Konten):
-6200 Gehälter                  2.400,00 EUR  /  3850 Verb. Mitarbeiter  2.400,00 EUR
-3600 GKK                         360,00 EUR  /  3600 GKK AG-Anteil        360,00 EUR
-
-Gehaltsverbuchung Beispiel (mehrere Haben):
-6200 Gehälter                  3.000,00 EUR  /  3850 Verb. Mitarbeiter  2.400,00 EUR
-                                             /  3600 GKK                  360,00 EUR
-                                             /  3540 Verb. Finanzamt       240,00 EUR
-
-REGEL: Soll-Konten stehen IMMER links, Haben-Konten IMMER rechts, IMMER getrennt durch " / "
-Wenn eine Seite weniger Zeilen hat: Leerzeile mit nur " / " und dem nächsten Haben-Konto
+REGEL: Jede Buchungszeile enthält " / " als Trenner. Soll links, Haben rechts. Wenn nur Haben-Konto (Fortsetzung): Zeile mit " / Kontonr Name Betrag". NIEMALS alle Konten in eine Zeile schreiben!
 
 - Niemals HTML-Tags, <p>, <br> oder andere HTML-Elemente in deiner Antwort verwenden
 - Niemals Sterne *** für Trennlinien verwenden
@@ -2096,6 +2088,8 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     let html = '';
     let inList = false;
     let listType = '';
+    let inBuchung = false;
+    let buchungRows = [];
 
     function closeList() {
       if (inList) {
@@ -2105,44 +2099,78 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
       }
     }
 
+    function closeBuchung() {
+      if (inBuchung && buchungRows.length > 0) {
+        html += '<table class="buchung-table"><thead><tr><th>Soll</th><th>Haben</th></tr></thead><tbody>';
+        buchungRows.forEach(row => {
+          html += `<tr><td>${inlineFormat(row.soll)}</td><td>${inlineFormat(row.haben)}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        inBuchung = false;
+        buchungRows = [];
+      }
+    }
+
     function inlineFormat(str) {
       return str
         .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
         .replace(/`([^`]+)`/g, '<code>$1</code>');
     }
 
+    // Pre-process: detect BUCHUNG: lines and table-format lines with " / "
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
       const trimmed = line.trim();
 
       // Empty line
       if (!trimmed) {
+        closeBuchung();
         closeList();
         continue;
       }
 
-      // BUCHUNG: special formatted line
+      // BUCHUNG: special formatted line (old format, keep for compat)
       if (trimmed.startsWith('BUCHUNG:')) {
         closeList();
+        closeBuchung();
         const content = trimmed.slice(8).trim();
-        // Split on | for amount
-        const parts = content.split('|');
-        const buchung = parts[0].trim();
-        const betrag = parts[1] ? parts[1].trim() : '';
-        // Split on / for soll/haben
-        const slashIdx = buchung.indexOf('/');
+        const slashIdx = content.indexOf('/');
         if (slashIdx !== -1) {
-          const soll = buchung.slice(0, slashIdx).trim();
-          const haben = buchung.slice(slashIdx + 1).trim();
-          html += `<div class="debit-credit">
-            <div class="debit-box"><span class="label">Soll</span><span class="konto">${inlineFormat(soll)}</span></div>
-            <div class="credit-box"><span class="label">Haben</span><span class="konto">${inlineFormat(haben)}</span>${betrag ? `<span class="betrag">${betrag}</span>` : ''}</div>
-          </div>`;
+          const soll = content.slice(0, slashIdx).trim();
+          const haben = content.slice(slashIdx + 1).trim();
+          html += '<table class="buchung-table"><thead><tr><th>Soll</th><th>Haben</th></tr></thead><tbody>';
+          html += `<tr><td>${inlineFormat(soll)}</td><td>${inlineFormat(haben)}</td></tr>`;
+          html += '</tbody></table>';
         } else {
           html += `<div class="buchung-line">${inlineFormat(content)}</div>`;
         }
         continue;
       }
+
+      // Detect Buchungssatz table line: contains " / " with konto pattern on at least one side
+      // Match lines like "2000 Lieferforderungen ... / 4000 HW-Erlöse ..." or " / 3500 USt ..."
+      const isContinuation = /^\s*\/\s+/.test(line); // line starting with optional space + /
+      const buchungMatch = isContinuation
+        ? [null, '', line.replace(/^\s*\/\s*/, '').trim()]  // " / 3500 USt..." → soll='', haben='3500...'
+        : trimmed.match(/^(.*?)\s{2,}\/\s{2,}(.*)$/);       // "X  /  Y" with 2+ spaces around /
+      const looksLikeBuchung = buchungMatch && (
+        /^\d{4}/.test(trimmed) ||   // starts with 4-digit konto nr
+        isContinuation ||             // continuation line starting with /
+        inBuchung                     // already in a buchung block
+      );
+
+      if (looksLikeBuchung && buchungMatch) {
+        closeList();
+        if (!inBuchung) inBuchung = true;
+        buchungRows.push({
+          soll: buchungMatch[1] ? buchungMatch[1].trim() : '',
+          haben: buchungMatch[2] ? buchungMatch[2].trim() : ''
+        });
+        continue;
+      }
+
+      // Not a buchung line – close any open buchung block
+      closeBuchung();
 
       // H1
       if (trimmed.startsWith('# ')) {
@@ -2188,6 +2216,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
       html += `<p>${inlineFormat(trimmed)}</p>`;
     }
 
+    closeBuchung();
     closeList();
     return html;
   }

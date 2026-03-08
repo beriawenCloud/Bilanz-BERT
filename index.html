@@ -429,7 +429,10 @@
   }
   .hidden { display: none !important; }
 
-  .buchung-table {
+  #requestCounter.warning { color: #e09050 !important; }
+  #requestCounter.danger  { color: #e05050 !important; }
+
+    .buchung-table {
     border-collapse: collapse;
     margin: 10px 0;
     font-family: 'JetBrains Mono', monospace;
@@ -513,6 +516,9 @@
       <div class="logo-text">Bilanz-Bert 🧾 <span style="font-weight:400;opacity:0.6;font-size:0.75em;">© GALS</span></div>
       <div class="logo-sub">Dein KI-Assistent für Rechnungswesen</div>
       <button id="adminMenuBtn" onclick="openAdmin()" style="display:none;margin-top:6px;padding:4px 10px;background:#2d3550;border:1px solid #3d4560;border-radius:6px;color:#c8a96e;font-size:0.75rem;cursor:pointer;">👤 Benutzer verwalten</button>
+      <div id="requestCounter" style="display:none;margin-top:6px;font-size:0.75rem;color:var(--text-muted);">
+        💬 <span id="counterText">...</span>
+      </div>
     </div>
   </div>
   <div class="mode-tabs">
@@ -1686,6 +1692,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
           if (session.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
             document.getElementById('adminMenuBtn').style.display = 'flex';
           }
+          updateCounterDisplay();
           return true;
         }
       }
@@ -1705,6 +1712,67 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     document.addEventListener('DOMContentLoaded', restoreSession);
   } else {
     restoreSession();
+  }
+
+  // ── Wöchentlicher Anfragen-Zähler ──────────────────────────────
+  const WEEKLY_LIMIT = 100;
+
+  function getWeekKey() {
+    const now = new Date();
+    const jan1 = new Date(now.getFullYear(), 0, 1);
+    const week = Math.ceil(((now - jan1) / 86400000 + jan1.getDay() + 1) / 7);
+    return now.getFullYear() + '-W' + String(week).padStart(2, '0');
+  }
+
+  function getCounterKey() {
+    const email = currentUser ? currentUser.email : 'anon';
+    return 'bb_req_' + email + '_' + getWeekKey();
+  }
+
+  function getRequestCount() {
+    try { return parseInt(sessionStorage.getItem(getCounterKey()) || '0'); }
+    catch(e) { return 0; }
+  }
+
+  function incrementRequestCount() {
+    try {
+      const key = getCounterKey();
+      const n = getRequestCount() + 1;
+      sessionStorage.setItem(key, n);
+      return n;
+    } catch(e) { return 0; }
+  }
+
+  function updateCounterDisplay() {
+    const counter = document.getElementById('requestCounter');
+    const text = document.getElementById('counterText');
+    if (!counter || !text || !currentUser) return;
+    // Hide for admin
+    if (currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return;
+    const used = getRequestCount();
+    const remaining = WEEKLY_LIMIT - used;
+    counter.style.display = 'block';
+    // Next Monday
+    const now = new Date();
+    const daysUntilMon = (8 - now.getDay()) % 7 || 7;
+    const nextMon = new Date(now); nextMon.setDate(now.getDate() + daysUntilMon);
+    const dateStr = nextMon.toLocaleDateString('de-AT', { weekday:'short', day:'numeric', month:'numeric' });
+    if (remaining <= 0) {
+      text.textContent = '0 Anfragen übrig – erneuert sich am ' + dateStr;
+      counter.className = 'danger';
+    } else if (remaining <= 20) {
+      text.textContent = remaining + ' von ' + WEEKLY_LIMIT + ' Anfragen übrig (erneuert ' + dateStr + ')';
+      counter.className = 'warning';
+    } else {
+      text.textContent = remaining + ' von ' + WEEKLY_LIMIT + ' Anfragen übrig';
+      counter.className = '';
+    }
+  }
+
+  function isLimitReached() {
+    if (!currentUser) return false;
+    if (currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return false;
+    return getRequestCount() >= WEEKLY_LIMIT;
   }
 
   async function doLogin() {

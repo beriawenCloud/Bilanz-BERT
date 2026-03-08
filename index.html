@@ -1023,6 +1023,13 @@ Stundentafel: I. Jg: 4h | II. Jg: 3h | III. Jg: 3h | IV. Jg: 2h | V. Jg: 2h (ges
 
 Wenn ein Schüler seinen Jahrgang nennt, passe deine Aufgaben und Erklärungen automatisch an den entsprechenden Lehrplanstand an!
 
+ANTWORTLÄNGE – STRIKT EINHALTEN:
+- Halte Antworten KURZ und PRÄGNANT – maximal 3-4 Punkte pro Erklärung
+- Kein langer Fließtext, keine ausschweifenden Erklärungen
+- Lieber einen Gedanken gut erklären als fünf oberflächlich
+- Nach einer kurzen Erklärung: Frage den Schüler ob er mehr Details möchte
+- Buchungssätze immer zeigen, aber Begründungen kurz halten
+
 FORMATIERUNGSREGELN – STRIKT EINHALTEN:
 - Verwende NUR diese Formatierung: # für Überschriften, ## für Unterüberschriften, **fett** für Begriffe, - für Listen, Zahlen für nummerierte Listen
 
@@ -1979,7 +1986,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 2048, system: SYSTEM_PROMPT, messages: messages })
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 3000, system: SYSTEM_PROMPT, messages: messages })
     }).then(function(r) { return r.json(); }).then(function(data) {
       removeTyping(typingId);
       const reply = data.content ? data.content.map(function(b) { return b.text || ''; }).join('') : 'Fehler.';
@@ -2073,7 +2080,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2048,
+          max_tokens: 3000,
           system: SYSTEM_PROMPT,
           messages: messages
         })

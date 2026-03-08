@@ -1692,7 +1692,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
           if (session.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
             document.getElementById('adminMenuBtn').style.display = 'flex';
           }
-          updateCounterDisplay();
+          loadRequestCount().then(updateCounterDisplay);
           return true;
         }
       }
@@ -1714,8 +1714,9 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     restoreSession();
   }
 
-  // ── Wöchentlicher Anfragen-Zähler ──────────────────────────────
+  // ── Wöchentlicher Anfragen-Zähler (Supabase) ───────────────────
   const WEEKLY_LIMIT = 100;
+  let cachedCount = 0;
 
   function getWeekKey() {
     const now = new Date();
@@ -1724,39 +1725,64 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     return now.getFullYear() + '-W' + String(week).padStart(2, '0');
   }
 
-  function getCounterKey() {
-    const email = currentUser ? currentUser.email : 'anon';
-    return 'bb_req_' + email + '_' + getWeekKey();
+  function getNextMonday() {
+    const now = new Date();
+    const daysUntilMon = (8 - now.getDay()) % 7 || 7;
+    const nextMon = new Date(now);
+    nextMon.setDate(now.getDate() + daysUntilMon);
+    return nextMon.toLocaleDateString('de-AT', { weekday:'long', day:'numeric', month:'numeric' });
   }
 
-  function getRequestCount() {
-    try { return parseInt(sessionStorage.getItem(getCounterKey()) || '0'); }
-    catch(e) { return 0; }
-  }
-
-  function incrementRequestCount() {
+  async function loadRequestCount() {
+    if (!currentUser || !currentToken) return 0;
+    if (currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return 0;
     try {
-      const key = getCounterKey();
-      const n = getRequestCount() + 1;
-      sessionStorage.setItem(key, n);
-      return n;
+      const email = encodeURIComponent(currentUser.email);
+      const week = getWeekKey();
+      const res = await sbFetch(
+        '/rest/v1/request_counts?user_email=eq.' + email + '&week_key=eq.' + week + '&select=count',
+        'GET', null, currentToken
+      );
+      const data = await res.json();
+      cachedCount = (data && data.length > 0) ? data[0].count : 0;
+      return cachedCount;
     } catch(e) { return 0; }
+  }
+
+  async function incrementRequestCount() {
+    if (!currentUser || !currentToken) return;
+    if (currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return;
+    const email = currentUser.email;
+    const week = getWeekKey();
+    const newCount = cachedCount + 1;
+    try {
+      // Try update first
+      const emailEnc = encodeURIComponent(email);
+      const patchRes = await sbFetch(
+        '/rest/v1/request_counts?user_email=eq.' + emailEnc + '&week_key=eq.' + week,
+        'PATCH', { count: newCount }, currentToken
+      );
+      const patched = await patchRes.json();
+      // If no row existed, insert
+      if (!patched || patched.length === 0) {
+        await sbFetch('/rest/v1/request_counts', 'POST',
+          { user_email: email, week_key: week, count: 1 },
+          currentToken
+        );
+      }
+      cachedCount = newCount;
+    } catch(e) {}
+    updateCounterDisplay();
   }
 
   function updateCounterDisplay() {
     const counter = document.getElementById('requestCounter');
     const text = document.getElementById('counterText');
     if (!counter || !text || !currentUser) return;
-    // Hide for admin
     if (currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return;
-    const used = getRequestCount();
-    const remaining = WEEKLY_LIMIT - used;
+    const remaining = WEEKLY_LIMIT - cachedCount;
     counter.style.display = 'block';
-    // Next Monday
-    const now = new Date();
-    const daysUntilMon = (8 - now.getDay()) % 7 || 7;
-    const nextMon = new Date(now); nextMon.setDate(now.getDate() + daysUntilMon);
-    const dateStr = nextMon.toLocaleDateString('de-AT', { weekday:'short', day:'numeric', month:'numeric' });
+    const dateStr = getNextMonday();
     if (remaining <= 0) {
       text.textContent = '0 Anfragen übrig – erneuert sich am ' + dateStr;
       counter.className = 'danger';
@@ -1772,7 +1798,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
   function isLimitReached() {
     if (!currentUser) return false;
     if (currentUser.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) return false;
-    return getRequestCount() >= WEEKLY_LIMIT;
+    return cachedCount >= WEEKLY_LIMIT;
   }
 
   async function doLogin() {

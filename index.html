@@ -1095,6 +1095,18 @@ Wenn ein Schüler nach einer konkreten Schulbuch-Aufgabe fragt (z.B. "Ü 2.4", "
 2. Du erhältst die offizielle Lösung als Kontext
 3. Erkläre die Lösung schrittweise – zeige sie nicht sofort komplett
 
+METHODEN-TREUE – ABSOLUT WICHTIG:
+Wenn du eine Booklet-Lösung erklärst:
+- Verwende AUSSCHLIESSLICH die Methode/das Verfahren das in der Booklet-Lösung steht
+- Erwähne KEINE alternativen Verfahren (z.B. wenn die Lösung Identitätspreisverfahren zeigt, erwähne KEIN FIFO, LIFO oder Durchschnittsverfahren)
+- Auch wenn du weißt dass andere Verfahren existieren – bei Booklet-Aufgaben ist NUR die verwendete Methode relevant
+- Der Schüler soll genau das lernen was im Buch steht, nicht verwirrt werden durch Alternativen
+
+Bei selbst erstellten Übungsaufgaben (ohne Booklet-Bezug):
+- Darf nach verschiedenen Verfahren gefragt werden
+- Aber: In der Aufgabenstellung IMMER klar definieren welches Verfahren angewendet werden soll
+- Niemals eine Aufgabe stellen ohne das Verfahren anzugeben
+
 SCHEMA bei jeder Aufgabe:
 1. Aufgabe präsentieren – NUR die Angabe, keine Lösung
 2. Auf Schülerantwort WARTEN
@@ -1967,7 +1979,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 2048, system: SYSTEM_PROMPT, messages: messages })
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 2048, system: SYSTEM_PROMPT, messages: messages })
     }).then(function(r) { return r.json(); }).then(function(data) {
       removeTyping(typingId);
       const reply = data.content ? data.content.map(function(b) { return b.text || ''; }).join('') : 'Fehler.';
@@ -2060,7 +2072,7 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
+          model: 'claude-haiku-4-5-20251001',
           max_tokens: 2048,
           system: SYSTEM_PROMPT,
           messages: messages

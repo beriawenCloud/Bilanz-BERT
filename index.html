@@ -442,7 +442,6 @@
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .buchung-table tbody td:nth-child(1) {
-    color: rgba(76,175,125,0.9);
     text-align: right;
     padding-right: 20px;
   }
@@ -454,9 +453,11 @@
     font-size: 15px;
   }
   .buchung-table tbody td:nth-child(3) {
-    color: rgba(229,160,80,0.9);
     padding-left: 20px;
   }
+  .konto-ertrag  { color: rgba(76,210,130,0.95); }
+  .konto-aufwand { color: rgba(220,80,80,0.95); }
+  .konto-neutral { color: rgba(229,160,80,0.9); }
   .buchung-table tbody tr:last-child td { border-bottom: none; }
 
 </style>
@@ -2149,11 +2150,35 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
       }
     }
 
+    function kontoClass(kontoText, seite) {
+      // Klasse 8 Ertragskonten
+      const k8ertrag = [8010,8030,8031,8035,8036,8050,8051,8052,8053,8055,8056,8057,
+                        8070,8080,8090,8140,8141,8142,8170,8180,8520,8750];
+      const nr = parseInt(kontoText.trim().slice(0,4));
+      if (isNaN(nr)) return 'konto-neutral';
+      const kl = Math.floor(nr / 1000);
+      let isErtrag;
+      if (kl === 8) {
+        isErtrag = k8ertrag.includes(nr);
+      } else if (kl === 4) {
+        isErtrag = true;
+      } else if (kl >= 5 && kl <= 7) {
+        isErtrag = false;
+      } else {
+        return 'konto-neutral'; // Klassen 0,1,2,3,9
+      }
+      // Alle Ertrags- und Aufwandskonten: im Soll = Gewinn sinkt (rot), im Haben = Gewinn steigt (grün)
+      if (seite === 'soll') return 'konto-aufwand';
+      else                  return 'konto-ertrag';
+    }
+
     function closeBuchung() {
       if (inBuchung && buchungRows.length > 0) {
         html += '<table class="buchung-table"><thead><tr><th>Soll</th><th></th><th>Haben</th></tr></thead><tbody>';
         buchungRows.forEach(row => {
-          html += `<tr><td>${inlineFormat(row.soll)}</td><td>|</td><td>${inlineFormat(row.haben)}</td></tr>`;
+          const sollClass = row.soll ? kontoClass(row.soll, 'soll') : 'konto-neutral';
+          const habenClass = row.haben ? kontoClass(row.haben, 'haben') : 'konto-neutral';
+          html += `<tr><td class="${sollClass}">${inlineFormat(row.soll)}</td><td>|</td><td class="${habenClass}">${inlineFormat(row.haben)}</td></tr>`;
         });
         html += '</tbody></table>';
         inBuchung = false;

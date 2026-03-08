@@ -189,6 +189,23 @@
 </head>
 <body>
 
+<!-- Passwortschutz -->
+<div id="pw-screen" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--light);">
+  <div style="background:white;border-radius:18px;box-shadow:0 4px 32px rgba(0,0,0,0.10);padding:48px 40px;max-width:380px;width:90%;text-align:center;">
+    <div style="font-size:2.8rem;margin-bottom:12px;">🧑‍💼</div>
+    <div style="font-size:1.5rem;font-weight:800;color:var(--orange);margin-bottom:6px;">Personal-Paul</div>
+    <div style="font-size:0.95rem;color:var(--mid);margin-bottom:28px;">Bitte gib das Passwort ein, das du von deiner Lehrerin erhalten hast.</div>
+    <input type="password" id="pw-input" placeholder="Passwort" style="width:100%;padding:12px 16px;border:2px solid var(--border);border-radius:10px;font-size:1rem;font-family:'Outfit',sans-serif;outline:none;box-sizing:border-box;margin-bottom:12px;" onkeydown="if(event.key==='Enter')checkPw()">
+    <div id="pw-error" style="display:none;color:#e74c3c;font-size:0.85rem;margin-bottom:10px;">❌ Falsches Passwort – versuch's nochmal!</div>
+    <button onclick="checkPw()" style="width:100%;background:var(--orange);color:white;border:none;border-radius:10px;padding:13px;font-size:1rem;font-weight:700;font-family:'Outfit',sans-serif;cursor:pointer;">Einloggen</button>
+    <div style="margin-top:24px;font-size:0.82rem;color:#888;">Dieses Tool dient ausschließlich Unterrichtszwecken.</div>
+    <div style="font-size:0.82rem;color:#888;margin-top:4px;">© GALS</div>
+  </div>
+</div>
+
+<!-- Hauptinhalt -->
+<div id="main-content" style="display:none;">
+
 <header>
   <div class="header-inner">
     <div class="logo">Personal-<span>Paul</span><span class="logo-sub">© GALS</span></div>
@@ -1170,6 +1187,21 @@ function togglePendler() {
     document.getElementById('pe-km-input').value = '';
     document.getElementById('pe-input').value = '';
     if (document.getElementById('pe-error')) document.getElementById('pe-error').style.display = 'none';
+  }
+}
+</script>
+</div><!-- end main-content -->
+
+<script>
+function checkPw() {
+  const val = document.getElementById('pw-input').value.trim().toLowerCase();
+  if (val === 'paulistcool') {
+    document.getElementById('pw-screen').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
   }
 }
 </script>

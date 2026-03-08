@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BW-Bernd – Virtuelles Unternehmen</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lato:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   CSS VARIABLES & RESET
+============================================= */
+:root {
+  --navy: #0f1f3d;
+  --navy-mid: #1a3260;
+  --accent: #e8a020;
+  --accent-light: #f5c455;
+  --green: #2a9d5c;
+  --red: #d94f3d;
+  --surface: #f7f8fc;
+  --surface-2: #eef0f7;
+  --text: #0f1f3d;
+  --text-mid: #4a5578;
+  --text-light: #8892aa;
+  --white: #ffffff;
+  --border: #dde1ef;
+  --shadow-sm: 0 2px 8px rgba(15,31,61,0.08);
+  --shadow-md: 0 6px 24px rgba(15,31,61,0.12);
+  --shadow-lg: 0 16px 48px rgba(15,31,61,0.18);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --font-head: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Lato', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--surface);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* =============================================
+   PAGES (SPA navigation)
+============================================= */
+.page { display: none; }
+.page.active { display: block; }
+
+/* =============================================
+   TOP NAVIGATION
+============================================= */
+.topnav {
+  background: var(--navy);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+}
+
+.topnav-logo {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.topnav-logo span {
+  color: var(--accent);
+}
+
+.topnav-logo .logo-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.topnav-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Schultyp Toggle */
+.schultyp-toggle {
+  display: flex;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.schultyp-btn {
+  padding: 6px 16px;
+  font-family: var(--font-head);
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.05em;
+}
+
+.schultyp-btn.active {
+  background: var(--accent);
+  color: var(--navy);
+}
+
+/* Jahrgang Select */
+.jahrgang-select {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.jahrgang-select option { color: var(--navy); background: white; }
+
+.nav-home-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nav-home-btn:hover { background: rgba(255,255,255,0.22); }
+
+/* =============================================
+   HERO (Startseite)
+============================================= */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1e4a8a 100%);
+  padding: 72px 32px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(232,160,32,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(42,157,92,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(232,160,32,0.15);
+  border: 1px solid rgba(232,160,32,0.4);
+  color: var(--accent-light);
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+  letter-spacing: 0.04em;
+}
+
+.hero h1 {
+  font-family: var(--font-head);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 600px;
+  margin-bottom: 36px;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* Company Card in Hero */
+.company-card {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-lg);
+  padding: 28px 32px;
+  backdrop-filter: blur(10px);
+  max-width: 680px;
+}
+
+.company-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.company-logo {
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.company-name {
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+}
+
+.company-tagline {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+}
+
+.company-desc {
+  color: rgba(255,255,255,0.72);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+.company-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-val {
+  font-family: var(--font-head);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* =============================================
+   SCHULTYP BANNER (below hero)
+============================================= */
+.schultyp-banner {
+  background: var(--accent);
+  padding: 10px 32px;
+  text-align: center;
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 0.04em;
+}
+
+/* =============================================
+   SECTION WRAPPER
+============================================= */
+.section {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 56px 32px;
+}
+
+.section-title {
+  font-family: var(--font-head);
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.section-sub {
+  color: var(--text-mid);
+  margin-bottom: 36px;
+  font-size: 0.97rem;
+}
+
+/* =============================================
+   MODULE GRID (Dashboard)
+============================================= */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.module-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: var(--card-color, var(--accent));
+}
+
+.module-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: transparent;
+}
+
+.module-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--card-bg, #fff8e8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.module-card h3 {
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--navy);
+}
+
+.module-card p {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.module-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.tag-jg { background: #eef2ff; color: #4f5fd9; }
+.tag-hak { background: #fff8e8; color: #b07010; }
+.tag-hlw { background: #e8f7ee; color: #1a7a42; }
+
+.module-arrow {
+  position: absolute;
+  top: 28px; right: 24px;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  transition: transform 0.2s;
+}
+
+.module-card:hover .module-arrow { transform: translateX(4px); }
+
+/* =============================================
+   MODULE PAGE
+============================================= */
+.module-page-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 32px;
+}
+
+.module-header {
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-header::after {
+  content: attr(data-icon);
+  position: absolute;
+  right: 32px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 5rem;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.module-header-badge {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.module-header h2 {
+  font-family: var(--font-head);
+  font-size: 1.9rem;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.module-header p {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.95rem;
+  max-width: 500px;
+}
+
+/* Content blocks */
+.content-block {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+
+.block-title {
+  font-family: var(--font-head);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-light);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.block-title .block-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--surface-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.content-block h3 {
+  font-family: var(--font-head);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.content-block p, .content-block li {
+  font-size: 0.94rem;
+  color: var(--text-mid);
+  line-height: 1.65;
+}
+
+.content-block ul, .content-block ol {
+  padding-left: 20px;
+  margin-top: 8px;
+}
+
+.content-block li { margin-bottom: 6px; }
+
+/* Aufgaben */
+.aufgabe-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: aufgabe;
+}
+
+.aufgabe-list li {
+  counter-increment: aufgabe;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.aufgabe-list li:last-child { border-bottom: none; }
+
+.aufgabe-list li::before {
+  content: counter(aufgabe);
+  min-width: 28px;
+  height: 28px;
+  background: var(--navy);
+  color: white;
+  border-radius: 50%;
+  font-family: var(--font-head);
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Infobox */
+.infobox {
+  background: linear-gradient(135deg, #fff8e8, #fef3d0);
+  border: 1px solid #f0d080;
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+
+.infobox-title {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #8a5f00;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.infobox p { color: #6b4a00; line-height: 1.6; }
+
+/* =============================================
+   KI CHAT AREA
+============================================= */
+.ki-area {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.ki-header {
+  background: var(--navy);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ki-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ki-avatar {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.ki-name {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: white;
+}
+
+.ki-status {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.ki-role-select {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.ki-role-select option { background: var(--navy); color: white; }
+
+.ki-messages {
+  height: 340px;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: #f9fafd;
+}
+
+.ki-messages::-webkit-scrollbar { width: 4px; }
+.ki-messages::-webkit-scrollbar-track { background: transparent; }
+.ki-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.msg {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  animation: msgIn 0.3s ease;
+}
+
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.msg-user { flex-direction: row-reverse; }
+
+.msg-bubble {
+  max-width: 80%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.msg-ai .msg-bubble {
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+
+.msg-user .msg-bubble {
+  background: var(--navy);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.msg-avatar-sm {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.msg-ai .msg-avatar-sm { background: linear-gradient(135deg, var(--accent), var(--accent-light)); }
+.msg-user .msg-avatar-sm { background: var(--navy-mid); }
+
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.typing-dot {
+  width: 6px; height: 6px;
+  background: var(--text-light);
+  border-radius: 50%;
+  animation: typingBounce 1.2s infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+.ki-input-area {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  background: white;
+}
+
+.ki-input {
+  flex: 1;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  resize: none;
+  outline: none;
+  color: var(--text);
+  background: var(--surface);
+  min-height: 44px;
+  max-height: 120px;
+  transition: border-color 0.2s;
+}
+
+.ki-input:focus { border-color: var(--navy); }
+
+.ki-send-btn {
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.ki-send-btn:hover { background: var(--navy-mid); }
+.ki-send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.ki-prompt-suggestion {
+  margin: 0 24px 16px;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.84rem;
+  color: var(--text-mid);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.use-prompt-btn {
+  background: var(--accent);
+  color: var(--navy);
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.use-prompt-btn:hover { background: var(--accent-light); }
+
+/* =============================================
+   REFLEXION BLOCK
+============================================= */
+.reflexion-list {
+  list-style: none;
+  padding: 0;
+}
+
+.reflexion-list li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.93rem;
+  color: var(--text-mid);
+}
+
+.reflexion-list li:last-child { border-bottom: none; }
+
+.refl-icon {
+  width: 24px; height: 24px;
+  background: #fff0f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* =============================================
+   KI KANN SICH IRREN PAGE
+============================================= */
+.irren-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.irren-card-header {
+  background: linear-gradient(135deg, #b91c1c, #dc2626);
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.irren-icon {
+  width: 40px; height: 40px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.irren-card-header h3 {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.irren-card-header p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.7);
+}
+
+.irren-body {
+  padding: 24px 28px;
+}
+
+.ki-falsch {
+  background: #fff8f8;
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  color: #7f1d1d;
+  font-style: italic;
+}
+
+.ki-falsch::before {
+  content: '🤖 KI-Empfehlung: ';
+  font-style: normal;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #b91c1c;
+}
+
+.aufgabe-irren {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  color: #14532d;
+}
+
+.aufgabe-irren::before {
+  content: '✏️ Deine Aufgabe: ';
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* =============================================
+   FOOTER
+============================================= */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  padding: 24px 32px;
+  font-size: 0.82rem;
+  margin-top: 48px;
+}
+
+footer strong { color: rgba(255,255,255,0.7); }
+
+/* =============================================
+   BREADCRUMB
+============================================= */
+.breadcrumb {
+  background: var(--surface-2);
+  padding: 12px 32px;
+  font-size: 0.83rem;
+  color: var(--text-mid);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumb a { color: var(--navy-mid); text-decoration: none; cursor: pointer; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb .sep { color: var(--border); }
+
+/* =============================================
+   FALLSTUDIE TABS
+============================================= */
+.tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.tab-btn {
+  padding: 10px 20px;
+  font-family: var(--font-head);
+  font-size: 0.83rem;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: var(--text-mid);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  letter-spacing: 0.03em;
+}
+
+.tab-btn.active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* =============================================
+   PROGRESS BAR (module completion)
+============================================= */
+.progress-bar-wrap {
+  background: var(--surface-2);
+  border-radius: 50px;
+  height: 6px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  border-radius: 50px;
+  transition: width 0.6s ease;
+}
+
+/* =============================================
+   RESPONSIVE
+============================================= */
+@media (max-width: 640px) {
+  .topnav { padding: 0 16px; gap: 8px; }
+  .hero { padding: 48px 20px 60px; }
+  .section { padding: 36px 20px; }
+  .module-grid { grid-template-columns: 1fr; }
+  .module-page-inner { padding: 28px 16px; }
+  .content-block { padding: 20px; }
+  .ki-messages { height: 260px; }
+  .company-stats { gap: 16px; }
+  .topnav-logo .logo-label { display: none; }
+}
+
+  .tab-btn-solution { background: #ecfdf5 !important; color: #14532d !important; border-color: #86efac !important; }
+  .tab-btn-solution.active { background: #10b981 !important; color: white !important; border-color: #10b981 !important; }
+  .loesung-block { margin-bottom: 20px; }
+  .loesung-aufgabe-label { font-size: 0.78rem; font-weight: 700; color: #10b981; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .loesung-text { background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid #10b981; border-radius: 8px; padding: 12px 15px; font-size: 0.88rem; color: #1a3260; line-height: 1.65; }
+  .loesung-text ul, .loesung-text ol { margin: 8px 0 8px 18px; }
+  .loesung-text li { margin-bottom: 5px; }
+  .loesung-text strong { color: #0f1f3d; }
+  .loesung-text table { width:100%; border-collapse:collapse; margin-top:8px; }
+  .loesung-text th { background:#d1fae5; padding:6px 10px; font-size:0.82rem; text-align:left; }
+  .loesung-text td { padding:6px 10px; border-top:1px solid #d1fae5; font-size:0.83rem; }
+  .loesung-hinweis { background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; color: #78350f; margin-top: 16px; line-height:1.5; }
+</style>
+</head>
+<body>
+
+<!-- ==================== TOP NAV ==================== -->
+<nav class="topnav">
+  <div class="topnav-logo" onclick="showPage('home')">
+    <div class="logo-icon">🏢</div>
+    <span class="logo-label">BW<span>-Bernd</span> <span style="font-weight:400; font-size:0.7rem; opacity:0.6; letter-spacing:0.02em">© GALS</span></span>
+  </div>
+  <div class="topnav-controls">
+    <div class="schultyp-toggle">
+      <button class="schultyp-btn active" id="btn-hak" onclick="setSchultyp('HAK')">HAK</button>
+      <button class="schultyp-btn" id="btn-hlw" onclick="setSchultyp('HLW')">HLW</button>
+    </div>
+    <select class="jahrgang-select" id="jahrgangSelect" onchange="setJahrgang(this.value)">
+      <option value="1">1. Jahrgang</option>
+      <option value="2">2. Jahrgang</option>
+      <option value="3" selected>3. Jahrgang</option>
+    </select>
+    <button class="nav-home-btn" onclick="showPage('home')">🏠 Startseite</button>
+  </div>
+</nav>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">🎓 Interaktive Lernplattform · Betriebswirtschaft</div>
+      <h1>Virtuelles Unternehmen –<br><em>Betriebswirtschaft erleben</em></h1>
+      <p class="hero-sub">Du bist Teil des Management-Teams von <strong style="color:white">AlpenFresh GmbH</strong> – einem jungen österreichischen Lebensmittel-Start-up. Triff echte unternehmerische Entscheidungen und nutze KI als deinen persönlichen Berater.</p>
+
+      <div class="company-card">
+        <div class="company-card-header">
+          <div class="company-logo">🌿</div>
+          <div>
+            <div class="company-name">AlpenFresh GmbH</div>
+            <div class="company-tagline">Natürliche Lebensmittel aus Österreich · Gegründet 2022</div>
+          </div>
+        </div>
+        <p class="company-desc">
+          AlpenFresh produziert nachhaltige Bio-Snacks (Müsliriegel, Nussmischungen, Trockenfrüchte) und vertreibt sie über österreichische Supermärkte sowie einen eigenen Onlineshop. Das Unternehmen steht vor denselben Herausforderungen wie echte österreichische Unternehmen – von der Gründung bis zur internationalen Expansion.
+        </p>
+        <p style="font-size:0.78rem; color:rgba(255,255,255,0.4); margin-top:8px">📚 Basierend auf: „Praxisblicke Betriebswirtschaft" (Trauner Verlag) · Fallunternehmen: TEAM 7, Umdasch Group, Palfinger AG, mymuesli, Red Bull ORGANICS
+        </p>
+        <div class="company-stats">
+          <div class="stat-item"><span class="stat-val">12</span><span class="stat-label">Mitarbeiter</span></div>
+          <div class="stat-item"><span class="stat-val">€ 1,2 Mio</span><span class="stat-label">Umsatz/Jahr</span></div>
+          <div class="stat-item"><span class="stat-val">3</span><span class="stat-label">Produktlinien</span></div>
+          <div class="stat-item"><span class="stat-val">AT + DE</span><span class="stat-label">Märkte</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Schultyp Banner -->
+  <div class="schultyp-banner" id="schultyp-banner">
+    🎯 Aktueller Modus: <span id="banner-text">HAK · 3. Jahrgang</span>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="section">
+    <h2 class="section-title">Deine Module</h2>
+    <p class="section-sub">Wähle ein Modul und triff unternehmerische Entscheidungen für AlpenFresh.</p>
+
+    <div class="module-grid" id="module-grid">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+
+  <!-- KI kann sich irren -->
+  <div class="section" style="padding-top:0">
+    <div class="module-card" style="--card-color:#d94f3d; --card-bg:#fff0ee; cursor:pointer" onclick="showPage('irren')">
+      <div class="module-icon">⚠️</div>
+      <h3>KI kann sich irren!</h3>
+      <p>Erkenne fehlerhafte KI-Empfehlungen und schärfe dein kritisches Denken.</p>
+      <div class="module-tags"><span class="tag tag-jg">Alle Jahrgänge</span></div>
+      <span class="module-arrow">→</span>
+    </div>
+  </div>
+
+</div><!-- /home -->
+
+<!-- ==================== MODULE PAGE ==================== -->
+<div id="page-module" class="page">
+  <div class="breadcrumb">
+    <a onclick="showPage('home')">🏠 Startseite</a>
+    <span class="sep">›</span>
+    <span id="bc-module">Modul</span>
+  </div>
+  <div class="module-page-inner" id="module-content">
+    <!-- injected by JS -->
+  </div>
+</div>
+
+<!-- ==================== KI KANN SICH IRREN PAGE ==================== -->
+<div id="page-irren" class="page">
+  <div class="breadcrumb">
+    <a onclick="showPage('home')">🏠 Startseite</a>
+    <span class="sep">›</span>
+    <span>KI kann sich irren</span>
+  </div>
+  <div class="module-page-inner">
+
+    <div class="module-header" data-icon="⚠️">
+      <div class="module-header-badge">Kritisches Denken</div>
+      <h2>KI kann sich irren!</h2>
+      <p>Hier siehst du vier Beispiele, bei denen eine KI wirtschaftlich problematische Empfehlungen geben könnte. Analysiere, was falsch oder unvollständig ist.</p>
+    </div>
+
+    <!-- Irren-Karte 1 -->
+    <div class="irren-card">
+      <div class="irren-card-header">
+        <div class="irren-icon">📉</div>
+        <div>
+          <h3>Preisstrategie: „Immer billiger als die Konkurrenz!"</h3>
+          <p>Szenario: AlpenFresh fragt die KI nach der besten Preisstrategie für die AlpenBar.</p>
+        </div>
+      </div>
+      <div class="irren-body">
+        <div class="ki-falsch">„Setze deinen Verkaufspreis immer 10–20 % unter dem Preis der Konkurrenz (also ca. € 1,70–1,90). So gewinnst du schnell Marktanteile und Kunden kaufen lieber bei dir als bei der Konkurrenz."</div>
+        <div class="aufgabe-irren">
+          Die variablen Kosten der AlpenBar betragen € 0,85/Stück, die Fixkosten € 12.000/Monat. Berechne den Deckungsbeitrag bei VKP € 1,80. Was passiert? Erkläre, warum diese Empfehlung für ein Bio-Premiumprodukt doppelt falsch ist (wirtschaftlich UND markenseitig).
+        </div>
+        <div class="infobox" style="margin-top:14px">
+          <div class="infobox-title">💡 Tipp: Deckungsbeitrag</div>
+          <p>Deckungsbeitrag = Verkaufspreis − variable Kosten. Ist er negativ, macht das Unternehmen mit jedem verkauften Stück <em>mehr</em> Verlust – egal wie viele Stück es verkauft. Die KI hat die Kostenstruktur nicht abgefragt!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Irren-Karte 2 -->
+    <div class="irren-card">
+      <div class="irren-card-header">
+        <div class="irren-icon">👥</div>
+        <div>
+          <h3>Personalplanung: „Sofort 10 Vollzeitkräfte einstellen!"</h3>
+          <p>Szenario: AlpenFresh hat einen Großauftrag von einem Supermarkt erhalten.</p>
+        </div>
+      </div>
+      <div class="irren-body">
+        <div class="ki-falsch">„Du solltest sofort 10 neue Vollzeitkräfte einstellen. Mehr Personal bedeutet mehr Produktion – und das führt automatisch zu mehr Gewinn."</div>
+        <div class="aufgabe-irren">
+          Welche Fragen hätte die KI zuerst stellen müssen? Denke an: Ist der Auftrag langfristig gesichert? Was sind die tatsächlichen Lohnnebenkosten? Gibt es Alternativen (Leiharbeit, Überstunden, Automatisierung)? Nenne mindestens vier Probleme, die die KI ignoriert hat.
+        </div>
+        <div class="infobox" style="margin-top:14px">
+          <div class="infobox-title">💡 Tipp: Personalbedarfsplanung</div>
+          <p>Die Personalbedarfsplanung unterscheidet zwischen <strong>quantitativem Bedarf</strong> (wie viele?) und <strong>qualitativem Bedarf</strong> (welche Kompetenzen?). Außerdem ist zwischen Erweiterungs- und Freisetzungsbedarf zu unterscheiden – auch wenn ein Auftrag wegfällt, bleiben die Fixkosten!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Irren-Karte 3 -->
+    <div class="irren-card">
+      <div class="irren-card-header">
+        <div class="irren-icon">🏦</div>
+        <div>
+          <h3>Finanzierung: „Kredit ist immer besser als Leasing!"</h3>
+          <p>Szenario: AlpenFresh prüft, wie die neue Abfüllmaschine (€ 250.000) finanziert werden soll.</p>
+        </div>
+      </div>
+      <div class="irren-body">
+        <div class="ki-falsch">„Nehmt auf jeden Fall einen Bankkredit auf – Leasing ist viel teurer, und ihr behaltet das Eigenkapital für andere Investitionen. Kredite sind in Österreich günstig."</div>
+        <div class="aufgabe-irren">
+          Berechne: Leasing kostet € 2.800/Monat = € 33.600/Jahr über 10 Jahre = € 336.000 gesamt. Kredit: € 250.000 bei 4,5 % auf 10 Jahre ≈ € 60.000 Zinsen = € 310.000 gesamt. Stimmt die Aussage der KI? Wann wäre Leasing trotzdem sinnvoller? Was hat die KI nicht berücksichtigt (Liquidität, Bilanzwirkung, Flexibilität)?
+        </div>
+        <div class="infobox" style="margin-top:14px">
+          <div class="infobox-title">💡 Tipp: Leasing vs. Kredit</div>
+          <p>Beim <strong>Finanzierungsleasing</strong> bleibt die Maschine bilanziell beim Leasinggeber → bessere Liquiditätswirkung. Beim <strong>Kredit</strong> wird die Maschine aktiviert und abgeschrieben. Ein einfaches „immer besser" gibt es nicht – es kommt auf die konkrete Situation an!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Irren-Karte 4 -->
+    <div class="irren-card">
+      <div class="irren-card-header">
+        <div class="irren-icon">🌍</div>
+        <div>
+          <h3>Expansion: „Gleichzeitig in alle Märkte – wie TEAM 7!"</h3>
+          <p>Szenario: AlpenFresh überlegt, nach Südtirol, Deutschland und die Schweiz gleichzeitig zu expandieren.</p>
+        </div>
+      </div>
+      <div class="irren-body">
+        <div class="ki-falsch">„TEAM 7 hat auch mehrere Märkte gleichzeitig erschlossen und ist jetzt in 6 Ländern. Macht es genauso – expandiert gleichzeitig in alle drei Märkte, bevor die Konkurrenz es tut!"</div>
+        <div class="aufgabe-irren">
+          Warum ist dieser Vergleich mit TEAM 7 irreführend? TEAM 7 wurde 1959 gegründet und ist seit über 60 Jahren am Markt. AlpenFresh existiert seit 2022. Nenne mindestens fünf Unterschiede (Ressourcen, Erfahrung, Markenbekanntheit, Kapital, Personal), die die KI ignoriert hat.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <strong>BW-Bernd</strong> · Virtuelle Lernplattform für Betriebswirtschaft · HAK &amp; HLW Österreich<br>
+  <span>© GALS · KI-Antworten sind Lernhilfe – überprüfe sie immer kritisch!</span>
+  
+</footer>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+/* ==============================================
+   STATE
+============================================== */
+let currentSchultyp = 'HAK';
+let currentJahrgang = 3;
+let currentModule = null;
+let chatHistories = {}; // per module
+
+/* ==============================================
+   MODULE DEFINITIONS
+============================================== */
+// =====================================================================
+// MODULE DEFINITIONS – inhaltlich abgestimmt auf:
+// „Praxisblicke Betriebswirtschaft" (Trauner Verlag)
+// HAK I/II/III & HLW II/III (Najand-Ellmer / Kneidinger u.a.)
+// Reale Fallunternehmen: TEAM 7, Umdasch Group, Palfinger AG,
+// Sportalm Kitzbühel, mymuesli, Red Bull ORGANICS, WKO-Cases
+// =====================================================================
+const MODULES = [
+  // ─── MODUL 1: UNTERNEHMENSGRÜNDUNG (JG 1–2) ──────────────────────
+  {
+    id: 'gruendung',
+    title: 'Unternehmensgründung',
+    icon: '🚀',
+    color: '#6366f1',
+    bg: '#eef2ff',
+    desc: 'Von der Geschäftsidee zum Businessplan – wie AlpenFresh gegründet wurde.',
+    jahrgaenge: [1,2],
+    schultypen: ['HAK','HLW'],
+    situation: `<p>Lisa Hofer hat eine Geschäftsidee: <strong>Bio-Snacks aus regionalen Tiroler Zutaten</strong> – einfach, nachhaltig, lecker. Sie überlegt, ob sie sich selbstständig machen soll oder lieber in einem sicheren Job bleibt.</p>
+      <p style="margin-top:10px">Du begleitest sie bei der Gründung der <strong>AlpenFresh GmbH</strong>. Ähnlich wie bei mymuesli (die ihre Idee entwickelt haben, indem sie Müsli individualisierbar gemacht haben) braucht auch Lisa eine klare Idee und einen soliden Plan.</p>`,
+    aufgaben: [
+      'Nenne je drei Vorteile und Nachteile der Selbstständigkeit für Lisa. Orientiere dich an der Unterscheidung zwischen selbstständig und unselbstständig Erwerbstätigen.',
+      'Was ist ein Businessplan? Nenne mindestens fünf Bestandteile, die ein guter Businessplan enthalten sollte.',
+      'Ist AlpenFresh ein Unternehmer im Sinne des UGB? Begründe deine Antwort (Stichwort: selbstständige wirtschaftliche Tätigkeit, auf Dauer, Gewinnerzielungsabsicht).',
+      'HAK: Welche Rechtsform würdest du für AlpenFresh empfehlen (e.U., GmbH, OG)? Vergleiche Haftung, Gründungsaufwand und Kapitalanforderungen.'
+    ],
+    aufgabenHLW: [
+      'Nenne je drei Vorteile und Nachteile der Selbstständigkeit für Lisa.',
+      'Was ist ein Businessplan und warum ist er wichtig für eine Unternehmensgründung?',
+      'Nenne fünf konkrete Schritte, die Lisa bei der Gründung von AlpenFresh durchlaufen muss.',
+      'Welche Rolle spielt die Wirtschaftskammer Österreich (WKO) bei der Unternehmensgründung?'
+    ],
+    infobox: { title: 'Businessplan', text: 'Ein <strong>Businessplan</strong> ist ein schriftliches Konzept, das die Geschäftsidee, Zielgruppen, Wettbewerb, Marketing, Finanzplanung und Meilensteine beschreibt. Er dient als Entscheidungsgrundlage für Gründer selbst, aber auch für Banken und Investoren.' },
+    prompt: 'Du bist ein Gründungsberater der Wirtschaftskammer Österreich (WKO). Lisa Hofer möchte ein Bio-Snack-Unternehmen (AlpenFresh GmbH) in Tirol gründen. Produkte: Bio-Müsliriegel aus regionalen Zutaten. Zielgruppe: gesundheitsbewusste Österreicher. Erstelle eine Checkliste der wichtigsten Gründungsschritte und erkläre, welche Unterlagen und Entscheidungen notwendig sind.',
+    loesungen: [
+      `<strong>Vorteile der Selbstständigkeit:</strong> Selbstbestimmung (eigene Ideen umsetzen), Entscheidungsfreiheit, hohe Motivation, Gewinn bleibt beim Unternehmer, freie Zeiteinteilung.<br><br><strong>Nachteile:</strong> Aufgabe einer sicheren Anstellung, finanzielles Risiko (Haftung mit Privatvermögen bei e.U.), hoher Leistungsdruck, unregelmäßiges Einkommen, hoher Zeitaufwand.`,
+      `Ein <strong>Businessplan</strong> enthält: (1) Executive Summary, (2) Unternehmensbeschreibung & Geschäftsidee, (3) Markt- und Wettbewerbsanalyse, (4) Marketing- und Vertriebsstrategie, (5) Organisations- und Rechtsform, (6) Finanzplanung (Umsatz-, Kosten-, Liquiditätsplan), (7) Risikoanalyse. Er dient als Entscheidungsgrundlage für Gründer selbst, Banken und Investoren.`,
+      `<strong>Ja</strong>, AlpenFresh ist ein Unternehmer im Sinne des UGB, wenn folgende Kriterien erfüllt sind: (1) Selbstständige wirtschaftliche Tätigkeit – Lisa entscheidet eigenverantwortlich, (2) auf Dauer angelegt – kein einmaliges Geschäft, (3) nach außen am Markt tätig. Die Gewinnerzielungsabsicht ist kein zwingend notwendiges Kriterium (auch gemeinnützige Organisationen können Unternehmer sein).`,
+      `<strong>Empfehlung: GmbH</strong><br><ul><li><strong>e.U.:</strong> Einfache Gründung, kein Mindestkapital, aber volle Haftung mit Privatvermögen → riskant bei wachsendem Unternehmen</li><li><strong>GmbH:</strong> Mindestkapital € 10.000, Haftung auf Stammkapital beschränkt, höhere Gründungskosten (Notar, Firmenbuch), aber Privatvermögen geschützt → empfehlenswert ab ernsthafter Geschäftstätigkeit</li><li><strong>OG:</strong> Mindestens 2 Gesellschafter, alle haften unbeschränkt → weniger geeignet</li></ul>Für AlpenFresh empfiehlt sich die <strong>GmbH</strong> wegen der Haftungsbeschränkung.`
+    ],
+    loesungenHLW: [
+      `<strong>Vorteile:</strong> Selbstbestimmung, eigene Ideen umsetzen, Gewinn bleibt beim Unternehmer, freie Zeiteinteilung, hohe Motivation.<br><br><strong>Nachteile:</strong> Finanzielles Risiko, Haftung mit Privatvermögen, unregelmäßiges Einkommen, hoher Arbeitseinsatz, kein Anspruch auf Urlaub/Krankenstand wie Angestellte.`,
+      `Ein <strong>Businessplan</strong> ist ein schriftliches Konzept für eine Unternehmensgründung. Er ist wichtig, weil er (1) den Gründer zwingt, alles durchzudenken, (2) als Grundlage für Bankkredite dient und (3) den Weg zum Erfolg strukturiert. Bestandteile: Geschäftsidee, Zielgruppe, Marktanalyse, Marketing, Finanzplanung, Risikoanalyse.`,
+      `<strong>5 Gründungsschritte für AlpenFresh:</strong><ol><li>Geschäftsidee entwickeln und prüfen (Marktanalyse)</li><li>Businessplan erstellen</li><li>Rechtsform wählen (z.B. GmbH) und Stammkapital einzahlen</li><li>Gewerbeanmeldung bei der Gewerbebehörde</li><li>Eintragung ins Firmenbuch, Anmeldung beim Finanzamt (Steuernummer, UID)</li></ol>`,
+      `Die <strong>Wirtschaftskammer Österreich (WKO)</strong> ist die gesetzliche Interessenvertretung der österreichischen Unternehmen. Sie bietet: kostenloses Gründerservice mit Beratung, Informationen zu Rechtsformen und Gewerberecht, Checklisten für Gründer. Jeder Unternehmer in Österreich ist automatisch WKO-Pflichtmitglied (Beitragspflicht!).`
+    ],
+    reflexion: [
+      'Berücksichtigt die KI spezifisch österreichische Vorschriften (Gewerbeanmeldung, WKO-Pflichtmitgliedschaft)?',
+      'Werden die realen Kosten einer GmbH-Gründung (Mindeststammkapital, Notarkosten) genannt?',
+      'Fehlt der Hinweis auf steuerliche Registrierungen (Finanzamt, UID-Nummer)?',
+      'Ist die Empfehlung für eine kleine Gründerin ohne großes Startkapital realistisch?'
+    ]
+  },
+
+  // ─── MODUL 2: MARKTANALYSE & MARKETING (JG 1–3) ──────────────────
+  {
+    id: 'marketing',
+    title: 'Marketing & Marktforschung',
+    icon: '📢',
+    color: '#8b5cf6',
+    bg: '#f5f3ff',
+    desc: 'Marktforschung, Zielgruppen und Marketing-Mix für AlpenFresh.',
+    jahrgaenge: [1,2,3],
+    schultypen: ['HAK','HLW'],
+    situation: `<p>AlpenFresh möchte ein neues Produkt einführen: die <strong>„AlpenBar"</strong> – ein Müsliriegel mit Tiroler Heumilchschokolade und regionalen Zutaten. VKP: € 2,49.</p>
+      <p style="margin-top:10px">Vergleichsbeispiel aus dem Schulbuch: <strong>mymuesli</strong> hat gezeigt, wie man mit einer innovativen Marketingidee (individuelle Bio-Müslis online zusammenstellen) einen bestehenden Markt aufbrechen kann. AlpenFresh setzt auf ähnliche Werte: regional, nachhaltig, transparent.</p>
+      <p style="margin-top:10px">Das Marketingbudget für die Einführung beträgt <strong>€ 30.000</strong>.</p>`,
+    aufgaben: [
+      'Erkläre das Marketing-Mix-Modell (4 P\'s) und wende es auf die AlpenBar an: Produkt, Preis, Distribution (Place), Kommunikation (Promotion).',
+      'Was ist Marktforschung? Unterscheide Primär- und Sekundärforschung und gib für AlpenFresh je ein konkretes Beispiel.',
+      'Welche Kommunikationskanäle würdest du mit € 30.000 Budget nutzen? Begründe deine Auswahl.',
+      'HAK: Berechne den Break-even: VKP € 2,49, variable Kosten € 0,85/Stück, fixe Marketingkosten € 30.000. Wie viele AlpenBars müssen verkauft werden, bevor Gewinn entsteht?'
+    ],
+    aufgabenHLW: [
+      'Erkläre das Marketing-Mix-Modell (4 P\'s) und wende es auf die AlpenBar an.',
+      'Was ist der Unterschied zwischen Primär- und Sekundärmarktforschung? Nenne je ein Beispiel für AlpenFresh.',
+      'Welche Social-Media-Kanäle eignen sich für die Zielgruppe (25–45 Jahre, gesundheitsbewusst)? Begründe.',
+      'Erkläre den Begriff „Zielgruppensegmentierung" und wende ihn auf die AlpenBar an.'
+    ],
+    infobox: { title: 'Break-even-Punkt', text: 'Der <strong>Break-even-Punkt</strong> ist die Absatzmenge, bei der weder Gewinn noch Verlust entsteht. Formel: Break-even-Menge = Fixkosten ÷ Stückdeckungsbeitrag. Stückdeckungsbeitrag = Verkaufspreis − variable Stückkosten. Beispiel: 30.000 ÷ (2,49 − 0,85) = 18.293 Stück.' },
+    prompt: 'Du bist ein Marketing-Experte. Entwickle eine Marketingstrategie für die Einführung eines neuen Bio-Müsliriegels ("AlpenBar") in Österreich. Zielgruppe: gesundheitsbewusste Erwachsene, 25–45 Jahre. Budget: € 30.000. VKP: € 2,49. Das Produkt positioniert sich als regionales Premium-Bio-Produkt aus Tirol. Gib konkrete Empfehlungen für den Marketing-Mix (4 P\'s) und eine Maßnahmenplanung.',
+    loesungen: [
+      `<strong>Marketing-Mix (4 P's) für die AlpenBar:</strong><ul><li><strong>Produkt:</strong> Bio-Müsliriegel mit Tiroler Heumilchschokolade, regionale Zutaten, nachhaltige Verpackung, Zertifizierungen (AMA, Bio Austria)</li><li><strong>Preis:</strong> € 2,49 → Premiumpreis-Strategie (Bio-Qualität rechtfertigt höheren Preis als Standardriegel)</li><li><strong>Distribution (Place):</strong> Supermärkte (REWE, SPAR), Bio-Läden, eigener Onlineshop, Tankstellen/Kioske</li><li><strong>Kommunikation (Promotion):</strong> Social Media (Instagram, TikTok), regionale Influencer, Messen (BioFach), Verkostungsaktionen</li></ul>`,
+      `<strong>Marktforschung:</strong> Systematische Sammlung und Auswertung von Informationen über Märkte, Kunden und Konkurrenten.<br><br><strong>Primärforschung</strong> (neue Daten erheben): z.B. AlpenFresh führt eine Online-Umfrage unter 200 Personen zur Zahlungsbereitschaft durch.<br><strong>Sekundärforschung</strong> (vorhandene Daten nutzen): z.B. AlpenFresh wertet Statistik Austria-Daten zum Bio-Lebensmittelkonsum aus oder nutzt Marktberichte von Branchenverbänden.`,
+      `<strong>Budgetverteilung € 30.000:</strong><ul><li>Instagram/TikTok Ads: € 10.000 (33%) – erreicht Zielgruppe 25–45 direkt</li><li>Verkostungsaktionen in Supermärkten: € 8.000 (27%) – direkte Kaufentscheidung am POS</li><li>Influencer Marketing (Mikro-Influencer, regional): € 6.000 (20%) – authentisch, kostengünstig</li><li>Printmaterial (Aufsteller, Flyer): € 3.000 (10%) – für POS-Präsenz</li><li>PR / Pressearbeit: € 3.000 (10%) – Artikel in Regionalpresse, Bio-Magazinen</li></ul>`,
+      `<strong>Break-even-Berechnung:</strong><br>Stückdeckungsbeitrag = VKP − variable Kosten = € 2,49 − € 0,85 = <strong>€ 1,64</strong><br>Break-even-Menge = Fixkosten ÷ Stückdeckungsbeitrag = € 30.000 ÷ € 1,64 = <strong>18.293 Stück</strong><br>→ AlpenFresh muss mindestens 18.293 AlpenBars verkaufen, bevor die Marketingkosten gedeckt sind und Gewinn entsteht.`
+    ],
+    loesungenHLW: [
+      `<strong>Marketing-Mix (4 P's) für die AlpenBar:</strong><ul><li><strong>Produkt:</strong> Bio-Müsliriegel mit Tiroler Heumilchschokolade, regional und nachhaltig</li><li><strong>Preis:</strong> € 2,49 – Premiumpreis, passend zum Bio-Image</li><li><strong>Distribution (Place):</strong> Supermärkte (SPAR, REWE), Bio-Läden, Onlineshop</li><li><strong>Kommunikation (Promotion):</strong> Social Media, Verkostungen, regionale Werbung</li></ul>`,
+      `<strong>Primärforschung:</strong> Neue Daten werden selbst erhoben (z.B. Umfrage, Interview, Beobachtung). Teurer, aber genau auf die Fragestellung zugeschnitten.<br>Beispiel AlpenFresh: Online-Umfrage zur Zahlungsbereitschaft.<br><br><strong>Sekundärforschung:</strong> Bereits vorhandene Daten werden genutzt (z.B. Statistiken, Studien). Günstiger, aber nicht immer aktuell.<br>Beispiel AlpenFresh: Statistik Austria-Daten zum Bio-Konsum in Österreich.`,
+      `<strong>Geeignete Social-Media-Kanäle für 25–45 Jahre:</strong><ul><li><strong>Instagram:</strong> Visuelle Plattform, ideal für Food-Produkte, hohe Nutzung in der Zielgruppe</li><li><strong>Facebook:</strong> Erreicht gut die Gruppe 35–45, geeignet für Community und Events</li><li><strong>TikTok:</strong> Wächst stark, eher 20–35 Jahre, aber gutes virales Potenzial</li></ul>LinkedIn und Twitter weniger geeignet – zu business-orientiert für ein Konsumprodukt.`,
+      `<strong>Zielgruppensegmentierung</strong> = Aufteilung des Gesamtmarktes in Gruppen mit ähnlichen Merkmalen. Kriterien: demografisch (Alter, Geschlecht), geografisch (Region), psychografisch (Werte, Lebensstil), verhaltensorientiert (Kaufhäufigkeit).<br><br>Für die AlpenBar: <em>Segment 1</em> – Sportler, 20–35 Jahre, kaufen für unterwegs. <em>Segment 2</em> – Gesundheitsbewusste Familien, 30–45 Jahre, kaufen für Kinder und sich selbst.`
+    ],
+    reflexion: [
+      'Sind die empfohlenen Kanäle für ein Budget von € 30.000 realistisch finanzierbar?',
+      'Berücksichtigt die KI den österreichischen Markt oder gibt sie allgemeine internationale Tipps?',
+      'Werden die Kosten der einzelnen Maßnahmen konkret genannt?',
+      'Ist die Zielgruppenanalyse der KI detailliert genug oder zu allgemein?'
+    ]
+  },
+
+  // ─── MODUL 3: PREIS & KALKULATION (JG 2–3) ───────────────────────
+  {
+    id: 'preisgestaltung',
+    title: 'Preis & Kalkulation',
+    icon: '💶',
+    color: '#f59e0b',
+    bg: '#fffbeb',
+    desc: 'Kostenrechnung, Deckungsbeitrag und optimale Preisfindung für AlpenFresh.',
+    jahrgaenge: [2,3],
+    schultypen: ['HAK','HLW'],
+    situation: `<p>Die AlpenBar hat folgende <strong>Kostenstruktur</strong>:</p>
+      <ul style="margin:10px 0 10px 20px; font-size:0.93rem; color:#4a5578">
+        <li>Variable Kosten/Stück: € 0,85 (Rohstoffe, Verpackung, Energie)</li>
+        <li>Fixkosten/Monat: € 12.000 (Miete, Löhne, Abschreibungen)</li>
+        <li>Geplante Absatzmenge: 15.000 Stück/Monat</li>
+        <li>Konkurrenzpreise: € 2,10 – € 2,80</li>
+      </ul>
+      <p>Vergleich aus dem Schulbuch: <strong>Red Bull ORGANICS</strong> hat beim Einstieg in den Bio-Markt bewusst einen Premiumpreis gesetzt – trotz höherer Kosten. Die Marke hat die Zahlungsbereitschaft der Zielgruppe richtig eingeschätzt.</p>`,
+    aufgaben: [
+      'Berechne den Stückdeckungsbeitrag (DB/Stück) und den Gesamtdeckungsbeitrag bei 15.000 Stück/Monat. Ist ein Gewinn möglich?',
+      'Berechne mit der Kostenaufschlags-Methode einen Preis: Gesamtkosten/Stück × (1 + 40 % Aufschlag).',
+      'Erkläre die Vor- und Nachteile von Niedrigpreis-, Premiumpreis- und konkurrenzorientierter Preisgestaltung. Welche passt zu AlpenFresh?',
+      'HAK: Berechne den Break-even bei VKP € 2,49 und bei VKP € 2,99. Wie verändert sich das Risiko?'
+    ],
+    aufgabenHLW: [
+      'Was ist ein Deckungsbeitrag? Erkläre den Begriff und berechne ihn für die AlpenBar (VKP € 2,49, variable Kosten € 0,85).',
+      'Was ist Cost-Plus-Pricing? Berechne einen Preis für die AlpenBar.',
+      'Nenne je ein Beispiel für Niedrigpreis- und Premiumstrategie aus dem echten Leben.',
+      'Welchen Preis empfiehlst du für die AlpenBar und warum? Berücksichtige Marke und Zielgruppe.'
+    ],
+    infobox: { title: 'Deckungsbeitrag (DB)', text: '<strong>Deckungsbeitrag (DB)</strong> = Verkaufspreis − variable Kosten pro Stück. Der DB zeigt, wie viel ein Produkt zur Deckung der Fixkosten beiträgt. Gesamtdeckungsbeitrag = DB/Stück × Menge. Ist der Gesamtdeckungsbeitrag größer als die Fixkosten, entsteht Gewinn.' },
+    prompt: 'Du bist ein Preisberater. AlpenFresh GmbH will die optimale Preisstrategie für einen neuen Bio-Müsliriegel ("AlpenBar") in Österreich entwickeln. Variable Kosten: € 0,85/Stück, Fixkosten: € 12.000/Monat, geplanter Absatz: 15.000 Stück/Monat. Konkurrenzpreise: € 2,10 bis € 2,80. Produktpositionierung: regionales Premium-Bio. Analysiere verschiedene Preisstrategien und empfehle den optimalen Preis mit Begründung.',
+
+    loesungen: [
+      `<strong>Deckungsbeitragsrechnung:</strong><br>DB/Stück = VKP − variable Kosten = € 2,49 − € 0,85 = <strong>€ 1,64</strong><br>Gesamtdeckungsbeitrag = € 1,64 × 15.000 Stück = <strong>€ 24.600/Monat</strong><br>Fixkosten: € 12.000/Monat<br>Gewinn = € 24.600 − € 12.000 = <strong>€ 12.600/Monat</strong> ✓ → Ja, Gewinn ist möglich!`,
+      `<strong>Cost-Plus-Pricing Berechnung:</strong><br>Variable Kosten/Stück: € 0,85<br>Fixkosten/Stück: € 12.000 ÷ 15.000 = € 0,80<br>Gesamtkosten/Stück: € 0,85 + € 0,80 = € 1,65<br>Aufschlag 40 %: € 1,65 × 1,40 = <strong>€ 2,31</strong><br>→ Kalkulierter Preis: ca. € 2,31. Da die Konkurrenz bis zu € 2,80 verlangt, ist € 2,49 als Premiumpreis gut positioniert.`,
+      `<table><tr><th>Strategie</th><th>Vorteile</th><th>Nachteile</th></tr><tr><td><strong>Niedrigpreis</strong></td><td>Hohe Absatzmenge, schnelle Marktdurchdringung</td><td>Schadet dem Bio-Image, gefährdet Deckungsbeitrag</td></tr><tr><td><strong>Premiumpreis</strong></td><td>Passt zum Bio-Markenwert, höhere Margen</td><td>Geringere Absatzmenge, Kunden müssen überzeugt werden</td></tr><tr><td><strong>Konkurrenzorientiert</strong></td><td>Marktkonform, leicht verständlich</td><td>Reagiert nur, keine eigenständige Positionierung</td></tr></table><br>→ <strong>Empfehlung: Premiumpreis (€ 2,49)</strong> passt zum regionalen Bio-Image von AlpenFresh.`,
+      `<strong>Break-even bei verschiedenen Preisen:</strong><br>Bei VKP € 2,49: DB = € 1,64 → Break-even = € 12.000 ÷ € 1,64 = <strong>7.317 Stück</strong><br>Bei VKP € 2,99: DB = € 2,14 → Break-even = € 12.000 ÷ € 2,14 = <strong>5.607 Stück</strong><br>→ Bei € 2,99 wird die Gewinnschwelle früher erreicht → <strong>geringeres Risiko</strong>. Aber: Höherer Preis kann die Absatzmenge senken – das muss abgewogen werden.`
+    ],
+    loesungenHLW: [
+      `<strong>Deckungsbeitrag (DB)</strong> = Verkaufspreis − variable Kosten pro Stück.<br>Er zeigt, wie viel jedes verkaufte Produkt zur Deckung der Fixkosten beiträgt. Erst wenn alle Fixkosten gedeckt sind, entsteht Gewinn.<br><br>AlpenBar: DB = € 2,49 − € 0,85 = <strong>€ 1,64 pro Stück</strong>`,
+      `<strong>Cost-Plus-Pricing</strong> (Kostenaufschlagsmethode): Preis = Gesamtkosten + Gewinnaufschlag.<br>Gesamtkosten/Stück: € 0,85 (variabel) + € 0,80 (fix) = € 1,65<br>+ 40 % Aufschlag: € 1,65 × 1,40 = <strong>€ 2,31</strong>`,
+      `<strong>Niedrigpreis:</strong> z.B. Hofer/Aldi-Eigenmarken, Billa Clever-Produkte → viele Kunden, geringe Marge.<br><strong>Premiumpreis:</strong> z.B. Ja! Natürlich, Bio Austria-Produkte, Apple, Nespresso → weniger Kunden, aber hohe Marge und starkes Markenimage.`,
+      `<strong>Empfehlung: € 2,49 (Premiumpreis)</strong><br>Begründung: AlpenFresh positioniert sich als regionales Bio-Premiumprodukt. Ein zu niedriger Preis würde das Markenimage beschädigen. € 2,49 liegt im Mittelfeld der Konkurrenz (€ 2,10–€ 2,80) und signalisiert Qualität. Bei 15.000 Stück/Monat entsteht ein Gewinn von € 12.600/Monat – wirtschaftlich sinnvoll.`
+    ],
+    reflexion: [
+      'Hat die KI alle Kostenarten berücksichtigt (variable UND fixe Kosten)?',
+      'Berücksichtigt die Empfehlung die Zahlungsbereitschaft der Zielgruppe?',
+      'Wird das Markenimage in die Preisfindung einbezogen?',
+      'Fehlen Informationen über Handelsspannen (typischerweise 25–40 % im Lebensmittelhandel)?'
+    ],
+  },
+
+  // ─── MODUL 4: PERSONALMANAGEMENT (JG 2–3) ────────────────────────
+  {
+    id: 'personal',
+    title: 'Personalmanagement',
+    icon: '👥',
+    color: '#06b6d4',
+    bg: '#ecfeff',
+    desc: 'Personalplanung, Recruiting und Motivation – wie bei der Umdasch Group.',
+    jahrgaenge: [2,3],
+    schultypen: ['HAK','HLW'],
+    situation: `<p>AlpenFresh wächst stark. Ähnlich wie die <strong>Umdasch Group</strong> (8.800 Mitarbeiter, Amstetten) steht das Unternehmen vor der Herausforderung, <strong>hochqualifiziertes Personal</strong> zu finden und zu binden.</p>
+      <p style="margin-top:10px">Aktuell: 12 Mitarbeiter. Gesucht: 1 Produktionsleiter, 2 Produktionsmitarbeiter, 1 Online-Marketing-Manager. Kosten pro Stelle (Gehalt + Lohnnebenkosten): ca. € 45.000/Jahr.</p>
+      <p style="margin-top:10px">Herausforderungen (wie bei Umdasch): <em>Fachkräftemangel, Employer Branding, demografischer Wandel.</em></p>`,
+    aufgaben: [
+      'AlpenFresh möchte eine neue Produktionsleiterin einstellen. Beschreibe den <strong>fünfstufigen Prozess der Personalsuche und -auswahl</strong> und ordne jedem Schritt eine konkrete Maßnahme für AlpenFresh zu.',
+      'Die Geschäftsführerin Nina Berger stellt fest, dass die Zufriedenheit der Mitarbeiter gesunken ist. Erkläre die <strong>Bedürfnispyramide von Maslow</strong> (alle 5 Stufen mit je einem AlpenFresh-Beispiel) und leite daraus Empfehlungen ab.',
+      'Wende die <strong>Zwei-Faktoren-Theorie von Herzberg</strong> auf folgende Mitarbeiteraussage an: „Das Gehalt ist okay, aber ich bekomme nie Feedback. Die Arbeit selbst macht mir Spaß – wir haben ein tolles Team, aber das Büro ist eng und laut." Ordne jeden Aspekt einem Hygienefaktor oder Motivator zu.',
+      'AlpenFresh hat nun 18 Mitarbeiter. Erkläre, ob die Mitarbeiter einen <strong>Betriebsrat</strong> gründen können. Unterscheide zwischen aktiv und passiv Wahlberechtigten. Wie viele Betriebsratsmitglieder wären zu wählen?'
+    ],
+    aufgabenHLW: [
+      'Beschreibe den <strong>fünfstufigen Prozess der Personalsuche und -auswahl</strong> bei AlpenFresh (Produktionsleiterin gesucht). Welche Schritte sind besonders wichtig für ein kleines Unternehmen?',
+      'Erkläre die <strong>Bedürfnispyramide von Maslow</strong> (alle 5 Stufen mit je einem AlpenFresh-Beispiel). Auf welcher Stufe befinden sich Mitarbeiter, die trotz gutem Gehalt kündigen?',
+      'Erkläre Motivatoren und Hygienefaktoren nach <strong>Herzberg</strong>. Ordne folgende Faktoren zu: Gehalt, Lob durch die Chefin, Jobsicherheit, interessante Aufgaben, angenehme Teamkultur, Karrierechancen.',
+      'Was versteht man unter <strong>Employer Branding</strong>? Entwickle drei konkrete Maßnahmen, mit denen AlpenFresh als attraktiver Arbeitgeber wahrgenommen werden kann.'
+    ],
+    infobox: { title: 'Betriebsrat in Österreich', text: 'Ab <strong>5 Arbeitnehmern</strong> kann ein Betriebsrat gegründet werden. <strong>Aktiv wahlberechtigt</strong> (Wahlrecht) sind alle Arbeitnehmer ab 16 Jahren. <strong>Passiv wahlberechtigt</strong> (wählbar) sind Arbeitnehmer ab 18 Jahren, die mind. 6 Monate im Betrieb beschäftigt sind. Die Anzahl der Betriebsratsmitglieder richtet sich nach der Belegschaftsgröße: 5–9 Arbeitnehmer → 1 Mitglied, 10–19 → 2, 20–50 → 3 Mitglieder.' },
+    prompt: 'Du bist ein HR-Berater. AlpenFresh GmbH (Bio-Start-up, 18 Mitarbeiter, Tirol) sucht eine Produktionsleiterin. Entwickle einen vollständigen 5-stufigen Recruiting-Plan, empfehle geeignete Auswahlverfahren und erkläre, welche Motivationsmaßnahmen nach Maslow und Herzberg für ein kleines Bio-Unternehmen besonders geeignet sind.',
+    loesungen: [
+      `<strong>5-stufiger Prozess der Personalsuche und -auswahl bei AlpenFresh:</strong><ol><li><strong>Festlegung des Anforderungsprofils:</strong> Welche fachlichen und persönlichen Qualifikationen braucht die Produktionsleiterin? (z.B. Lebensmitteltechnik, Führungserfahrung, HACCP-Kenntnisse)</li><li><strong>Personalsuche:</strong> Intern prüfen (Beförderung vorhandener Mitarbeiter?) → extern: AMS, karriere.at, LinkedIn, Aushang in der FH Kufstein</li><li><strong>Vorauswahl – Analyse der Bewerbungsunterlagen:</strong> Bewerbungsschreiben und Lebenslauf auf Vollständigkeit, Passung zum Anforderungsprofil und Berufserfahrung prüfen</li><li><strong>Auswahlverfahren:</strong> Strukturiertes Vorstellungsgespräch mit Fachfragen zur Lebensmittelproduktion, evtl. Probearbeitstag</li><li><strong>Personaleinstellung:</strong> Arbeitsvertrag, Dienstzettel, Einarbeitung (Onboarding-Plan für die ersten 3 Monate)</li></ol>`,
+      `<strong>Maslow-Bedürfnispyramide – 5 Stufen mit AlpenFresh-Beispielen:</strong><ol><li><strong>Physiologische Bedürfnisse:</strong> Pünktliche Gehaltszahlung, Pausenraum mit Kaffee und Mahlzeiten</li><li><strong>Sicherheitsbedürfnisse:</strong> Unbefristeter Dienstvertrag, klare Arbeitsanweisungen, Schutzausrüstung in der Produktion</li><li><strong>Soziale Bedürfnisse:</strong> Gutes Teamklima, gemeinsame Betriebsausflüge, flache Hierarchie</li><li><strong>Wertschätzungsbedürfnisse:</strong> Lob durch die Geschäftsführerin, Einbindung in Entscheidungen, Anerkennung von Leistungen</li><li><strong>Selbstverwirklichung:</strong> Übernahme eigener Projekte (z.B. neue Produktlinie entwickeln), Weiterbildungsangebote</li></ol><br>Wenn Mitarbeiter trotz gutem Gehalt kündigen, fehlt meist Stufe 3–5 (Anerkennung, Entwicklung, Sinn der Arbeit).`,
+      `<strong>Herzberg – Einordnung der Mitarbeiteraussage:</strong><br><table><tr><th>Aussage</th><th>Einordnung</th><th>Faktortyp</th></tr><tr><td>„Gehalt ist okay"</td><td>✅ vorhanden → keine Unzufriedenheit</td><td>Hygienefaktor</td></tr><tr><td>„Bekomme nie Feedback"</td><td>❌ fehlt → schafft Unzufriedenheit</td><td>Hygienefaktor (Führungsstil)</td></tr><tr><td>„Arbeit macht Spaß"</td><td>✅ vorhanden → schafft Zufriedenheit</td><td>Motivator (Arbeitsinhalt)</td></tr><tr><td>„Tolles Team"</td><td>✅ vorhanden → verhindert Unzufriedenheit</td><td>Hygienefaktor (Kollegialität)</td></tr><tr><td>„Büro eng und laut"</td><td>❌ fehlt → schafft Unzufriedenheit</td><td>Hygienefaktor (Arbeitsbedingungen)</td></tr></table><br>Fazit: Die Motivatoren sind positiv, aber fehlende Hygienefaktoren (kein Feedback, schlechte Arbeitsbedingungen) führen zur Unzufriedenheit. Nina Berger sollte zuerst diese beheben.`,
+      `<strong>Betriebsrat bei AlpenFresh (18 Mitarbeiter):</strong><br><br>✅ <strong>Gründung möglich</strong> – ab 5 Arbeitnehmern haben Mitarbeiter das Recht, einen Betriebsrat zu gründen. Die Geschäftsführerin kann dies <em>nicht verbieten</em>.<br><br><strong>Aktiv wahlberechtigt</strong> (haben Wahlrecht): Alle Arbeitnehmer ab 16 Jahren → alle 18 Mitarbeiter von AlpenFresh.<br><strong>Passiv wahlberechtigt</strong> (können gewählt werden): Arbeitnehmer ab 18 Jahren, die seit mind. 6 Monaten im Betrieb sind.<br><br><strong>Anzahl der Betriebsratsmitglieder:</strong> Bei 10–19 Arbeitnehmern sind <strong>2 Mitglieder</strong> zu wählen.<br><br>Aufgaben des Betriebsrats: Mitbestimmung bei Arbeitszeiten, Mitwirkung bei Kündigungen, Interessenvertretung der Belegschaft.`
+    ],
+    loesungenHLW: [
+      `<strong>5-stufiger Prozess bei AlpenFresh (Produktionsleiterin):</strong><ol><li><strong>Anforderungsprofil festlegen:</strong> Fachliche Qualifikationen (Lebensmitteltechnik, Führungserfahrung), persönliche Eigenschaften (Organisationstalent, Durchsetzungsvermögen)</li><li><strong>Personalsuche starten:</strong> Intern (Beförderung?), extern (AMS, karriere.at, Social Media, Fachhochschulen)</li><li><strong>Vorauswahl treffen:</strong> Bewerbungsunterlagen sichten, Shortlist mit den besten Kandidatinnen erstellen</li><li><strong>Auswahlverfahren:</strong> Strukturiertes Vorstellungsgespräch, evtl. Probearbeitstag in der Produktion</li><li><strong>Einstellung:</strong> Dienstvertrag abschließen, Onboarding planen (Einarbeitung, Mentorin, 3-Monats-Zielgespräch)</li></ol>Für kleine Unternehmen besonders wichtig: Schritt 1 (klares Anforderungsprofil spart Zeit) und Schritt 5 (gutes Onboarding senkt die Fluktuation).`,
+      `<strong>Maslow – 5 Stufen mit AlpenFresh-Beispielen:</strong><ol><li><strong>Physiologische Bedürfnisse:</strong> Pünktliches Gehalt, Pausenraum mit Mahlzeiten</li><li><strong>Sicherheit:</strong> Fester Arbeitsvertrag, sichere Produktionsumgebung</li><li><strong>Soziale Bedürfnisse:</strong> Teamevents, kollegiales Klima, gemeinsame Mittagessen</li><li><strong>Wertschätzung:</strong> Lob, Anerkennung von Leistung, Mitsprache bei Entscheidungen</li><li><strong>Selbstverwirklichung:</strong> Eigene Projekte leiten, Weiterbildung, mehr Verantwortung übernehmen</li></ol>Wenn Mitarbeiter trotz gutem Gehalt kündigen, fehlt meist Stufe 4 (Wertschätzung) oder Stufe 5 (Entwicklung und Sinn).`,
+      `<strong>Herzberg – Zuordnung der Faktoren:</strong><br><table><tr><th>Faktor</th><th>Typ</th><th>Wirkung bei Vorhandensein</th></tr><tr><td>Gehalt</td><td>Hygienefaktor</td><td>Verhindert Unzufriedenheit</td></tr><tr><td>Lob durch die Chefin</td><td>Motivator</td><td>Schafft Zufriedenheit</td></tr><tr><td>Jobsicherheit</td><td>Hygienefaktor</td><td>Verhindert Unzufriedenheit</td></tr><tr><td>Interessante Aufgaben</td><td>Motivator</td><td>Schafft Zufriedenheit</td></tr><tr><td>Angenehme Teamkultur</td><td>Hygienefaktor</td><td>Verhindert Unzufriedenheit</td></tr><tr><td>Karrierechancen</td><td>Motivator</td><td>Schafft Zufriedenheit</td></tr></table><br>Wichtig: Hygienefaktoren schaffen keine Zufriedenheit, aber ihr Fehlen macht unzufrieden. Nur Motivatoren führen zu echter Arbeitsmotivation.`,
+      `<strong>Employer Branding</strong> = alle Maßnahmen, mit denen ein Unternehmen als attraktiver Arbeitgeber wahrgenommen wird.<br><br><strong>3 Maßnahmen für AlpenFresh:</strong><ol><li><strong>Authentische Social-Media-Präsenz:</strong> Instagram-Einblicke in den Produktionsalltag und das Team zeigen die Unternehmenskultur (Bio, Nachhaltigkeit, Teamgeist) und sprechen werteorientierte Bewerber an.</li><li><strong>Mitarbeiterstimmen auf der Website:</strong> Echte Zitate und Fotos der Mitarbeiter wirken glaubwürdiger als Marketingtexte und stärken das Vertrauen potenzieller Bewerber.</li><li><strong>Attraktives Benefitpaket:</strong> Flexible Arbeitszeiten, Weiterbildungsbudget, Mitarbeiterrabatt auf AlpenFresh-Produkte – schafft konkreten Mehrwert über das Gehalt hinaus.</li></ol>`
+    ],
+    reflexion: [
+      'Berücksichtigt die KI österreichisches Arbeitsrecht (Kollektivverträge, Betriebsratspflicht, Kündigungsschutz)?',
+      'Werden die Kosten des Recruiting-Prozesses erwähnt (Stellenanzeigen, Auswahlverfahren, Einarbeitungszeit)?',
+      'Sind die Motivationsempfehlungen realistisch für ein kleines Unternehmen mit begrenztem Budget?',
+      'Unterscheidet die KI klar zwischen Hygienefaktoren und Motivatoren – oder wirft sie alles in einen Topf?'
+    ]
+  },
+
+  // ─── MODUL 5: UNTERNEHMENSFÜHRUNG & ORGANISATION (JG 3) ──────────
+  {
+    id: 'fuehrung',
+    title: 'Unternehmensführung',
+    icon: '🧭',
+    color: '#0ea5e9',
+    bg: '#f0f9ff',
+    desc: 'Normatives, strategisches und operatives Management – am Beispiel TEAM 7.',
+    jahrgaenge: [3],
+    schultypen: ['HAK','HLW'],
+    situation: `<p><strong>TEAM 7</strong> (Naturholzmöbel, Ried im Innkreis, OÖ) ist ein Paradebeispiel österreichischer Unternehmensführung: 1959 als kleine Tischlerei gegründet, heute 17 eigene Stores weltweit (u.a. USA, China, Mallorca).</p>
+      <p style="margin-top:10px">Das Unternehmen hat drei Managementebenen: <em>Topmanagement</em> (Georg & Stefan Emprechtinger, Geschäftsführung), <em>Middle Management</em> (z.B. Elisabeth Emprechtinger als Marketingleiterin), <em>Lower Management</em> (Abteilungsleiter in Produktion, Verkauf).</p>
+      <p style="margin-top:10px">Für AlpenFresh stellt sich dieselbe Frage: Wie soll die Führungsstruktur aussehen, wenn das Unternehmen wächst?</p>`,
+    aufgaben: [
+      'Erkläre die drei Managementebenen (Top-, Middle-, Lower Management) und ordne die Führungspersonen von TEAM 7 diesen Ebenen zu. Was unterscheidet normative, strategische und operative Aufgaben?',
+      'Führe eine <strong>SWOT-Analyse</strong> für AlpenFresh durch (mind. 2 Punkte pro Feld). Leite danach je eine <strong>SO-Strategie</strong> (Stärken nutzen + Chancen ergreifen) und eine <strong>WT-Strategie</strong> (Schwächen reduzieren + Risiken abwenden) ab.',
+      'Wende das <strong>Fünf-Kräfte-Modell von Porter</strong> auf AlpenFresh an. Nenne für jede der 5 Kräfte einen konkreten Einflussfaktor und eine Handlungsempfehlung für das Unternehmen.',
+      'AlpenFresh hat nun 25 Mitarbeiter (Produktion, Marketing, Verwaltung, Logistik). Entscheide, welche <strong>Form der Aufbauorganisation</strong> (Einliniensystem, Stabliniensystem oder Mehrliniensystem) geeignet ist. Begründe deine Wahl und nenne je einen Vor- und Nachteil.'
+    ],
+    aufgabenHLW: [
+      'Erkläre die drei Managementebenen und nenne je ein Beispiel aus einem österreichischen Unternehmen. Welche Entscheidungen trifft jede Ebene bei AlpenFresh?',
+      'Was ist eine <strong>SWOT-Analyse</strong>? Führe sie für AlpenFresh durch (mind. 2 Punkte pro Feld). Was unterscheidet interne von externen Faktoren?',
+      'Erkläre das <strong>Fünf-Kräfte-Modell von Porter</strong> und nenne für AlpenFresh konkrete Beispiele für mindestens 3 der 5 Kräfte.',
+      'Welche <strong>Führungsstile</strong> kennst du (autoritär, kooperativ, laissez-faire)? Erkläre Vor- und Nachteile und begründe, welcher Stil zu AlpenFresh als wachsendem Start-up passt.'
+    ],
+    infobox: { title: 'SWOT-Strategien ableiten', text: '<strong>SO-Strategie</strong> (Stärken + Chancen): Wie können Stärken genutzt werden, um Chancen zu ergreifen? <strong>ST-Strategie</strong> (Stärken + Risiken): Wie können Stärken Bedrohungen abwehren? <strong>WO-Strategie</strong> (Schwächen + Chancen): Wie können Schwächen abgebaut werden, um Chancen zu nutzen? <strong>WT-Strategie</strong> (Schwächen + Risiken): Wie können Schwächen und Risiken minimiert werden?' },
+    prompt: 'Du bist ein Unternehmensberater. AlpenFresh GmbH (25 Mitarbeiter, Bio-Lebensmittel, Tirol, € 1,2 Mio Umsatz) plant eine strategische Neuausrichtung. Führe eine vollständige SWOT-Analyse durch, leite 2 konkrete Strategien ab und analysiere das Wettbewerbsumfeld mit dem Fünf-Kräfte-Modell von Porter. Empfehle auch eine geeignete Aufbauorganisation für das Wachstum.',
+    loesungen: [
+      `<strong>Managementebenen bei TEAM 7 und normatives/strategisches/operatives Management:</strong><ul><li><strong>Topmanagement:</strong> Georg & Stefan Emprechtinger (Geschäftsführung) → normative Entscheidungen (Unternehmenswerte, Vision) und strategische Entscheidungen (Expansion in neue Märkte)</li><li><strong>Middle Management:</strong> Elisabeth Emprechtinger (Marketingleitung), Produktionsverantwortliche → setzen Strategie um, koordinieren Abteilungen</li><li><strong>Lower Management:</strong> Teamleiter in Produktion, Verkauf, Logistik → operative Aufgaben, direkte Mitarbeiterführung</li></ul><strong>Normativ</strong> = Grundsätze & Werte (langfristig). <strong>Strategisch</strong> = mittelfristige Planung (3–5 Jahre). <strong>Operativ</strong> = kurzfristiges Tagesgeschäft.`,
+      `<strong>SWOT-Analyse AlpenFresh:</strong><br><table><tr><th>Stärken (intern)</th><th>Schwächen (intern)</th></tr><tr><td>• Bio-zertifiziert & regional<br>• Starke Markenidentität (Nachhaltigkeit)<br>• Direktvertrieb über eigenen Webshop</td><td>• Geringe Produktionskapazität<br>• Abhängigkeit von einzelnen Lieferanten<br>• Noch wenig Bekanntheit außerhalb Tirols</td></tr><tr><th>Chancen (extern)</th><th>Risiken (extern)</th></tr><tr><td>• Wachsende Nachfrage nach Bio-Produkten<br>• Expansion in den deutschen Markt<br>• Neue Vertriebskanäle (LEH, Abo-Box)</td><td>• Neue Konkurrenten im Bio-Segment<br>• Steigende Rohstoffpreise<br>• Wetterabhängige Ernten bei Zulieferern</td></tr></table><br><strong>SO-Strategie:</strong> Bio-Zertifizierung + wachsende Nachfrage → aktiv in deutschen Bio-Supermarkt expandieren (z.B. Kooperation mit denn's Biomarkt).<br><strong>WT-Strategie:</strong> Abhängigkeit von Lieferanten + Rohstoffpreisrisiko → 2. Lieferant für Schlüsselzutaten aufbauen, langfristige Lieferverträge abschließen.`,
+      `<strong>Fünf-Kräfte-Modell von Porter – AlpenFresh:</strong><br><table><tr><th>Kraft</th><th>Einfluss bei AlpenFresh</th><th>Handlungsempfehlung</th></tr><tr><td>Rivalität unter Wettbewerbern</td><td>Bio-Markt wächst → viele neue Anbieter (mymuesli, Local Brands)</td><td>Differenzierung durch regionale Herkunft und persönliche Geschichte betonen</td></tr><tr><td>Verhandlungsmacht Lieferanten</td><td>Wenige zertifizierte Bio-Bauern in Tirol → hohe Abhängigkeit</td><td>Langfristige Verträge + 2. Lieferant aufbauen</td></tr><tr><td>Verhandlungsmacht Käufer</td><td>Endkunden im Online-Shop → niedrig; Supermarkt → hoch</td><td>Direktvertrieb (B2C) stärken, um Abhängigkeit von Händlern zu reduzieren</td></tr><tr><td>Bedrohung durch Substitutionsprodukte</td><td>Konventionelle Produkte deutlich günstiger</td><td>Kommunikation des Mehrwerts (Gesundheit, Regionalität, Umwelt)</td></tr><tr><td>Bedrohung durch neue Anbieter</td><td>Markteintrittsbarrieren niedrig im Bio-Food-Bereich</td><td>Marke frühzeitig etablieren, Kundenbindung (Newsletter, Community) aufbauen</td></tr></table>`,
+      `<strong>Wahl der Aufbauorganisation für AlpenFresh (25 Mitarbeiter):</strong><br><br><strong>Empfehlung: Einliniensystem mit Stabsstellen</strong> (= Stabliniensystem)<br><br>Begründung: Mit 4 Abteilungen und 25 Mitarbeitern braucht AlpenFresh klare Verantwortlichkeiten (Einlinienprinzip). Gleichzeitig kann z.B. ein Qualitätsmanager oder Nachhaltigkeitsbeauftragter als Stabsstelle die Geschäftsführung beraten, ohne Weisungsbefugnis zu haben.<br><br><table><tr><th>Organisationsform</th><th>Vorteil</th><th>Nachteil</th></tr><tr><td>Einliniensystem</td><td>Klare Hierarchie, eindeutige Verantwortung</td><td>Lange Kommunikationswege bei vielen Ebenen</td></tr><tr><td>Stabliniensystem</td><td>Fachwissen wird gezielt eingebracht</td><td>Stabsstellen verursachen Kosten ohne Linienverantwortung</td></tr><tr><td>Mehrliniensystem</td><td>Kurze Kommunikationswege</td><td>Mehrere Vorgesetzte → Kompetenzkonflikte möglich</td></tr></table>`,
+    ],
+    loesungenHLW: [
+      `<strong>Managementebenen mit österreichischen Beispielen:</strong><ul><li><strong>Topmanagement</strong> (normative + strategische Entscheidungen): Birgit Noggler-Gürtler (CEO Manner) → entscheidet über Unternehmensphilosophie und Expansionsstrategie. Bei AlpenFresh: Geschäftsführerin Nina Berger.</li><li><strong>Middle Management</strong> (strategische + operative Entscheidungen): Marketingdirektor bei Spar → setzt Kampagnenstrategie um. Bei AlpenFresh: Produktionsleiterin.</li><li><strong>Lower Management</strong> (operative Aufgaben): Schichtleiter in der Produktion → führt Tagesgeschäft durch. Bei AlpenFresh: Vorarbeiter in der Abfüllanlage.</li></ul>`,
+      `<strong>SWOT-Analyse</strong> = Methode zur systematischen Analyse eines Unternehmens. Intern (Stärken/Schwächen) = was das Unternehmen selbst beeinflussen kann. Extern (Chancen/Risiken) = Umfeldfaktoren.<br><br><table><tr><th>Stärken</th><th>Schwächen</th></tr><tr><td>• Bio-zertifiziert & regional<br>• Direktvertrieb online</td><td>• Geringe Kapazität<br>• Wenig Bekanntheit außerhalb Tirols</td></tr><tr><th>Chancen</th><th>Risiken</th></tr><tr><td>• Wachsende Bio-Nachfrage<br>• Expansion nach Deutschland</td><td>• Neue Konkurrenten<br>• Steigende Rohstoffpreise</td></tr></table>`,
+      `<strong>Fünf-Kräfte-Modell von Porter</strong> analysiert das Wettbewerbsumfeld eines Unternehmens anhand von 5 Kräften:<br><br><strong>3 Beispiele für AlpenFresh:</strong><ol><li><strong>Rivalität unter Wettbewerbern:</strong> Viele Bio-Start-ups (mymuesli, Local Heroes) drängen auf den Markt → AlpenFresh muss durch Regionalität und Qualität punkten.</li><li><strong>Verhandlungsmacht der Lieferanten:</strong> Wenige Bio-Bauern in Tirol → hohe Abhängigkeit → Lösung: langfristige Verträge abschließen.</li><li><strong>Bedrohung durch Substitutionsprodukte:</strong> Konventionelle Produkte sind günstiger → AlpenFresh muss den Mehrwert (Gesundheit, Umwelt) klar kommunizieren.</li></ol>`,
+      `<strong>Führungsstile im Vergleich:</strong><br><table><tr><th>Stil</th><th>Merkmal</th><th>Vorteil</th><th>Nachteil</th></tr><tr><td>Autoritär</td><td>Chef entscheidet allein</td><td>Schnelle Entscheidungen</td><td>Wenig Motivation, kein Engagement</td></tr><tr><td>Kooperativ</td><td>Mitarbeiter werden einbezogen</td><td>Hohe Motivation, bessere Ideen</td><td>Zeitaufwändiger</td></tr><tr><td>Laissez-faire</td><td>Mitarbeiter entscheiden selbst</td><td>Maximale Freiheit & Kreativität</td><td>Risiko von Chaos, keine klare Richtung</td></tr></table><br>Für AlpenFresh als wachsendes Start-up empfiehlt sich der <strong>kooperative Führungsstil</strong>: Mitarbeiter bringen Ideen ein (z.B. neue Produkte), das fördert Innovation und Bindung – wichtig um Talente zu halten.`
+    ],
+    reflexion: [
+      'Leitet die KI aus der SWOT-Analyse konkrete Strategien ab – oder bleibt sie bei einer reinen Auflistung?',
+      'Werden beim Porter-Modell alle 5 Kräfte mit konkreten Beispielen belegt?',
+      'Ist die empfohlene Organisationsstruktur zur Größe und Branche von AlpenFresh passend?',
+      'Berücksichtigt die KI österreichische Besonderheiten (z.B. Fachkräftemangel, regionale Märkte)?'
+    ]
+  },
+
+  // ─── MODUL 6: INVESTITION & FINANZIERUNG (JG 3) ──────────────────
+  {
+    id: 'investition',
+    title: 'Investition & Finanzierung',
+    icon: '🏦',
+    color: '#10b981',
+    bg: '#ecfdf5',
+    desc: 'Investitionsrechnung und Finanzierungsentscheidungen – wie bei Palfinger AG.',
+    jahrgaenge: [3],
+    schultypen: ['HAK','HLW'],
+    situation: `<p><strong>Palfinger AG</strong> (Salzburg, Weltmarktführer für Ladekrane) investiert laufend in neue Produktionsanlagen und Technologien. Für ein Weltunternehmen ist die Investitionsrechnung selbstverständlich – aber auch kleine Unternehmen wie AlpenFresh müssen strukturiert entscheiden.</p>
+      <p style="margin-top:10px">AlpenFresh prüft den Kauf einer <strong>neuen Abfüllmaschine</strong>:</p>
+      <ul style="margin:8px 0 8px 20px; font-size:0.93rem; color:#4a5578">
+        <li>Anschaffungskosten: € 250.000</li>
+        <li>Nutzungsdauer: 10 Jahre, Restwert: € 0</li>
+        <li>Jährliche Kosteneinsparungen: € 40.000</li>
+        <li>Eigenkapital verfügbar: € 80.000</li>
+        <li>Alternativen: Bankkredit 4,5 % p.a., Leasing € 2.800/Monat</li>
+      </ul>`,
+    aufgaben: [
+      'AlpenFresh prüft zwei Abfüllmaschinen. Führe eine <strong>Kostenvergleichsrechnung</strong> durch (kalk. AfA, kalk. Zinsen, variable Kosten, Fixkosten, Gesamtkosten, Stückkosten) und entscheide, welche Maschine günstiger ist.<br><small>Maschine A: AK € 240.000, ND 8 J., Restwert 10 %, Zinssatz 4 %, Fixkosten € 8.000/J., variable Kosten € 0,45/Stk., Menge 30.000 Stk.<br>Maschine B: AK € 260.000, ND 8 J., Restwert 10 %, Zinssatz 4 %, Fixkosten € 12.000/J., variable Kosten € 0,40/Stk., Menge 35.000 Stk.</small>',
+      'Bestimme für folgende AlpenFresh-Situationen jeweils die <strong>Art der Finanzierung</strong> (Innen-/Außenfinanzierung UND Eigen-/Fremdfinanzierung):<br>(a) AlpenFresh zahlt eine Lieferantenrechnung erst in 3 Monaten. (b) Die Geschäftsführerin legt € 30.000 Privatkapital ein. (c) Eine vollständig abgeschriebene Maschine wird um € 5.000 verkauft. (d) AlpenFresh nimmt einen Bankkredit über € 100.000 auf.',
+      'Erkläre die <strong>vier Crowdfunding-Modelle</strong> (Donation, Reward, Lending, Equity) und überlege, welches Modell für AlpenFresh bei der Entwicklung einer neuen Produktlinie sinnvoll wäre.',
+      'Berechne folgende <strong>Kennzahlen</strong> aus der AlpenFresh-Bilanz und interpretiere sie stichwortartig:<br><small>Bilanz: Gebäude € 180.000, Maschinen € 70.000, Warenbestand € 40.000, Bank € 25.000, Forderungen € 35.000 | FK kurzfristig € 60.000, FK langfristig € 100.000, EK € 190.000</small><br>Berechne: Eigenkapitalquote, Liquidität 1. Grades, Liquidität 2. Grades, Anlagendeckung in %.'
+    ],
+    aufgabenHLW: [
+      'Erkläre den Unterschied zwischen <strong>Eigen- und Fremdfinanzierung</strong> sowie <strong>Innen- und Außenfinanzierung</strong>. Nenne je 2 konkrete Beispiele aus der Praxis (kein AlpenFresh-Bezug nötig).',
+      'Was sind die <strong>vier Crowdfunding-Modelle</strong>? Erkläre sie anhand eines Beispiels für ein österreichisches Startup und nenne je einen Vor- und Nachteil.',
+      'Warum ist eine <strong>Investitionsrechnung</strong> (z.B. Amortisationsrechnung oder Kostenvergleich) sinnvoll, bevor ein Unternehmen eine große Investition tätigt? Nenne 3 Gründe.',
+      'Welche <strong>Finanzierungsoption</strong> würdest du AlpenFresh für den Kauf einer neuen Abfüllmaschine (€ 240.000) empfehlen: Eigenfinanzierung, Bankkredit oder Leasing? Begründe unter Berücksichtigung von Liquidität und Risiko.'
+    ],
+    infobox: { title: 'Kostenvergleichsrechnung – Formeln', text: '<strong>Kalk. AfA</strong> = (Anschaffungskosten − Restwert) ÷ Nutzungsdauer<br><strong>Kalk. Zinsen</strong> = (Anschaffungskosten + Restwert) ÷ 2 × Zinssatz<br><strong>Variable Kosten</strong> = Kosten/Stk. × tatsächliche Menge (= Kapazität × Auslastung)<br><strong>Gesamtkosten</strong> = AfA + Zinsen + Fixkosten + variable Kosten<br><strong>Stückkosten</strong> = Gesamtkosten ÷ tatsächliche Menge' },
+    prompt: 'Du bist ein Bankberater. AlpenFresh GmbH (€ 1,2 Mio Umsatz, 18 Mitarbeiter) möchte eine neue Abfüllmaschine kaufen (Maschine A: € 240.000, 8 Jahre Nutzungsdauer) und prüft verschiedene Finanzierungsoptionen. Analysiere: Welche Finanzierungsarten gibt es grundsätzlich? Welche eignet sich für AlpenFresh? Wie würdest du die Kennzahlen EK-Quote und Liquidität beurteilen (EK € 190.000, FK gesamt € 160.000, flüssige Mittel € 25.000, kurzfristiges FK € 60.000)?',
+    loesungen: [
+      `<strong>Kostenvergleichsrechnung AlpenFresh:</strong><br><table><tr><th>Position</th><th>Maschine A</th><th>Maschine B</th></tr><tr><td>Tatsächliche Menge</td><td>30.000 Stk.</td><td>35.000 Stk.</td></tr><tr><td>Kalk. AfA</td><td>(240.000 − 24.000) ÷ 8 = <strong>€ 27.000</strong></td><td>(260.000 − 26.000) ÷ 8 = <strong>€ 29.250</strong></td></tr><tr><td>Kalk. Zinsen</td><td>(240.000 + 24.000) ÷ 2 × 4% = <strong>€ 5.280</strong></td><td>(260.000 + 26.000) ÷ 2 × 4% = <strong>€ 5.720</strong></td></tr><tr><td>Variable Kosten</td><td>0,45 × 30.000 = <strong>€ 13.500</strong></td><td>0,40 × 35.000 = <strong>€ 14.000</strong></td></tr><tr><td>Fixkosten</td><td><strong>€ 8.000</strong></td><td><strong>€ 12.000</strong></td></tr><tr><td><strong>Gesamtkosten</strong></td><td><strong>€ 53.780</strong></td><td><strong>€ 60.970</strong></td></tr><tr><td><strong>Stückkosten</strong></td><td>53.780 ÷ 30.000 = <strong>€ 1,79/Stk.</strong></td><td>60.970 ÷ 35.000 = <strong>€ 1,74/Stk.</strong></td></tr></table><br>→ Gesamtkosten: <strong>Maschine A günstiger</strong>. Stückkosten: Maschine B günstiger (wegen größerer Menge). Da AlpenFresh nicht die volle Kapazität von B benötigt, ist <strong>Maschine A zu empfehlen</strong>.`,
+      `<strong>Finanzierungsarten AlpenFresh:</strong><br><table><tr><th>Situation</th><th>Innen/Außen</th><th>Eigen/Fremd</th></tr><tr><td>(a) Lieferantenrechnung in 3 Monaten</td><td>Außen</td><td>Fremd (Lieferantenkredit)</td></tr><tr><td>(b) Geschäftsführerin legt € 30.000 ein</td><td>Außen</td><td>Eigen (Einlagenfinanzierung)</td></tr><tr><td>(c) Abgeschriebene Maschine verkauft</td><td>Innen</td><td>Eigen (Umschichtungsfinanzierung)</td></tr><tr><td>(d) Bankkredit € 100.000</td><td>Außen</td><td>Fremd (Kreditfinanzierung)</td></tr></table>`,
+      `<strong>Vier Crowdfunding-Modelle:</strong><br><table><tr><th>Modell</th><th>Prinzip</th><th>Beispiel für AlpenFresh</th></tr><tr><td>Donation-based</td><td>Spenden ohne Gegenleistung</td><td>Spende für nachhaltiges Verpackungsprojekt</td></tr><tr><td>Reward-based</td><td>Gegenleistung = Produkt/Erlebnis</td><td>Unterstützer bekommen die neue Produktlinie als Erste</td></tr><tr><td>Lending-based</td><td>Kredit von vielen Privatpersonen</td><td>Crowd leiht AlpenFresh € 50.000 für neue Maschine, bekommt Zinsen</td></tr><tr><td>Equity-based</td><td>Unternehmensanteile im Austausch für Kapital</td><td>Investoren erhalten 5 % Unternehmensanteil</td></tr></table><br>Empfehlung für AlpenFresh: <strong>Reward-based</strong> – stärkt gleichzeitig die Community und Kundenbindung, ohne Schulden oder Unternehmensanteile abzugeben.`,
+      `<strong>Kennzahlenanalyse AlpenFresh:</strong><br><br><strong>Eigenkapitalquote</strong> = EK ÷ Gesamtkapital × 100<br>= 190.000 ÷ 350.000 × 100 = <strong>54,3 %</strong> → sehr solide, Faustregel ≥ 30 %<br><br><strong>Liquidität 1. Grades</strong> = flüssige Mittel ÷ kurzfristiges FK × 100<br>= 25.000 ÷ 60.000 × 100 = <strong>41,7 %</strong> → unter 100 %, Vorsicht bei plötzlichen Zahlungen<br><br><strong>Liquidität 2. Grades</strong> = (flüssige Mittel + Forderungen) ÷ kurzfristiges FK × 100<br>= (25.000 + 35.000) ÷ 60.000 × 100 = <strong>100 %</strong> → genau ausreichend, Sollwert ≥ 100 %<br><br><strong>Anlagendeckung</strong> = (EK + langfr. FK) ÷ Anlagevermögen × 100<br>= (190.000 + 100.000) ÷ 250.000 × 100 = <strong>116 %</strong> → gut, Anlagevermögen ist langfristig gedeckt`
+    ],
+    loesungenHLW: [
+      `<strong>Eigen- vs. Fremdfinanzierung:</strong><br><strong>Eigenfinanzierung</strong> = Kapital der Eigentümer (keine Rückzahlungspflicht). Beispiele: Einlage der Gesellschafter, einbehaltene Gewinne (Selbstfinanzierung).<br><strong>Fremdfinanzierung</strong> = Kapital von Dritten (Rückzahlung + Zinsen). Beispiele: Bankkredit, Anleihe, Lieferantenkredit.<br><br><strong>Innen- vs. Außenfinanzierung:</strong><br><strong>Innenfinanzierung</strong> = Mittel entstehen im Betrieb selbst. Beispiele: Cashflow aus Gewinnen, Verkauf nicht benötigter Anlagen.<br><strong>Außenfinanzierung</strong> = Kapital wird von außen zugeführt. Beispiele: Bankkredit, Kapitalerhöhung durch neue Gesellschafter.`,
+      `<strong>Vier Crowdfunding-Modelle:</strong><ol><li><strong>Donation-based:</strong> Spende ohne Gegenleistung (z.B. Klimaschutzprojekt). Vorteil: keine Rückzahlung. Nachteil: meist nur kleine Beträge.</li><li><strong>Reward-based:</strong> Unterstützer erhalten ein Produkt (z.B. Kickstarter-Kampagne für neues Gadget). Vorteil: Kundenbindung + Marketing. Nachteil: Lieferpflicht.</li><li><strong>Lending-based:</strong> Viele geben kleinen Kredit (z.B. Conda, Fundera). Vorteil: günstig. Nachteil: Rückzahlungspflicht.</li><li><strong>Equity-based:</strong> Investoren erhalten Unternehmensanteile (z.B. Seedmatch). Vorteil: viel Kapital möglich. Nachteil: Mitspracherechte der Investoren.</li></ol>`,
+      `Drei Gründe für eine Investitionsrechnung vor großen Investitionen:<ol><li><strong>Amortisationsprüfung:</strong> Wann hat sich die Investition bezahlt gemacht? Wenn die Amortisationsdauer länger als die Nutzungsdauer ist → unvorteilhaft.</li><li><strong>Alternativenvergleich:</strong> Welche von mehreren Optionen ist die günstigste? (Kostenvergleichsrechnung: Maschine A vs. B)</li><li><strong>Fremdkapitalgeber verlangen es:</strong> Banken finanzieren nur, wenn eine fundierte Wirtschaftlichkeitsrechnung vorliegt – ohne Rechnung kein Kredit.</li></ol>`,
+      `<strong>Empfehlung: Bankkredit</strong><br>Begründung: Eigenkapital (€ 190.000) wäre für eine Maschine von € 240.000 nicht ausreichend ohne die Liquidität zu gefährden. Leasing ist über 8 Jahre teurer. Mit einem Kredit bei 4 % Zinsen bleibt die Maschine Eigentum von AlpenFresh und kann steuerlich abgeschrieben werden. Die laufenden Kosteneinsparungen durch die neue Maschine decken die Kreditrate gut ab.<br><br>Tipp: Vor dem Kredit staatliche Förderungen prüfen (AWS Gründerkredit, Wirtschaftsförderung Tirol, ERP-Kredit).`
+    ],
+    reflexion: [
+      'Berücksichtigt die KI alle Kostenbestandteile der Investitionsrechnung (kalk. AfA, kalk. Zinsen, variable + fixe Kosten)?',
+      'Werden staatliche Förderungen erwähnt (AWS, ERP-Fonds, Wirtschaftsförderung der Bundesländer)?',
+      'Unterscheidet die KI zwischen Gesamt- und Stückkosten – und erklärt sie, wann welcher Vergleich relevant ist?',
+      'Ist die Kennzahlenanalyse mit konkreten Richtwerten versehen (z.B. EK-Quote ≥ 30 %, Liquidität 2. Grades ≥ 100 %)?'
+    ]
+  },
+
+  // ─── MODUL 7: RECHTSFORMEN & KAUFVERTRAG (JG 1–2) ────────────────
+  {
+    id: 'recht',
+    title: 'Rechtsformen & Kaufvertrag',
+    icon: '⚖️',
+    color: '#64748b',
+    bg: '#f8fafc',
+    desc: 'Unternehmensrecht, Rechtsformen und Kaufvertragsrecht in der Praxis.',
+    jahrgaenge: [1,2],
+    schultypen: ['HAK','HLW'],
+    situation: `<p>AlpenFresh startet und muss wichtige rechtliche Entscheidungen treffen: Welche <strong>Rechtsform</strong> ist die richtige? Wie funktioniert ein rechtsgültiger <strong>Kaufvertrag</strong>?</p>
+      <p style="margin-top:10px">Im Schulbuch-Case hat Georg Hofstadler überlegt, die Tischlerei seines Chefs zu übernehmen und stand vor denselben Fragen bei der WKO-Beratung. Auch bei AlpenFresh: e.U. oder GmbH?</p>`,
+    aufgaben: [
+      'Vergleiche e.U. (Einzelunternehmen), GmbH und OG anhand folgender Kriterien: Haftung, Mindestkapital, Anzahl der Gründer, Eintragung ins Firmenbuch.',
+      'Was sind die Bestandteile eines rechtsgültigen Kaufvertrags? Nenne und erkläre mindestens fünf Bestandteile (Ware, Menge, Preis, Liefertermin, Zahlungsbedingungen...).',
+      'AlpenFresh bestellt 2.000 kg Bio-Haferflocken bei der Mühlviertler Getreidemühle. Erstelle ein schriftliches Bestellschreiben mit allen wichtigen Bestandteilen.',
+      'HAK: Was sind die rechtlichen Konsequenzen, wenn ein Käufer nicht zahlt oder ein Verkäufer nicht liefert? Erkläre Mahnung, Klage, Inkasso.'
+    ],
+    aufgabenHLW: [
+      'Was ist der Unterschied zwischen einer GmbH und einem Einzelunternehmen (e.U.)? Nenne je einen Vorteil.',
+      'Was sind die wichtigsten Bestandteile eines Kaufvertrags? Nenne mindestens vier.',
+      'Was passiert, wenn ein Käufer eine Ware zu spät bekommt oder die Qualität nicht stimmt? Erkläre das Rücktrittsrecht.',
+      'Warum ist es für Unternehmen wichtig, Verträge schriftlich abzuschließen?'
+    ],
+    infobox: { title: 'GmbH vs. Einzelunternehmen', text: '<strong>Einzelunternehmen (e.U.)</strong>: einfache Gründung, volle Haftung mit Privatvermögen, kein Mindestkapital. <strong>GmbH</strong>: Mindestkapital € 10.000 (seit 2024, vorher € 35.000), Haftung auf Stammkapital beschränkt, zwei Organe (Geschäftsführung + Gesellschafter). Für AlpenFresh empfiehlt sich eine GmbH ab einer gewissen Größe, um das Privatvermögen zu schützen.' },
+    prompt: 'Du bist ein Rechtsexperte und Unternehmensberater der WKO. AlpenFresh GmbH überprüft ihre Rechtsform und ihre Lieferverträge. Das Unternehmen schließt regelmäßig Kaufverträge mit Bio-Zutatenlieferanten ab. Erkläre: (1) Welche Rechtsform ist für ein wachsendes Bio-Unternehmen mit 12 Mitarbeiter sinnvoll? (2) Welche Klauseln sollten in Lieferverträgen unbedingt enthalten sein?',
+    loesungen: [
+      `<table><tr><th>Kriterium</th><th>e.U.</th><th>GmbH</th><th>OG</th></tr><tr><td>Haftung</td><td>Unbeschränkt (Privatvermögen)</td><td>Beschränkt auf Stammkapital</td><td>Unbeschränkt, solidarisch</td></tr><tr><td>Mindestkapital</td><td>Keines</td><td>€ 10.000</td><td>Keines</td></tr><tr><td>Gründer</td><td>1 Person</td><td>Mind. 1 Person</td><td>Mind. 2 Personen</td></tr><tr><td>Firmenbuch</td><td>Ab € 700.000 Umsatz Pflicht</td><td>Immer Pflicht</td><td>Immer Pflicht</td></tr></table>`,
+      `<strong>Bestandteile eines Kaufvertrags:</strong><ol><li><strong>Ware/Leistung:</strong> genaue Bezeichnung des Produkts (z.B. „Bio-Haferflocken, Qualität A")</li><li><strong>Menge:</strong> z.B. 2.000 kg</li><li><strong>Preis:</strong> z.B. € 1,20/kg, netto exkl. MwSt.</li><li><strong>Liefertermin/-ort:</strong> z.B. „15.04. frei Haus Wien"</li><li><strong>Zahlungsbedingungen:</strong> z.B. „30 Tage netto, 2 % Skonto bei Zahlung in 10 Tagen"</li><li><strong>Gewährleistung:</strong> 2 Jahre gesetzliche Gewährleistung</li></ol>`,
+      `<strong>Muster-Bestellschreiben:</strong><br><pre style="font-size:0.8rem;background:#f8fafc;border-radius:6px;padding:10px;line-height:1.8">AlpenFresh GmbH · Innsbrucker Straße 5 · 6060 Hall in Tirol
+An: Mühlviertler Getreidemühle GmbH, Freistadt
+
+Bestellung Nr. 2024-047
+Datum: 15.04.2024
+
+Sehr geehrte Damen und Herren,
+
+wir bestellen hiermit folgende Ware:
+
+Position: Bio-Haferflocken, zart, AMA-zertifiziert
+Menge: 2.000 kg
+Einzelpreis: € 1,20/kg, netto exkl. 10 % MwSt.
+Gesamtbetrag: € 2.400,00 netto
+
+Gewünschter Liefertermin: 30.04.2024
+Lieferadresse: AlpenFresh GmbH, Produktion, Innsbrucker Str. 5, 6060 Hall
+Zahlungsbedingung: 30 Tage netto
+
+Mit freundlichen Grüßen,
+Lisa Hofer, Geschäftsführerin AlpenFresh GmbH</pre>`,
+      `<strong>Rechtsfolgen bei Vertragsverletzung:</strong><br><ul><li><strong>Mahnung:</strong> Formlose Aufforderung zur Leistungserfüllung (1. Mahnung meist freundlich, 2. mit Fristsetzung, 3. mit Androhung rechtlicher Schritte)</li><li><strong>Klage:</strong> Klage beim zuständigen Bezirks- oder Handelsgericht auf Erfüllung oder Schadenersatz</li><li><strong>Inkasso:</strong> Beauftragung eines Inkassobüros für die außergerichtliche Forderungseintreibung (günstiger als Klage)</li><li><strong>Rücktritt:</strong> Bei Nichtlieferung oder mangelhafter Ware kann vom Vertrag zurückgetreten werden</li></ul>`
+    ],
+    loesungenHLW: [
+      `<strong>GmbH</strong> (Gesellschaft mit beschränkter Haftung): Mindestkapital € 10.000, Haftung beschränkt auf Stammkapital → Privatvermögen geschützt. Vorteil: Haftungsschutz. Nachteil: Gründungskosten (Notar), laufende Buchführungspflicht.<br><strong>Einzelunternehmen (e.U.):</strong> Kein Mindestkapital, einfache Gründung, aber volle Haftung mit Privatvermögen. → Für kleine Gründer mit geringem Risiko geeignet.`,
+      `<strong>4 wichtige Bestandteile eines Kaufvertrags:</strong><ol><li>Ware/Leistung (genaue Bezeichnung)</li><li>Menge und Qualität</li><li>Preis (netto/brutto, inkl./exkl. MwSt.)</li><li>Liefertermin und Lieferort</li><li>Zahlungsbedingungen (z.B. 30 Tage netto)</li></ol>`,
+      `Bei mangelhafter oder verspäteter Lieferung hat der Käufer folgende Rechte: (1) <strong>Verbesserung</strong> (Reparatur oder Austausch), (2) <strong>Preisminderung</strong>, (3) <strong>Wandlung</strong> (Rücktritt vom Vertrag). Bei Verbrauchern gilt eine gesetzliche Gewährleistungsfrist von <strong>2 Jahren</strong> (§ 924 ABGB). Das Rücktrittsrecht bei Fernabsatz beträgt 14 Tage (KSchG).`,
+      `Schriftliche Verträge sind wichtig, weil: (1) alle vereinbarten Konditionen dokumentiert sind, (2) bei Streitigkeiten Beweise vorhanden sind, (3) Missverständnisse vermieden werden, (4) manche Vertragsarten die Schriftform gesetzlich verlangen (z.B. Leasingverträge, Arbeitsverträge für bestimmte Klauseln). Mündliche Verträge sind zwar grundsätzlich gültig, aber schwer beweisbar.`
+    ],
+    reflexion: [
+      'Berücksichtigt die KI österreichisches Recht (UGB, ABGB) oder gibt sie allgemeine Empfehlungen?',
+      'Werden wichtige österreichische Gesetze (Konsumentenschutzgesetz, E-Commerce-Gesetz) erwähnt?',
+      'Fehlen Hinweise auf Fristen (z.B. Gewährleistungsfristen: 2 Jahre bei Verbrauchern)?',
+      'Ist die rechtliche Empfehlung für ein kleines Start-up ohne eigene Rechtsabteilung umsetzbar?'
+    ]
+  },
+
+  // ─── MODUL 8: EXPANSION & INTERNATIONALES (JG 2–3) ───────────────
+  {
+    id: 'expansion',
+    title: 'Expansion & Internationale Märkte',
+    icon: '🌍',
+    color: '#ef4444',
+    bg: '#fff1f2',
+    desc: 'Internationale Geschäftstätigkeit und Markteintrittsstrategie.',
+    jahrgaenge: [2,3],
+    schultypen: ['HAK','HLW'],
+    situation: `<p>AlpenFresh will international expandieren – ähnlich wie <strong>TEAM 7</strong> (von Ried im Innkreis in die USA und nach China). Das Unternehmen prüft zwei Optionen: Markteintritt in <strong>Südtirol (IT)</strong> oder die <strong>Schweiz (CH)</strong>.</p>
+      <p style="margin-top:10px">Herausforderungen: unterschiedliche Mehrwertsteuern, Lebensmittelkennzeichnungspflichten, andere Distributionsstrukturen, Wechselkursrisiko EUR/CHF.</p>`,
+    aufgaben: [
+      'Vergleiche die vier Markteintrittsstrategien (Direktexport, indirekter Export, Tochtergesellschaft, Joint Venture) anhand von Kosten, Risiko und Kontrollmöglichkeiten.',
+      'Erstelle eine Länderanalyse für Südtirol: Marktpotenzial, kulturelle Nähe zu Österreich, sprachliche Vorteile, rechtliche Besonderheiten (EU-Mitglied, Mehrwertsteuer).',
+      'HAK: Erkläre das Wechselkursrisiko bei einem Markteintritt in die Schweiz. Wenn AlpenFresh für CHF 3,20 verkauft und der EUR/CHF-Kurs von 0,95 auf 0,90 fällt – wie verändert sich der Euro-Erlös?',
+      'Welchen Markt würdest du zuerst erschließen und warum? Begründe mit konkreten Argumenten.'
+    ],
+    aufgabenHLW: [
+      'Warum ist eine internationale Expansion riskant? Nenne vier konkrete Risiken (wirtschaftlich, kulturell, rechtlich, finanziell).',
+      'Was sind die kulturellen und sprachlichen Vorteile einer Expansion nach Südtirol im Vergleich zur Schweiz?',
+      'Was bedeutet Wechselkursrisiko? Erkläre am Beispiel: AlpenFresh verkauft für CHF 3,20, Kurs EUR/CHF = 0,95.',
+      'Welchen Markt würdest du zuerst erschließen und warum?'
+    ],
+    infobox: { title: 'Wechselkursrisiko', text: 'Das <strong>Wechselkursrisiko</strong> entsteht bei Geschäften in Fremdwährung. Beispiel: AlpenFresh verkauft eine AlpenBar für CHF 3,20. Bei EUR/CHF 0,95 sind das € 3,04. Fällt der Kurs auf 0,90, sind es nur noch € 2,88 – Erlösrückgang um 5 %. Absicherung möglich durch <em>Devisentermingeschäfte</em> oder <em>natürliches Hedging</em> (Einnahmen und Ausgaben in gleicher Währung).' },
+    prompt: 'Du bist ein Unternehmensberater für internationale Expansion. AlpenFresh GmbH (österreichisches Bio-Start-up, € 1,2 Mio Umsatz, 12 Mitarbeiter) überlegt, nach Südtirol (IT) und/oder in die Schweiz zu expandieren. Welche Markteintrittsstrategien empfiehlst du? Welche rechtlichen, kulturellen und wirtschaftlichen Besonderheiten müssen beachtet werden? Welchen Markt empfiehlst du für den ersten Schritt und warum?',
+    loesungen: [
+      `<table><tr><th>Strategie</th><th>Kosten</th><th>Risiko</th><th>Kontrolle</th></tr><tr><td><strong>Direktexport</strong></td><td>Gering</td><td>Gering</td><td>Mittel</td></tr><tr><td><strong>Indirekter Export</strong> (Handelsvertreter)</td><td>Gering</td><td>Gering</td><td>Gering</td></tr><tr><td><strong>Tochtergesellschaft</strong></td><td>Hoch</td><td>Hoch</td><td>Hoch</td></tr><tr><td><strong>Joint Venture</strong></td><td>Mittel</td><td>Mittel</td><td>Mittel</td></tr></table><br>→ Für AlpenFresh als kleines Start-up: <strong>Direktexport oder Handelsvertreter</strong> als erster Schritt – geringes Risiko, überschaubare Kosten.`,
+      `<strong>Länderanalyse Südtirol:</strong><ul><li><strong>Marktpotenzial:</strong> 530.000 Einwohner, hohe Affinität zu regionalen Bio-Produkten, Nähe zu Österreich</li><li><strong>Kulturelle Nähe:</strong> Deutschsprachig, ähnliche Essgewohnheiten, bekannte Marken aus Österreich sind akzeptiert</li><li><strong>Sprachliche Vorteile:</strong> Kein Übersetzungsaufwand für Verpackung und Marketing</li><li><strong>Rechtliche Besonderheiten:</strong> EU-Mitglied (kein Zoll, keine Einfuhrabgaben), italienische MwSt. auf Lebensmittel: 4 % (Österreich: 10 %) → günstig</li><li><strong>Fazit:</strong> Idealer erster Exportmarkt für AlpenFresh!</li></ul>`,
+      `<strong>Wechselkursrisiko Schweiz:</strong><br>Ausgangssituation: AlpenFresh verkauft für CHF 3,20, Kurs EUR/CHF = 0,95<br>Euro-Erlös: CHF 3,20 × 0,95 = <strong>€ 3,04</strong><br><br>Kurs fällt auf EUR/CHF = 0,90:<br>Euro-Erlös: CHF 3,20 × 0,90 = <strong>€ 2,88</strong><br><br>Verlust: € 3,04 − € 2,88 = <strong>€ 0,16 pro Stück</strong> (−5,3 %)<br>Bei 10.000 Stück/Monat = Erlösrückgang von <strong>€ 1.600/Monat</strong> ohne Kursänderung beim Produkt!`,
+      `<strong>Empfehlung: Zuerst Südtirol</strong><br>Begründung: (1) Kein Währungsrisiko (beide in €), (2) kulturelle und sprachliche Nähe → geringerer Marketing-Aufwand, (3) EU-Binnenmarkt → keine Zollhürden, (4) Bio-Affinität der Südtiroler, (5) Test für internationales Vorgehen mit überschaubarem Risiko.<br><br>Die Schweiz ist als zweiter Schritt sinnvoll, wenn Südtirol erfolgreich war – aber erst dann, wenn AlpenFresh das Wechselkursrisiko absichern kann.`
+    ],
+    loesungenHLW: [
+      `<strong>4 konkrete Risiken einer internationalen Expansion:</strong><ul><li><strong>Wirtschaftlich:</strong> Hohe Anlaufkosten für Marktaufbau, unsichere Absatzmenge, Preisdruck durch lokale Konkurrenz</li><li><strong>Kulturell:</strong> Andere Essgewohnheiten und Präferenzen, andere Kommunikationsstile</li><li><strong>Rechtlich:</strong> Andere Lebensmittelkennzeichnungspflichten, andere MwSt.-Sätze, andere Vertragsrechte</li><li><strong>Finanziell:</strong> Wechselkursrisiko (Schweiz), höhere Logistikkosten, Zahlungsausfallrisiko bei ausländischen Kunden</li></ul>`,
+      `<strong>Südtirol vs. Schweiz – kultureller Vergleich:</strong><ul><li><strong>Sprache:</strong> Südtirol deutschsprachig → keine Übersetzungskosten. Schweiz: 4 Landessprachen, aber Deutschschweiz als Hauptmarkt ebenfalls deutschsprachig</li><li><strong>Regionalität:</strong> Südtiroler schätzen Tiroler Produkte als „Nachbarn" → hohe Akzeptanz</li><li><strong>Bio-Affinität:</strong> Beide Regionen haben hohe Bio-Affinität</li><li><strong>Kaufkraft:</strong> Schweiz deutlich höher → höhere Preise möglich, aber auch höhere Konkurrenz</li></ul>`,
+      `<strong>Wechselkursrisiko:</strong> Wenn AlpenFresh in CHF fakturiert und der CHF gegenüber dem EUR an Wert verliert, bekommt AlpenFresh weniger Euro für dieselbe Ware.<br><br>Beispiel: CHF 3,20 × 0,95 = € 3,04. Fällt der Kurs auf 0,90: CHF 3,20 × 0,90 = € 2,88 → Verlust von € 0,16/Stück. Das Risiko kann durch <strong>Fakturierung in Euro</strong> auf den Schweizer Kunden übertragen werden.`,
+      `<strong>Empfehlung: Südtirol zuerst</strong><br>Begründung: Gleiche Währung (€), deutschsprachig, kulturelle Nähe zu Tirol, EU-Binnenmarkt (kein Zoll), Bio-affine Bevölkerung. AlpenFresh kann den Markteintritt mit geringem Risiko testen, bevor es in die aufwändigere Schweiz-Expansion investiert.`
+    ],
+    reflexion: [
+      'Berücksichtigt der Bankberater (KI) die Liquiditätssituation und Bonität des Unternehmens?',
+      'Werden alle Nebenkosten einer Kreditfinanzierung erwähnt (Bearbeitungsgebühren, Sicherheiten, Kreditversicherung)?',
+      'Fehlen Hinweise zu staatlichen Förderungen (z.B. AWS, ÖHT, ERP-Fonds)?',
+      'Ist die Empfehlung der KI neutral oder scheint sie eine Option zu bevorzugen?'
+    ],
+    reflexion: [
+      'Kennt die KI spezifische Regelungen für Lebensmittelkennzeichnung in Italien und der Schweiz?',
+      'Werden die Kosten eines Marktaufbaus realistisch eingeschätzt (Lagerlogistik, Vertriebsaufbau)?',
+      'Fehlen Hinweise auf österreichische Exportförderungen (go-international, Außenwirtschaft Austria)?',
+      'Berücksichtigt die KI die begrenzte Kapazität eines kleinen Start-ups mit 12 Mitarbeiter?'
+    ],
+  }
+];
+
+/* ==============================================
+   SCHULTYP & JAHRGANG
+============================================== */
+function setSchultyp(typ) {
+  currentSchultyp = typ;
+  document.getElementById('btn-hak').classList.toggle('active', typ === 'HAK');
+  document.getElementById('btn-hlw').classList.toggle('active', typ === 'HLW');
+  updateBanner();
+  renderModuleGrid();
+}
+
+function setJahrgang(val) {
+  currentJahrgang = parseInt(val);
+  updateBanner();
+  renderModuleGrid();
+}
+
+function updateBanner() {
+  document.getElementById('banner-text').textContent = `${currentSchultyp} · ${currentJahrgang}. Jahrgang`;
+}
+
+/* ==============================================
+   RENDER MODULE GRID
+============================================== */
+function renderModuleGrid() {
+  const grid = document.getElementById('module-grid');
+  const visible = MODULES.filter(m =>
+    m.schultypen.includes(currentSchultyp) &&
+    m.jahrgaenge.includes(currentJahrgang)
+  );
+
+  if (visible.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#8892aa">Für ${currentSchultyp} ${currentJahrgang}. Jahrgang sind noch keine Module verfügbar.</div>`;
+    return;
+  }
+
+  grid.innerHTML = visible.map(m => `
+    <div class="module-card" style="--card-color:${m.color}; --card-bg:${m.bg}" onclick="openModule('${m.id}')">
+      <div class="module-icon">${m.icon}</div>
+      <h3>${m.title}</h3>
+      <p>${m.desc}</p>
+      <div class="module-tags">
+        <span class="tag tag-jg">${m.jahrgaenge.map(j=>j+'. Jg.').join(', ')}</span>
+        ${m.schultypen.includes('HAK') && m.schultypen.includes('HLW')
+          ? '<span class="tag tag-hak">HAK</span><span class="tag tag-hlw">HLW</span>'
+          : `<span class="tag tag-${m.schultypen[0].toLowerCase()}">${m.schultypen[0]}</span>`
+        }
+      </div>
+      <span class="module-arrow">→</span>
+    </div>
+  `).join('');
+}
+
+/* ==============================================
+   OPEN MODULE
+============================================== */
+function openModule(id) {
+  const m = MODULES.find(x => x.id === id);
+  if (!m) return;
+  currentModule = m;
+  document.getElementById('bc-module').textContent = m.title;
+
+  const aufgaben = (currentSchultyp === 'HLW' && m.aufgabenHLW) ? m.aufgabenHLW : m.aufgaben;
+  // filter by Jahrgang hint in task text is implicit; all tasks shown
+
+  if (!chatHistories[id]) chatHistories[id] = [];
+
+  const html = `
+    <div class="module-header" data-icon="${m.icon}">
+      <div class="module-header-badge">Modul · ${currentSchultyp} · ${currentJahrgang}. Jahrgang</div>
+      <h2>${m.icon} ${m.title}</h2>
+      <p>${m.desc}</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(event,'tab-situation')">📋 Situation</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-aufgaben')">✏️ Aufgaben</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-ki')">🤖 KI-Beratung</button>
+      <button class="tab-btn" onclick="switchTab(event,'tab-reflexion')">💭 Reflexion</button>
+      <button class="tab-btn tab-btn-solution" onclick="switchTab(event,'tab-loesung')">✅ Musterlösung</button>
+    </div>
+
+    <!-- Situation -->
+    <div class="tab-content active" id="tab-situation">
+      <div class="content-block">
+        <div class="block-title"><span class="block-icon">🏢</span>Unternehmenssituation</div>
+        <h3>Ausgangslage bei AlpenFresh</h3>
+        ${m.situation}
+      </div>
+      ${m.infobox ? `<div class="infobox"><div class="infobox-title">💡 Fachbegriff: ${m.infobox.title}</div><p>${m.infobox.text}</p></div>` : ''}
+    </div>
+
+    <!-- Aufgaben -->
+    <div class="tab-content" id="tab-aufgaben">
+      <div class="content-block">
+        <div class="block-title"><span class="block-icon">✏️</span>Arbeitsaufträge · ${currentSchultyp}</div>
+        <h3>Deine Aufgaben</h3>
+        <ol class="aufgabe-list">
+          ${aufgaben.map(a => `<li>${a}</li>`).join('')}
+        </ol>
+      </div>
+    </div>
+
+    <!-- KI Chat -->
+    <div class="tab-content" id="tab-ki">
+      <div class="ki-area">
+        <div class="ki-header">
+          <div class="ki-header-left">
+            <div class="ki-avatar">🤖</div>
+            <div>
+              <div class="ki-name">AlpenFresh KI-Berater</div>
+              <div class="ki-status" id="ki-status-${id}">Bereit für deine Fragen</div>
+            </div>
+          </div>
+          <select class="ki-role-select" id="role-select-${id}">
+            <option value="berater">🧑‍💼 Unternehmensberater</option>
+            <option value="investor">💰 Investor</option>
+            <option value="bank">🏦 Bankberater</option>
+            <option value="kunde">🛒 Kritischer Kunde</option>
+          </select>
+        </div>
+
+        <div class="ki-messages" id="chat-${id}">
+          <div class="msg msg-ai">
+            <div class="msg-avatar-sm">🤖</div>
+            <div class="msg-bubble">Hallo! Ich bin dein KI-Berater für das Modul <strong>${m.title}</strong>. Stelle mir eine Frage oder nutze den vorbereiteten Prompt unten! Denk daran: Überprüfe meine Antworten kritisch – ich kann auch Fehler machen! 🧐</div>
+          </div>
+        </div>
+
+        <div class="ki-prompt-suggestion">
+          <span id="prompt-preview-${id}">${m.prompt.substring(0,80)}…</span>
+          <button class="use-prompt-btn" onclick="usePrompt('${id}')">Prompt verwenden →</button>
+        </div>
+
+        <div class="ki-input-area">
+          <textarea class="ki-input" id="input-${id}" placeholder="Stelle eine Frage an den KI-Berater…" rows="1"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage('${id}')}"
+            oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
+          <button class="ki-send-btn" id="send-btn-${id}" onclick="sendMessage('${id}')">Senden →</button>
+        </div>
+      </div>
+
+      <div class="content-block" style="background:#fffbf0;border-color:#f0d080">
+        <div class="block-title"><span class="block-icon">💡</span>Vorbereiteter Prompt</div>
+        <p style="font-size:0.88rem;color:#6b4a00;line-height:1.65">${m.prompt}</p>
+      </div>
+    </div>
+
+    <!-- Reflexion -->
+    <div class="tab-content" id="tab-reflexion">
+      <div class="content-block">
+        <div class="block-title"><span class="block-icon">💭</span>Reflexionsfragen</div>
+        <h3>Bewerte die KI-Antwort kritisch</h3>
+        <p style="margin-bottom:16px;font-size:0.9rem">Nachdem du den KI-Berater befragt hast, beantworte diese Fragen:</p>
+        <ul class="reflexion-list">
+          ${m.reflexion.map(r => `<li><span class="refl-icon">❓</span>${r}</li>`).join('')}
+        </ul>
+      </div>
+      <div class="infobox">
+        <div class="infobox-title">🎯 Lernziel</div>
+        <p>KI-Systeme können sehr überzeugend klingen, aber <strong>unvollständige, veraltete oder falsche Informationen</strong> liefern. Deine Aufgabe als zukünftige/r Wirtschaftsfachmann/-frau ist es, KI-Outputs zu <strong>hinterfragen, einzuordnen und zu ergänzen</strong>.</p>
+      </div>
+    </div>
+
+    <!-- Musterlösung -->
+    <div class="tab-content" id="tab-loesung">
+      <div class="content-block">
+        <div class="block-title"><span class="block-icon">✅</span>Musterlösung · ${currentSchultyp}</div>
+        <h3>Lösungsvorschläge zu den Aufgaben</h3>
+        <p style="margin-bottom:18px;font-size:0.88rem;color:#4a5578">Die folgenden Lösungen sind <strong>Lösungsvorschläge</strong> – in der Betriebswirtschaft gibt es oft mehrere richtige Antworten. Vergleiche mit deinen eigenen Überlegungen und begründe, wo du abweichst.</p>
+        ${(m.loesungen && (currentSchultyp === 'HLW' && m.loesungenHLW ? m.loesungenHLW : m.loesungen)).map((l,i) => `
+          <div class="loesung-block">
+            <div class="loesung-aufgabe-label">Aufgabe ${i+1}</div>
+            <div class="loesung-text">${l}</div>
+          </div>`).join('') || '<p style="color:#8892aa">Musterlösung wird bald ergänzt.</p>'}
+      </div>
+      <div class="loesung-hinweis">
+        💡 <strong>Hinweis:</strong> Diese Musterlösungen basieren auf den Inhalten der „Praxisblicke Betriebswirtschaft"-Reihe (Trauner Verlag). Bei Rechenaufgaben gibt es nur eine richtige Lösung – bei konzeptionellen Aufgaben zählt die Begründung!
+      </div>
+    </div>
+  `;
+
+  document.getElementById('module-content').innerHTML = html;
+  showPage('module');
+}
+
+/* ==============================================
+   TAB SWITCH
+============================================== */
+function switchTab(e, tabId) {
+  const tabBtns = e.target.closest('.tabs').querySelectorAll('.tab-btn');
+  const moduleContent = e.target.closest('.module-page-inner');
+  const tabContents = moduleContent.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(b => b.classList.remove('active'));
+  tabContents.forEach(c => c.classList.remove('active'));
+  e.target.classList.add('active');
+  moduleContent.querySelector('#' + tabId).classList.add('active');
+}
+
+/* ==============================================
+   KI CHAT (Anthropic API)
+============================================== */
+const ROLE_PROMPTS = {
+  berater: 'Du bist ein erfahrener Unternehmensberater für kleine und mittlere österreichische Unternehmen. Du gibst praktische, wirtschaftlich fundierte Ratschläge. Du arbeitest für AlpenFresh GmbH, ein Bio-Lebensmittel-Start-up aus Österreich.',
+  investor: 'Du bist ein kritischer österreichischer Investor (Angel Investor). Du stellst kritische Fragen zu Rentabilität, Skalierbarkeit und Risiken. Du überlegst, ob du in AlpenFresh GmbH investieren würdest.',
+  bank: 'Du bist ein Firmenkundenberater einer österreichischen Bank. Du analysierst die Kreditwürdigkeit und Finanzierungsoptionen für AlpenFresh GmbH sachlich und vorsichtig.',
+  kunde: 'Du bist ein kritischer Konsument, der sehr auf Nachhaltigkeit, Preis-Leistung und Transparenz achtet. Du bewertest die Produkte und das Unternehmen AlpenFresh GmbH aus Kundenperspektive.'
+};
+
+async function sendMessage(moduleId) {
+  const input = document.getElementById(`input-${moduleId}`);
+  const chatBox = document.getElementById(`chat-${moduleId}`);
+  const sendBtn = document.getElementById(`send-btn-${moduleId}`);
+  const statusEl = document.getElementById(`ki-status-${moduleId}`);
+  const roleSelect = document.getElementById(`role-select-${moduleId}`);
+
+  const text = input.value.trim();
+  if (!text) return;
+
+  // Add user message
+  appendMsg(chatBox, 'user', text);
+  input.value = '';
+  input.style.height = 'auto';
+  sendBtn.disabled = true;
+  statusEl.textContent = 'Schreibt…';
+
+  // Store in history
+  if (!chatHistories[moduleId]) chatHistories[moduleId] = [];
+  chatHistories[moduleId].push({ role: 'user', content: text });
+
+  // Typing indicator
+  const typingId = 'typing-' + Date.now();
+  chatBox.innerHTML += `<div class="msg msg-ai" id="${typingId}">
+    <div class="msg-avatar-sm">🤖</div>
+    <div class="msg-bubble"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>
+  </div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  const role = roleSelect ? roleSelect.value : 'berater';
+  const systemPrompt = ROLE_PROMPTS[role] + '\n\nDu antwortest auf Deutsch, klar und verständlich für Schüler einer österreichischen HAK/HLW (ca. 16–18 Jahre). Fachbegriffe erklärst du kurz. Halte Antworten übersichtlich (max. 200 Wörter). WICHTIG: Du bist eine Lernhilfe – betone bei komplexen Entscheidungen, dass echte Beratung durch Experten wichtig ist.';
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: chatHistories[moduleId]
+      })
+    });
+
+    const data = await response.json();
+    const reply = data.content?.[0]?.text || 'Entschuldigung, ich konnte keine Antwort generieren.';
+
+    chatHistories[moduleId].push({ role: 'assistant', content: reply });
+
+    document.getElementById(typingId)?.remove();
+    appendMsg(chatBox, 'ai', reply);
+    statusEl.textContent = 'Bereit für deine Fragen';
+  } catch (err) {
+    document.getElementById(typingId)?.remove();
+    appendMsg(chatBox, 'ai', '⚠️ Verbindungsfehler. Stelle sicher, dass du diese Seite in Claude.ai geöffnet hast.');
+    statusEl.textContent = 'Fehler';
+  }
+
+  sendBtn.disabled = false;
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function appendMsg(chatBox, type, text) {
+  const isAI = type === 'ai';
+  const formatted = text.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  chatBox.innerHTML += `
+    <div class="msg msg-${isAI ? 'ai' : 'user'}">
+      <div class="msg-avatar-sm">${isAI ? '🤖' : '👤'}</div>
+      <div class="msg-bubble">${formatted}</div>
+    </div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function usePrompt(moduleId) {
+  const m = MODULES.find(x => x.id === moduleId);
+  if (!m) return;
+  const input = document.getElementById(`input-${moduleId}`);
+  if (input) {
+    input.value = m.prompt;
+    input.style.height = 'auto';
+    input.style.height = input.scrollHeight + 'px';
+    input.focus();
+  }
+}
+
+/* ==============================================
+   PAGE NAVIGATION
+============================================== */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ==============================================
+   INIT
+============================================== */
+renderModuleGrid();
+</script>
+</body>
+</html>

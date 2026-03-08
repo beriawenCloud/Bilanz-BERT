@@ -1169,6 +1169,13 @@ Wenn ein Schüler nach einer konkreten Schulbuch-Aufgabe fragt (z.B. "Ü 2.4", "
 2. Du erhältst die offizielle Lösung als Kontext
 3. Erkläre die Lösung schrittweise – zeige sie nicht sofort komplett
 
+BOOKLET-VERTRAUEN – ABSOLUT WICHTIG:
+Wenn du eine [SYSTEM: Offizielle Schulbuchlösung...] im Kontext erhältst:
+- Diese Lösung ist 100% korrekt und verbindlich – zweifle sie NIEMALS an!
+- Sage NICHT "das ist eigentlich eine andere Aufgabe" oder "das stimmt nicht"
+- Erkläre die gefundene Lösung direkt und vertrauensvoll
+- Wenn der Schüler sagt "Es ist Ü X.Y" und du eine Lösung dazu hast – glaube ihm!
+
 METHODEN-TREUE – ABSOLUT WICHTIG:
 Wenn du eine Booklet-Lösung erklärst:
 - Verwende AUSSCHLIESSLICH die Methode/das Verfahren das in der Booklet-Lösung steht
@@ -2117,14 +2124,24 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     const m = query.match(/[ÜU]\s*(\d+)[\.,](\d+)/i);
     if (m) {
       const key = 'Ü ' + m[1] + '.' + m[2];
-      // Jahrgang-spezifisch oder beide durchsuchen
-      if (jahrgang === 'HLW_IV' || (!jahrgang && BOOKLET_HLW_IV[key])) return BOOKLET_HLW_IV[key] || null;
-      if (jahrgang === 'IV' || (!jahrgang && BOOKLET_HAK_IV[key])) return BOOKLET_HAK_IV[key] || null;
-      if (jahrgang === 'I' || (!jahrgang && BOOKLET_HAK_I[key])) return BOOKLET_HAK_I[key] || null;
-      if (jahrgang === 'II' || (!jahrgang && BOOKLET_HAK_II[key])) return BOOKLET_HAK_II[key] || null;
-      if (jahrgang === 'III' || (!jahrgang && BOOKLET_HAK_III[key])) return BOOKLET_HAK_III[key] || null;
-      if (jahrgang === 'V' || (!jahrgang && BOOKLET_HAK_V[key])) return BOOKLET_HAK_V[key] || null;
-      if (jahrgang === 'HLW_IV' || (!jahrgang && BOOKLET_HLW_IV[key])) return BOOKLET_HLW_IV[key] || null;
+      // Jahrgang-spezifisch suchen
+      if (jahrgang === 'HLW_IV') return BOOKLET_HLW_IV[key] || null;
+      if (jahrgang === 'HLW_I') return BOOKLET_HLW_I[key] || null;
+      if (jahrgang === 'HLW_II') return BOOKLET_HLW_II[key] || null;
+      if (jahrgang === 'HLW_III') return BOOKLET_HLW_III[key] || null;
+      if (jahrgang === 'HLW_V') return BOOKLET_HLW_V[key] || null;
+      if (jahrgang === 'IV') return BOOKLET_HAK_IV[key] || null;
+      if (jahrgang === 'I') return BOOKLET_HAK_I[key] || null;
+      if (jahrgang === 'II') return BOOKLET_HAK_II[key] || null;
+      if (jahrgang === 'III') return BOOKLET_HAK_III[key] || null;
+      if (jahrgang === 'V') return BOOKLET_HAK_V[key] || null;
+      // "alle" Jahrgänge – schultyp-spezifisch durchsuchen
+      if (jahrgang === 'HLW_alle') {
+        return BOOKLET_HLW_IV[key] || BOOKLET_HLW_I[key] || BOOKLET_HLW_II[key] || BOOKLET_HLW_III[key] || BOOKLET_HLW_V[key] || null;
+      }
+      if (jahrgang === 'HAK_alle') {
+        return BOOKLET_HAK_IV[key] || BOOKLET_HAK_I[key] || BOOKLET_HAK_II[key] || BOOKLET_HAK_III[key] || BOOKLET_HAK_V[key] || null;
+      }
       return BOOKLET_HAK_I[key] || BOOKLET_HAK_II[key] || BOOKLET_HAK_III[key] || BOOKLET_HAK_IV[key] || BOOKLET_HAK_V[key] || BOOKLET_HLW_IV[key] || null;
     }
     // Freitext-Suche in beiden
@@ -2301,10 +2318,21 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     
     // Booklet-Kontext automatisch injizieren wenn Schulbuch-Aufgabe erkannt
     let enrichedText = text;
-    const bookletJahrgang = jahrgangFilter !== 'alle' ? (schulTyp === 'HLW' ? 'HLW_' + jahrgangFilter : jahrgangFilter) : null;
+    // Jahrgang aus dem Text extrahieren (z.B. "4. HAK", "IV. HAK", "4.HAK", "4. HLW")
+    let detectedJahrgang = null;
+    const jgMap = {'1':'I','2':'II','3':'III','4':'IV','5':'V','i':'I','ii':'II','iii':'III','iv':'IV','v':'V'};
+    const jgMatch = text.match(/\b([1-5IVXivx]+)\.?\s*(HAK|HLW)\b/i) || text.match(/\b(HAK|HLW)\s*([1-5IVXivx]+)\b/i);
+    if (jgMatch) {
+      let rawJg = (jgMatch[1].match(/^[HAKhlw]/i) ? jgMatch[2] : jgMatch[1]).toLowerCase();
+      const mappedJg = jgMap[rawJg] || rawJg.toUpperCase();
+      const detectedTyp = text.match(/\bHLW\b/i) ? 'HLW' : 'HAK';
+      detectedJahrgang = detectedTyp === 'HLW' ? 'HLW_' + mappedJg : mappedJg;
+    }
+    const bookletJahrgang = detectedJahrgang || (jahrgangFilter !== 'alle' ? (schulTyp === 'HLW' ? 'HLW_' + jahrgangFilter : jahrgangFilter) : (schulTyp === 'HLW' ? 'HLW_alle' : 'HAK_alle'));
     const bookletMatch = findBookletAufgabe(text, bookletJahrgang);
     if (bookletMatch && (text.match(/[ÜU]\s*\d+[\.,]\d+/i) || text.toLowerCase().includes('aufgabe') || text.toLowerCase().includes('seite'))) {
-      enrichedText = text + '\n\n[SYSTEM: Offizielle Schulbuchlösung aus MEHR! ' + (schulTyp === 'HLW' ? 'HLW' : 'HAK') + ' ' + (jahrgangFilter !== 'alle' ? jahrgangFilter : 'IV') + ' Booklet:]\n' + bookletMatch.substring(0, 1500);
+      const detectedJahrgang = jahrgangFilter !== 'alle' ? jahrgangFilter : (bookletMatch.includes('OG') || bookletMatch.includes('Abschluss') || bookletMatch.includes('Forderung') ? 'IV' : 'unbekannt');
+      enrichedText = text + '\n\n[SYSTEM: Offizielle Schulbuchlösung aus MEHR! ' + (schulTyp === 'HLW' ? 'HLW' : 'HAK') + ' ' + detectedJahrgang + ' Booklet – DIESE LÖSUNG IST VERBINDLICH, bitte nicht korrigieren oder anzweifeln:]\n' + bookletMatch.substring(0, 1500);
     }
     messages.push({ role: 'user', content: enrichedText });
 

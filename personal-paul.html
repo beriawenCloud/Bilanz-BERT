@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal-Paul HTL</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #E8620A;
+    --orange-light: #F5874A;
+    --orange-pale: #FEF0E6;
+    --dark: #1A1A1A;
+    --mid: #555;
+    --light: #F7F5F2;
+    --white: #FFFFFF;
+    --green: #2D8A4E;
+    --green-light: #E8F5ED;
+    --red: #C0392B;
+    --red-light: #FDECEA;
+    --blue: #1A6FA8;
+    --blue-light: #E8F2FA;
+    --border: #E5E0D8;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Outfit', sans-serif; background: var(--light); color: var(--dark); min-height: 100vh; font-size: 16px; }
+
+  /* HEADER */
+  header { background: var(--dark); padding: 0 24px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 16px rgba(0,0,0,0.3); }
+  .header-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; gap: 12px; height: 58px; }
+  .logo { font-family: 'Outfit', sans-serif; font-weight: 900; font-size: 1.35rem; color: var(--white); letter-spacing: -0.5px; }
+  .logo span { color: var(--orange); }
+  .logo-sub { font-size: 0.78rem; color: #777; font-weight: 400; margin-left: 6px; }
+  .header-copy { margin-left: auto; font-size: 0.75rem; color: #666; font-weight: 400; white-space: nowrap; }
+
+  /* TABS */
+  .tabs-wrapper { background: var(--white); border-bottom: 2px solid var(--border); position: sticky; top: 58px; z-index: 99; overflow-x: auto; }
+  .tabs { max-width: 1100px; margin: 0 auto; display: flex; padding: 0 16px; gap: 2px; }
+  .tab-btn { font-family: 'Outfit', sans-serif; font-weight: 500; font-size: 0.83rem; padding: 14px 15px; border: none; background: none; color: var(--mid); cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s; position: relative; top: 2px; }
+  .tab-btn:hover { color: var(--orange); }
+  .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 700; }
+  .tab-num { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; background: var(--orange-pale); color: var(--orange); border-radius: 50%; font-size: 0.72rem; font-weight: 700; margin-right: 5px; }
+  .tab-btn.active .tab-num { background: var(--orange); color: white; }
+
+  /* MAIN */
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 20px 80px; }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* MODULE HEADER */
+  .module-header { margin-bottom: 28px; }
+  .module-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 6px; }
+  .module-title { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 900; color: var(--dark); line-height: 1.1; }
+  .module-desc { margin-top: 10px; color: var(--mid); font-size: 0.95rem; max-width: 660px; line-height: 1.6; font-weight: 400; }
+
+  /* CARDS */
+  .card { background: var(--white); border-radius: 16px; padding: 26px; box-shadow: var(--shadow); margin-bottom: 22px; border: 1px solid var(--border); }
+  .card-title { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: var(--dark); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* HINTS / CALLOUTS */
+  .hinweis { background: var(--blue-light); border: 1px solid #B3D4EF; border-radius: 10px; padding: 12px 16px; font-size: 0.85rem; color: var(--blue); margin-bottom: 16px; font-weight: 400; line-height: 1.5; }
+  .hinweis strong { font-weight: 700; }
+  .quiz-intro { background: var(--orange-pale); border-left: 4px solid var(--orange); border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 22px; font-size: 0.88rem; color: var(--mid); font-style: italic; }
+  .theory-box { background: var(--blue-light); border-left: 4px solid var(--blue); border-radius: 0 10px 10px 0; padding: 16px 20px; margin-bottom: 18px; font-size: 0.9rem; line-height: 1.7; color: var(--dark); }
+  .theory-box strong { color: var(--blue); font-weight: 700; }
+  .warning-box { background: #FFF8E1; border-left: 4px solid #F59E0B; border-radius: 0 10px 10px 0; padding: 14px 18px; margin-top: 14px; font-size: 0.85rem; line-height: 1.6; color: var(--dark); }
+  .warning-box strong { color: #B45309; }
+
+  /* SCORE BAR */
+  .score-bar { background: var(--dark); color: white; border-radius: 12px; padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+  .score-label { font-size: 0.78rem; color: #999; }
+  .score-num { font-size: 1.7rem; font-weight: 900; }
+  .score-num span { color: var(--orange); }
+  .reset-btn { padding: 8px 16px; background: transparent; border: 1px solid #555; color: #ccc; border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-family: 'Outfit', sans-serif; transition: all 0.2s; }
+  .reset-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* SCENARIO CARDS */
+  .scenario-card { background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 22px; margin-bottom: 14px; transition: border-color 0.2s; }
+  .scenario-card.correct { border-color: var(--green); background: var(--green-light); }
+  .scenario-card.wrong { border-color: var(--red); background: var(--red-light); }
+  .scenario-emoji { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+  .scenario-text { font-size: 0.93rem; line-height: 1.6; margin-bottom: 14px; color: var(--dark); }
+  .answer-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .answer-btn { padding: 8px 16px; border-radius: 22px; border: 2px solid var(--border); background: var(--white); cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 500; color: var(--mid); transition: all 0.15s; }
+  .answer-btn:hover { border-color: var(--orange); color: var(--orange); }
+  .answer-btn.selected-correct { background: var(--green); border-color: var(--green); color: white; }
+  .answer-btn.selected-wrong { background: var(--red); border-color: var(--red); color: white; }
+  .answer-btn.show-correct { background: var(--green); border-color: var(--green); color: white; }
+  .answer-btn:disabled { cursor: default; }
+  .feedback-box { margin-top: 12px; padding: 11px 15px; border-radius: 9px; font-size: 0.87rem; line-height: 1.5; display: none; }
+  .feedback-box.show { display: block; }
+  .feedback-box.correct { background: var(--green-light); color: var(--green); }
+  .feedback-box.wrong { background: var(--red-light); color: var(--red); }
+
+  /* INPUTS */
+  .input-group { margin-bottom: 14px; }
+  .input-label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--mid); margin-bottom: 5px; }
+  .input-field { width: 100%; padding: 10px 13px; border: 2px solid var(--border); border-radius: 9px; font-family: 'Outfit', sans-serif; font-size: 0.93rem; color: var(--dark); background: var(--white); transition: border-color 0.2s; outline: none; }
+  .input-field:focus { border-color: var(--orange); }
+  select.input-field { cursor: pointer; }
+  .calc-btn { width: 100%; padding: 13px; background: var(--orange); color: white; border: none; border-radius: 10px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 0.97rem; cursor: pointer; transition: background 0.2s; letter-spacing: 0.3px; }
+  .calc-btn:hover { background: var(--orange-light); }
+
+  /* RESULT PANEL */
+  .result-panel { background: var(--dark); border-radius: 14px; padding: 22px; color: white; }
+  .result-title { font-size: 0.72rem; color: #888; margin-bottom: 14px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+  .result-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid #262626; font-size: 0.88rem; }
+  .result-row:last-child { border-bottom: none; }
+  .result-row.highlight { color: #F5A06A; }
+  .result-row.netto-row { font-weight: 900; font-size: 1.25rem; color: white; margin-top: 8px; padding-top: 12px; border-top: 2px solid var(--orange); border-bottom: none; }
+  .result-op { color: #666; font-size: 0.85rem; width: 18px; flex-shrink: 0; }
+  .result-label { flex: 1; padding-left: 8px; }
+  .result-val { font-weight: 600; font-family: 'DM Mono', monospace; font-size: 0.88rem; }
+
+  /* BADGES */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; margin-left: 4px; }
+  .badge-orange { background: var(--orange-pale); color: var(--orange); }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+
+  /* FORMULA */
+  .formula-box { background: var(--dark); color: var(--orange); border-radius: 10px; padding: 14px 20px; font-family: 'DM Mono', monospace; font-size: 0.9rem; text-align: center; margin-bottom: 18px; }
+
+  /* AUFGABE */
+  .aufgabe-box { background: var(--orange-pale); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .aufgabe-title { font-weight: 700; font-size: 0.88rem; color: var(--orange); margin-bottom: 8px; }
+  .aufgabe-text { font-size: 0.88rem; line-height: 1.65; color: var(--dark); }
+  .solution-toggle { margin-top: 12px; padding: 7px 16px; background: transparent; border: 2px solid var(--orange); color: var(--orange); border-radius: 8px; cursor: pointer; font-family: 'Outfit', sans-serif; font-size: 0.83rem; font-weight: 600; transition: all 0.15s; }
+  .solution-toggle:hover { background: var(--orange); color: white; }
+  .solution-box { display: none; margin-top: 12px; background: var(--white); border: 2px solid var(--green); border-radius: 10px; padding: 15px; font-size: 0.87rem; line-height: 1.75; color: var(--dark); }
+  .solution-box.show { display: block; }
+  .solution-box code { display: block; background: var(--light); padding: 10px 14px; border-radius: 8px; margin-top: 8px; font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--dark); line-height: 1.9; }
+
+  /* LOHNFORM TABS */
+  .lohnform-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .lf-tab { padding: 8px 18px; border-radius: 22px; border: 2px solid var(--border); background: var(--white); cursor: pointer; font-size: 0.85rem; font-weight: 500; font-family: 'Outfit', sans-serif; transition: all 0.15s; color: var(--mid); }
+  .lf-tab.active, .lf-tab:hover { background: var(--orange); border-color: var(--orange); color: white; font-weight: 600; }
+  .lf-panel { display: none; }
+  .lf-panel.active { display: block; }
+
+  /* PM CARDS */
+  .pm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 22px; }
+  .pm-card { background: var(--white); border: 2px solid var(--border); border-radius: 14px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .pm-card:hover, .pm-card.active { border-color: var(--orange); }
+  .pm-card.active { background: var(--orange); color: white; }
+  .pm-icon { font-size: 1.8rem; margin-bottom: 7px; }
+  .pm-label { font-weight: 600; font-size: 0.87rem; }
+
+  /* RECHTSGRUNDLAGEN */
+  .rg-item { display: flex; gap: 14px; padding: 15px; border: 2px solid var(--border); border-radius: 12px; margin-bottom: 9px; transition: border-color 0.2s; }
+  .rg-item:hover { border-color: var(--orange); }
+  .rg-rank { font-weight: 900; font-size: 1.6rem; color: var(--orange-pale); line-height: 1; min-width: 28px; }
+  .rg-content h4 { font-weight: 700; margin-bottom: 4px; font-size: 0.9rem; }
+  .rg-content p { font-size: 0.83rem; color: var(--mid); line-height: 1.5; }
+
+  /* STEP CALC */
+  .step-calc { background: var(--light); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .step-label { font-size: 0.87rem; color: var(--mid); flex: 1; }
+  .step-val { font-weight: 700; font-family: 'DM Mono', monospace; font-size: 0.95rem; color: var(--dark); min-width: 110px; text-align: right; }
+  .step-val.highlight { color: var(--orange); }
+
+  /* SCHEMA */
+  .rechner-schema { display: flex; flex-direction: column; gap: 3px; margin-bottom: 20px; }
+  .schema-row { display: flex; align-items: center; padding: 9px 14px; border-radius: 9px; }
+  .schema-row.brutto { background: #EEF4FF; }
+  .schema-row.abzug { background: #FFF3F0; }
+  .schema-row.ergebnis { background: #F0FAF4; }
+  .schema-row.netto { background: var(--dark); color: white; border-radius: 10px; margin-top: 6px; }
+  .schema-op { font-size: 1.1rem; font-weight: 700; width: 26px; text-align: center; flex-shrink: 0; color: var(--orange); }
+  .schema-label { flex: 1; font-size: 0.88rem; font-weight: 500; }
+
+  /* PROGRESS */
+  .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .progress-label { font-size: 0.80rem; color: var(--mid); min-width: 90px; }
+  .progress-bar-bg { flex: 1; height: 7px; background: var(--border); border-radius: 4px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--orange); border-radius: 4px; }
+
+  @media (max-width: 600px) {
+    .module-title { font-size: 1.55rem; }
+    main { padding: 20px 15px 70px; }
+    .card { padding: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">Personal-<span>Paul</span><span class="logo-sub">© GALS</span></div>
+    <div class="header-copy">HTL II/III · Personalmanagement & Entgelt</div>
+  </div>
+</header>
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(0)"><span class="tab-num">1</span>Beschäftigungsformen</button>
+    <button class="tab-btn" onclick="showTab(1)"><span class="tab-num">2</span>Brutto → Netto</button>
+    <button class="tab-btn" onclick="showTab(2)"><span class="tab-num">3</span>Personalkosten & Stundensatz</button>
+    <button class="tab-btn" onclick="showTab(3)"><span class="tab-num">4</span>Lohnformen</button>
+    <button class="tab-btn" onclick="showTab(4)"><span class="tab-num">5</span>Aufgaben PM</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ===== TAB 1 ===== -->
+<div class="tab-panel active" id="tab0">
+  <div class="module-header">
+    <div class="module-label">Modul 1</div>
+    <div class="module-title">Beschäftigungsformen & Verträge</div>
+    <div class="module-desc">Erkenne in echten Szenarien, welche Vertragsform vorliegt – und was das für Arbeitgeber und Arbeitnehmer bedeutet.</div>
+  </div>
+
+  <div class="score-bar">
+    <div><div class="score-label">Dein Ergebnis</div><div class="score-num"><span id="score1-correct">0</span>/<span id="score1-total">0</span></div></div>
+    <button class="reset-btn" onclick="resetQuiz1()">↺ Neu starten</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎯 Erkenne die Vertragsform</div>
+    <div class="quiz-intro">Lies das Szenario und entscheide: Liegt ein Arbeitsvertrag (AV), Werkvertrag (WV) oder freier Dienstvertrag (FDV) vor?</div>
+    <div id="scenarios1"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">👥 Angestellter, Arbeiter oder Lehrling?</div>
+    <div class="hinweis"><strong>Merkhilfe:</strong> Angestellter → kaufmännisch/technisch/Kanzlei → Entgelt = Gehalt | Arbeiter → manuelle Tätigkeit → Entgelt = Lohn | Lehrling → in Ausbildung → Entgelt = Lehrlingsgehalt</div>
+    <div id="sortier-quiz"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚖️ Rechtsgrundlagen – Günstigkeitsprinzip</div>
+    <p style="font-size:0.87rem;color:var(--mid);margin-bottom:16px;">4 Ebenen regeln das Beschäftigungsverhältnis. Höherrangige Regelungen gehen vor – aber eine günstigere Einzelvereinbarung ist immer erlaubt.</p>
+    <div class="rg-item"><div class="rg-rank">1</div><div class="rg-content"><h4>Gesetz <span class="badge badge-orange">Höchste Priorität</span></h4><p>ABGB, Arbeitsverfassungsgesetz, Arbeitszeitgesetz, ArbeitnehmerInnenschutzgesetz, Berufsausbildungsgesetz</p></div></div>
+    <div class="rg-item"><div class="rg-rank">2</div><div class="rg-content"><h4>Kollektivvertrag (KV)</h4><p>Jährlich zwischen Gewerkschaft und Wirtschaftskammer verhandelt. Legt Mindestlöhne, Urlaubsanspruch, Kündigungsfristen, Zulagen uvm. fest. Gilt für alle Arbeitnehmer der Branche.</p></div></div>
+    <div class="rg-item"><div class="rg-rank">3</div><div class="rg-content"><h4>Betriebsvereinbarung</h4><p>Vereinbarung zwischen Arbeitgeber und Betriebsrat. Gilt nur betriebsintern. Ab 5 Mitarbeitern ist ein Betriebsrat möglich.</p></div></div>
+    <div class="rg-item"><div class="rg-rank">4</div><div class="rg-content"><h4>Arbeitsvertrag <span class="badge badge-green">Individuell</span></h4><p>Direkte Vereinbarung zwischen Arbeitgeber und Arbeitnehmer. Darf nicht schlechter sein als KV – besser ist immer erlaubt.</p></div></div>
+    <div class="warning-box"><strong>Beispiel Günstigkeitsprinzip:</strong> Der KV sieht € 2.100 Mindestgehalt vor. Der Arbeitgeber bietet € 2.400 – das ist gültig. Er bietet € 1.900 – das ist rechtswidrig!</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🏛️ Pflichtmitgliedschaft</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="padding:13px;background:var(--blue-light);border-radius:10px;"><strong style="font-size:0.85rem;color:var(--blue);">Arbeiterkammer (AK)</strong><p style="font-size:0.82rem;color:var(--mid);margin-top:4px;">Vertretung der Arbeitnehmer – Pflichtmitgliedschaft (Lehrling beitragsfrei)</p></div>
+        <div style="padding:13px;background:var(--orange-pale);border-radius:10px;"><strong style="font-size:0.85rem;color:var(--orange);">Wirtschaftskammer (WK)</strong><p style="font-size:0.82rem;color:var(--mid);margin-top:4px;">Vertretung der Arbeitgeber – Pflichtmitgliedschaft</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🤝 Freiwillige Mitgliedschaft</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="padding:13px;background:var(--light);border-radius:10px;"><strong style="font-size:0.85rem;">Gewerkschaft (ÖGB)</strong><p style="font-size:0.82rem;color:var(--mid);margin-top:4px;">Vertritt Arbeitnehmerinteressen bei KV-Verhandlungen</p></div>
+        <div style="padding:13px;background:var(--light);border-radius:10px;"><strong style="font-size:0.85rem;">Industriellenvereinigung (IV) & ÖWB</strong><p style="font-size:0.82rem;color:var(--mid);margin-top:4px;">Freiwillige Interessenvertretung der Arbeitgeber</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2 ===== -->
+<div class="tab-panel" id="tab1">
+  <div class="module-header">
+    <div class="module-label">Modul 2</div>
+    <div class="module-title">Brutto → Netto Rechner</div>
+    <div class="module-desc">Berechne das Nettoeinkommen Schritt für Schritt.</div>
+  </div>
+
+  <div class="hinweis"><strong>Aktuelle Werte 2026:</strong> SV-DNA gestaffelt (15,12 % bis 18,07 %) | Höchstbeitragsgrundlage: € 6.930 | Geringfügigkeitsgrenze: € 551,10 | FABO Plus: € 166,68/Monat/Kind</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">⚙️ Eingaben</div>
+      <div class="input-group"><label class="input-label">Bruttogehalt / Bruttolohn (€/Monat)</label><input type="number" class="input-field" id="brutto-input" value="2500" min="0" step="10"></div>
+      <div class="input-group"><label class="input-label">AVAB/AEAB (Alleinverdiener/Alleinerzieher)</label><select class="input-field" id="avab-input"><option value="0">Kein AVAB/AEAB</option><option value="1">1 Kind</option><option value="2">2 Kinder</option><option value="3">3 Kinder</option><option value="4">4 Kinder</option><option value="5">5 Kinder</option></select></div>
+      <div class="input-group"><label class="input-label">Familienbonus Plus (Anzahl Kinder bis 18 J.)</label><input type="number" class="input-field" id="fabo-input" value="0" min="0" max="10"></div>
+      <div class="input-group"><label class="input-label">Gewerkschaftsbeitrag (€/Monat)</label><input type="number" class="input-field" id="gwb-input" value="0" step="0.01"><div style="font-size:0.73rem;color:var(--mid);margin-top:3px;">1 % des Bruttogehalts, max. € 42,30</div><div id="gwb-error" style="display:none;margin-top:6px;padding:8px 12px;background:var(--red-light);color:var(--red);border-radius:8px;font-size:0.83rem;"></div></div>
+      <div class="input-group">
+        <label class="input-label">Pendlerpauschale</label>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 13px;border:2px solid var(--border);border-radius:9px;background:var(--white);cursor:pointer;" onclick="togglePendler()">
+          <input type="checkbox" id="pp-check" style="width:18px;height:18px;cursor:pointer;accent-color:var(--orange);" onchange="togglePendler()">
+          <span style="font-size:0.9rem;color:var(--mid);">Ja, Pendlerpauschale liegt vor</span>
+        </div>
+      </div>
+      <div id="pendler-felder" style="display:none;">
+        <div class="input-group">
+          <label class="input-label">Pendlerpauschale (€/Monat)</label>
+          <input type="number" class="input-field" id="pp-input" value="0" step="1">
+          <div style="font-size:0.73rem;color:var(--mid);margin-top:3px;">Betrag aus der PP-Tabelle rechts ablesen</div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Einfache Fahrtstrecke (km)</label>
+          <input type="number" class="input-field" id="pe-km-input" value="" step="1" min="1" placeholder="z.B. 26">
+          <div style="font-size:0.73rem;color:var(--mid);margin-top:3px;">Für die Berechnung des Pendlereuros</div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Pendlereuro (€/Monat) – selbst ausrechnen!</label>
+          <input type="number" class="input-field" id="pe-input" value="" step="0.01" placeholder="= km × € 6,00 ÷ 12">
+          <div id="pe-error" style="display:none;margin-top:6px;padding:8px 12px;background:var(--red-light);color:var(--red);border-radius:8px;font-size:0.83rem;"></div>
+        </div>
+      </div>
+      <div class="input-group"><label class="input-label">Freibetrag (€/Monat, z.B. Werbungskosten)</label><input type="number" class="input-field" id="fb-input" value="0" step="0.01"></div>
+      <button class="calc-btn" onclick="berechneNetto()">▶ Berechnen</button>
+    </div>
+    <div>
+      <div class="result-panel" id="result-panel">
+        <div class="result-title">Gehaltsabrechnung 2026</div>
+        <div id="result-content"><div style="color:#666;font-size:0.88rem;text-align:center;padding:24px 0;">Gib ein Bruttogehalt ein und klicke auf Berechnen.</div></div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <div class="card-title">📊 SV-Sätze 2026 (Dienstnehmeranteil)</div>
+        <div style="font-size:0.8rem;color:var(--mid);margin-bottom:10px;">inkl. KU 0,50 % + WF 0,50 % (bundesweit)</div>
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+          <thead><tr style="background:var(--dark);color:white;"><th style="padding:8px 10px;text-align:left;border-radius:6px 0 0 0;">Bruttobezug</th><th style="padding:8px 10px;text-align:right;border-radius:0 6px 0 0;">SV-DNA Satz</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid var(--border);">bis € 2.225,00</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);">15,12 %</td></tr>
+            <tr style="background:var(--light);"><td style="padding:8px 10px;border-bottom:1px solid var(--border);">€ 2.225,01 – € 2.427,00</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);">16,12 %</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid var(--border);">€ 2.427,01 – € 2.630,00</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);">17,12 %</td></tr>
+            <tr style="background:var(--light);"><td style="padding:8px 10px;">über € 2.630,00</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;">18,07 %</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:0.73rem;color:var(--mid);margin-top:8px;">Höchstbeitragsgrundlage: € 6.930,00 / Monat</div>
+
+        <div class="card-title" style="margin-top:20px;">🚗 Pendlerpauschale 2026 (Monatsbeträge)</div>
+        <div style="font-size:0.8rem;color:var(--mid);margin-bottom:10px;"><strong>Kleines PP:</strong> öffentl. Verkehrsmittel zumutbar &nbsp;|&nbsp; <strong>Grosses PP:</strong> nicht zumutbar (kein Anschluss, Schichtarbeit …)</div>
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+          <thead><tr style="background:var(--dark);color:white;"><th style="padding:8px 10px;text-align:left;border-radius:6px 0 0 0;">Entfernung</th><th style="padding:8px 10px;text-align:right;color:#F5A06A;">Kleines PP</th><th style="padding:8px 10px;text-align:right;color:#F5A06A;border-radius:0 6px 0 0;">Grosses PP</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid var(--border);">ab 2 km</td><td style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border);color:var(--mid);">–</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);">€ 31,00</td></tr>
+            <tr style="background:var(--light);"><td style="padding:8px 10px;border-bottom:1px solid var(--border);">ab 20 km</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);">€ 58,00</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);">€ 123,00</td></tr>
+            <tr><td style="padding:8px 10px;border-bottom:1px solid var(--border);">ab 40 km</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);">€ 113,00</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;border-bottom:1px solid var(--border);">€ 214,00</td></tr>
+            <tr style="background:var(--light);"><td style="padding:8px 10px;">ab 60 km</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;">€ 168,00</td><td style="padding:8px 10px;text-align:right;font-weight:700;font-family:'DM Mono',monospace;">€ 306,00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEMA -->
+  <div class="card">
+    <div class="card-title">📐 Das Berechnungsschema – Schritt für Schritt</div>
+    <div class="rechner-schema">
+      <div class="schema-row brutto"><div class="schema-op">=</div><div class="schema-label"><strong>Bruttobezug</strong> (laut KV oder Vereinbarung)</div></div>
+      <div class="schema-row abzug"><div class="schema-op">−</div><div class="schema-label">SV-Dienstnehmeranteil (SV-DNA) <span class="badge badge-orange">gestaffelt 2026</span></div></div>
+      <div class="schema-row abzug"><div class="schema-op">−</div><div class="schema-label">Gewerkschaftsbeitrag / Pendlerpauschale / Freibetrag</div></div>
+      <div class="schema-row ergebnis"><div class="schema-op">=</div><div class="schema-label"><strong>Lohnsteuer-Bemessungsgrundlage (LSt-BMG)</strong></div></div>
+      <div class="schema-row abzug"><div class="schema-op">−</div><div class="schema-label">Lohnsteuer (LSt) laut Tarif <span class="badge badge-blue">progressiv</span></div></div>
+      <div class="schema-row abzug"><div class="schema-op">−</div><div class="schema-label">Familienbonus Plus (direkt vom LSt-Betrag abgezogen!)</div></div>
+      <div class="schema-row" style="background:#F0FAF4;"><div class="schema-op" style="color:var(--green)">+</div><div class="schema-label">Pendlereuro <span class="badge badge-green">Absetzbetrag vom Netto</span></div></div>
+      <div class="schema-row netto"><div class="schema-op" style="color:var(--orange)">→</div><div class="schema-label" style="color:white;font-weight:700;">NETTOBEZUG (= Auszahlungsbetrag)</div></div>
+    </div>
+    <div class="warning-box"><strong>Wichtig – FABO Plus:</strong> Der Familienbonus Plus ist ein <em>Absetzbetrag</em>, kein Absetzposten von der BMG! Er wird direkt vom errechneten Lohnsteuerbetrag abgezogen. 2026: € 166,68/Monat pro Kind bis 18 Jahre.</div>
+  </div>
+
+  <!-- DURCHGERECHNETE BEISPIELE -->
+  <div class="card">
+    <div class="card-title">📝 Durchgerechnete Beispiele</div>
+
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Beispiel 1 – Angestellte ohne AVAB</div>
+      <div class="aufgabe-text">Angestellte ohne AVAB, Gehalt € 1.781,– Berechne den Nettobezug.</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>
+Bruttogehalt:                        € 1.781,00
+− SV-DNA (15,12 %):                  €   269,29
+= LSt-BMG:                           € 1.511,71
+− Lohnsteuer (20 %, Abzug 269,18):   €    33,16
+                                     (1511,71 × 0,20 − 269,18)
+= Nettobezug:                        € 1.478,55
+      </code></div>
+    </div>
+
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Beispiel 2 – Angestellter ohne AVAB, niedriges Gehalt</div>
+      <div class="aufgabe-text">Angestellter ohne AVAB, Gehalt € 1.372,– Berechne den Nettobezug.</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>
+Bruttogehalt:                        € 1.372,00
+− SV-DNA (15,12 %):                  €   207,45
+= LSt-BMG:                           € 1.164,55
+− Lohnsteuer:                        €     0,00
+  (unter € 1.139,25 → keine Steuer, aber hier knapp drüber:
+   1164,55 × 0,20 − 269,18 = −36,27 → 0,00)
+= Nettobezug:                        € 1.164,55
+      </code></div>
+    </div>
+
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Beispiel 3 – Arbeiter mit AVAB, 1 Kind</div>
+      <div class="aufgabe-text">Arbeiter mit AVAB (1 Kind), Stundenlohn € 15,30, August: 168 Stunden. Berechne den Nettolohn.</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>
+Bruttolohn (168 h × € 15,30):        € 2.570,40
+− SV-DNA (17,12 %, da über 2.427):   €   439,95
+= LSt-BMG:                           € 2.130,45
+− Lohnsteuer (30 %, Abzug 504,55):   €   134,59
+  (2130,45 × 0,30 − 504,55)
+= Nettolohn:                         € 1.995,86
+      </code></div>
+    </div>
+
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Beispiel 4 – Mit Pendlerpauschale & Gewerkschaftsbeitrag</div>
+      <div class="aufgabe-text">Angestellte mit AVAB (3 Kinder), Gehalt € 2.842,60, Gewerkschaftsbeitrag € 28,40, kleines Pendlerpauschale ab 20 km (€ 58,00/Monat). Berechne den Nettobezug.</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>
+Bruttogehalt:                        € 2.842,60
+− SV-DNA (18,07 %, da über 2.630):   €   513,86
+− Gewerkschaftsbeitrag:              €    28,40
+− Pendlerpauschale:                  €    58,00
+= LSt-BMG:                           € 2.242,34
+− Lohnsteuer (30 %, Abzug 545,30):   €   127,40
+  (2242,34 × 0,30 − 545,30)
+= Nettobezug:                        € 2.172,94
+      </code>
+      <div style="margin-top:8px;font-size:0.82rem;color:var(--mid);">Hinweis: Auch der Gewerkschaftsbeitrag wird vom Bruttobezug abgezogen (nicht nur von der BMG)!</div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- ===== TAB 3 ===== -->
+<div class="tab-panel" id="tab2">
+  <div class="module-header">
+    <div class="module-label">Modul 3</div>
+    <div class="module-title">Personalkosten & Stundensatz</div>
+    <div class="module-desc">Was kostet ein Mitarbeiter das Unternehmen wirklich? Und wie viel pro Stunde?</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🧮 Jahrespersonalkosten Rechner</div>
+      <div class="formula-box">JPK = Monatslohn × (1 + LNK-Satz/100) × 12</div>
+      <div class="input-group"><label class="input-label">Monatsbruttogehalt/-lohn (€)</label><input type="number" class="input-field" id="pk-brutto" value="2500" step="10"></div>
+      <div class="input-group"><label class="input-label">Lohnnebenkosten-Satz (%)</label>
+        <select class="input-field" id="pk-lnk">
+          <option value="52">52 % (Buch-Richtwert)</option>
+          <option value="53">53 % (Skriptum-Richtwert)</option>
+          <option value="51.70">51,70 % (Datenblatt-Beispiel)</option>
+          <option value="custom">Eigener Wert</option>
+        </select>
+      </div>
+      <div class="input-group" id="pk-custom-wrap" style="display:none;"><label class="input-label">Eigener LNK-Satz (%)</label><input type="number" class="input-field" id="pk-lnk-custom" value="52" step="0.1"></div>
+      <div class="input-group"><label class="input-label">Anzahl Mitarbeiter</label><input type="number" class="input-field" id="pk-anz" value="1" min="1"></div>
+      <button class="calc-btn" onclick="berechnePersonalkosten()">▶ Personalkosten berechnen</button>
+      <div id="pk-result" style="margin-top:14px;"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">⏱️ Stundensatz Rechner</div>
+      <div class="formula-box">Stundensatz = JPK ÷ verrechenbare Stunden</div>
+      <div class="input-group"><label class="input-label">Anwesenheitszeit (h/Jahr)</label><input type="number" class="input-field" id="ss-anw" value="1594" step="1"><div style="font-size:0.73rem;color:var(--mid);margin-top:3px;">Standardwert: 1.594 h (207 Tage × 7,7 h)</div></div>
+      <div class="input-group"><label class="input-label">Auslastungsgrad (%)</label><input type="number" class="input-field" id="ss-ausl" value="90" min="1" max="100"></div>
+      <div class="input-group"><label class="input-label">Jahrespersonalkosten (€)</label><input type="number" class="input-field" id="ss-jpk" value="0" step="100"><div style="font-size:0.73rem;color:var(--mid);margin-top:3px;">Wird automatisch aus linkem Rechner übernommen</div></div>
+      <button class="calc-btn" onclick="berechneStundensatz()">▶ Stundensatz berechnen</button>
+      <div id="ss-result" style="margin-top:14px;"></div>
+    </div>
+  </div>
+
+  <!-- LNK ÜBERSICHT -->
+  <div class="card">
+    <div class="card-title">📋 Bestandteile der Lohnnebenkosten</div>
+    <p style="font-size:0.85rem;color:var(--mid);margin-bottom:16px;">Was zahlt der Arbeitgeber <em>zusätzlich</em> zum Bruttoentgelt? Basis: Bruttoentgelt = 100 %</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;">
+      <div style="background:var(--light);border-radius:10px;padding:12px 14px;font-size:0.83rem;"><div style="font-weight:700;color:var(--orange);margin-bottom:4px;">SV-DGA · 20,98 %</div><div>Dienstgeberanteil zur Sozialversicherung (inkl. WF + IE)</div></div>
+      <div style="background:var(--light);border-radius:10px;padding:12px 14px;font-size:0.83rem;"><div style="font-weight:700;color:var(--orange);margin-bottom:4px;">DB · 3,70 %</div><div>Dienstgeberbeitrag zum Familienlastenausgleichsfonds</div></div>
+      <div style="background:var(--light);border-radius:10px;padding:12px 14px;font-size:0.83rem;"><div style="font-weight:700;color:var(--orange);margin-bottom:4px;">DZ · 0,39 % (Tirol)</div><div>Zuschlag zum Dienstgeberbeitrag (Kammerumlage)</div></div>
+      <div style="background:var(--light);border-radius:10px;padding:12px 14px;font-size:0.83rem;"><div style="font-weight:700;color:var(--orange);margin-bottom:4px;">Kommunalsteuer · 3,00 %</div><div>Gemeindesteuer auf die Bruttolohnsumme</div></div>
+      <div style="background:var(--light);border-radius:10px;padding:12px 14px;font-size:0.83rem;"><div style="font-weight:700;color:var(--orange);margin-bottom:4px;">MV-Beitrag · 1,53 %</div><div>Mitarbeitervorsorgekasse – Abfertigung Neu</div></div>
+      <div style="background:var(--orange);border-radius:10px;padding:12px 14px;font-size:0.83rem;color:white;"><div style="font-weight:700;margin-bottom:4px;">Summe LNK ≈ 30 %</div><div>+ anteilige Sonderzahlungen → gesamt ≈ 52 %</div></div>
+    </div>
+    <div class="hinweis" style="margin-top:14px;margin-bottom:0;"><strong>Merkformel:</strong> JPK ≈ Brutto × 1,52. Ein Mitarbeiter mit € 2.500 Brutto kostet das Unternehmen ca. <strong>€ 3.800/Monat</strong> bzw. ca. <strong>€ 45.600/Jahr!</strong></div>
+  </div>
+
+  <!-- ANWESENHEITSZEIT -->
+  <div class="card">
+    <div class="card-title">📅 Berechnung der Anwesenheitszeit</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div style="font-size:0.87rem;line-height:2;color:var(--dark);">
+        <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 14px;">
+          <span style="color:var(--mid);">Brutto-Jahresarbeitszeit</span><span><strong>260 Tage</strong> (52 × 5)</span>
+          <span style="color:var(--red);">− Feiertage</span><span>11 Tage</span>
+          <span style="color:var(--red);">− Urlaub</span><span>25 Tage</span>
+          <span style="color:var(--red);">− Krankenstand</span><span>13 Tage</span>
+          <span style="color:var(--red);">− Sonstige</span><span>4 Tage</span>
+          <span style="color:var(--green);font-weight:700;">= Anwesenheit</span><span><strong>207 Tage</strong></span>
+          <span style="color:var(--dark);">× tgl. Arbeitszeit</span><span>7,7 h</span>
+          <span style="color:var(--orange);font-weight:700;">= Anwesenheitszeit</span><span><strong>1.594 h/Jahr</strong></span>
+        </div>
+      </div>
+      <div>
+        <div class="aufgabe-box">
+          <div class="aufgabe-title">Aufgabe – Anwesenheitszeit</div>
+          <div class="aufgabe-text">Ein Mitarbeiter hat 30 Tage Urlaub, 12 Tage Krankenstand und 2 Tage sonstige Verhinderung. Berechne seine Anwesenheitszeit in Stunden (38,5 h/Woche).</div>
+          <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+          <div class="solution-box"><code>
+260 − 11 − 30 − 12 − 2 = 205 Tage
+205 × (38,5 h / 5) = 205 × 7,7 = 1.578,5 h/Jahr
+          </code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BEISPIEL AUS BUCH -->
+  <div class="card">
+    <div class="card-title">📝 Durchgerechnetes Beispiel: Stundensatz</div>
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Beispiel – Abteilung Konstruktion & Fertigung</div>
+      <div class="aufgabe-text">
+        <strong>Konstruktion:</strong> 2 Angestellte, Bruttomonatsgehalt € 2.220 und € 2.480. Anwesenheitszeit 1.578 h/Jahr, Auslastung 90 %. LNK-Satz 53 %.<br><br>
+        <strong>Fertigung:</strong> 4 Arbeiter, Bruttostundenlohn € 10,80 / € 11,20 / € 11,20 / € 13,40. Anwesenheitszeit 1.565 h/Jahr, Auslastung 92 %. LNK-Satz 53 %.
+      </div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>
+KONSTRUKTION:
+Durchschnittsgehalt = (2.220 + 2.480) / 2 = € 2.350/Monat
+JPK je MA = 2.350 × (1 + 53/100) × 12 = € 43.146/Jahr
+JPK gesamt = 2 × 43.146 = € 86.292/Jahr
+Verrechenb. Std. = 1.578 × 90% = 1.420 h/Jahr je MA → 2.840 h
+Stundensatz = 86.292 / 2.840 = € 30,38/h
+
+FERTIGUNG:
+Durchschnittslohn = (10,80+11,20+11,20+13,40)/4 = € 11,65/h
+JPK je MA = 167 × 11,65 × (1+53/100) × 12 = € 35.720/Jahr
+JPK gesamt = 4 × 35.720 = € 142.880/Jahr
+Verrechenb. Std. = 1.565 × 92% → 1.440 h je MA → 5.760 h
+Stundensatz = 142.880 / 5.760 = € 24,80/h
+      </code></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 4 ===== -->
+<div class="tab-panel" id="tab3">
+  <div class="module-header">
+    <div class="module-label">Modul 4</div>
+    <div class="module-title">Lohnformen & Lohnbestandteile</div>
+    <div class="module-desc">Zeitlohn, Prämienlohn und Akkordlohn – verstehe die Unterschiede und rechne selbst.</div>
+  </div>
+
+  <div class="lohnform-tabs">
+    <button class="lf-tab active" onclick="showLFTab(0)">⏰ Zeitlohn</button>
+    <button class="lf-tab" onclick="showLFTab(1)">🏆 Prämienlohn</button>
+    <button class="lf-tab" onclick="showLFTab(2)">⚡ Akkordlohn</button>
+    <button class="lf-tab" onclick="showLFTab(3)">📊 Vergleich</button>
+  </div>
+
+  <!-- ZEITLOHN -->
+  <div class="lf-panel active" id="lf0">
+    <div class="theory-box">
+      <strong>Zeitlohn</strong> = vereinbarter Lohnsatz × geleistete Zeit<br><br>
+      Wird eingesetzt wenn: Leistung <strong>nicht messbar</strong> (z.B. Qualitätskontrolle), Arbeitsgeschwindigkeit nicht beeinflussbar (z.B. Fließband), sorgfältige Ausführung wichtiger als Geschwindigkeit (z.B. Konstruktion).<br><br>
+      <strong>Arbeitsbewertung:</strong> Um Lohngerechtigkeit zu erreichen, werden Arbeitsplätze nach Anforderungen bewertet (Fachkenntnisse, Geschicklichkeit, körperliche Belastung, Verantwortung, Umgebungseinflüsse) und Lohngruppen zugeordnet.
+    </div>
+    <div class="card">
+      <div class="card-title">🧮 Zeitlohn berechnen</div>
+      <div class="grid-2">
+        <div>
+          <div class="input-group"><label class="input-label">Stundenlohn (€/h)</label><input type="number" class="input-field" id="zl-stunde" value="13.40" step="0.01"></div>
+          <div class="input-group"><label class="input-label">Arbeitsstunden im Monat (h)</label><input type="number" class="input-field" id="zl-stunden" value="166" step="1"></div>
+          <button class="calc-btn" onclick="berechneZeitlohn()">▶ Berechnen</button>
+        </div>
+        <div id="zl-result"></div>
+      </div>
+    </div>
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Aufgabe 1 – Einfacher Zeitlohn</div>
+      <div class="aufgabe-text">Ein Arbeiter hat einen Stundenlohn von € 13,40. Im August hat er 166 Normalstunden gearbeitet. Berechne seinen Bruttolohn.</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>Bruttolohn = 166 h × € 13,40/h = <strong>€ 2.224,40</strong></code></div>
+    </div>
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Aufgabe 2 – Arbeitsbewertung & Lohngruppe</div>
+      <div class="aufgabe-text">
+        Zwei Arbeitsplätze werden bewertet:<br>
+        Arbeitsplatz A: Fachkenntnisse 1, Belastung 3, Geschicklichkeit 3, Verantwortung 1, Umgebung 2 → Gesamtwert: 10<br>
+        Arbeitsplatz B: Fachkenntnisse 5, Belastung 3, Geschicklichkeit 3, Verantwortung 2, Umgebung 4 → Gesamtwert: 17<br><br>
+        Lohngruppen: 6–12 = LG1, 13–18 = LG2, 19–24 = LG3, 25–30 = LG4<br>
+        Welcher Lohngruppe gehören die Arbeitsplätze an?
+      </div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box">
+        Arbeitsplatz A: Gesamtwert 10 → <strong>Lohngruppe 1</strong><br>
+        Arbeitsplatz B: Gesamtwert 17 → <strong>Lohngruppe 2</strong><br><br>
+        Mitarbeiter an Arbeitsplatz B erhält einen höheren Lohn, weil die Anforderungen deutlich höher sind.
+      </div>
+    </div>
+  </div>
+
+  <!-- PRÄMIENLOHN -->
+  <div class="lf-panel" id="lf1">
+    <div class="theory-box">
+      <strong>Prämienlohn</strong> = Grundlohn (Zeitlohn) + leistungsbezogene Prämie<br><br>
+      Prämienarten: <strong>Umsatzprämie</strong> (Umsatzziel erreicht) | <strong>Qualitätsprämie</strong> (Ausschussquote unterschritten) | <strong>Nutzungsprämie</strong> (Maschinenauslastung erhöht) | <strong>Ersparnissprämie</strong> (Verbesserungsvorschlag mit Einsparung) | <strong>Terminprämie</strong> (Termin eingehalten)
+    </div>
+    <div class="card">
+      <div class="card-title">🧮 Prämienlohn berechnen</div>
+      <div class="grid-2">
+        <div>
+          <div class="input-group"><label class="input-label">Grundlohn (€)</label><input type="number" class="input-field" id="pl-grund" value="2100" step="10"></div>
+          <div class="input-group"><label class="input-label">Prämie (%)</label><input type="number" class="input-field" id="pl-praemie" value="8" step="0.5"></div>
+          <button class="calc-btn" onclick="berechnePraemienlohn()">▶ Berechnen</button>
+        </div>
+        <div id="pl-result"></div>
+      </div>
+    </div>
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Aufgabe 1 – Qualitätsprämie</div>
+      <div class="aufgabe-text">Eine Mitarbeiterin erhält ein Grundgehalt von € 2.100 und eine Qualitätsprämie von 8 %, weil die Ausschussquote unter 2 % gesenkt wurde. Wie hoch ist ihr Bruttolohn?</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>Grundgehalt:     € 2.100,00
+Qualitätsprämie: € 2.100 × 8 % = € 168,00
+Bruttolohn:      <strong>€ 2.268,00</strong></code></div>
+    </div>
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Aufgabe 2 – Ersparnissprämie</div>
+      <div class="aufgabe-text">Ein Mitarbeiter (Grundlohn € 1.950) schlägt eine Prozessverbesserung vor, die dem Unternehmen monatlich € 3.200 einspart. Laut KV erhält er 15 % der monatlichen Einsparung als Ersparnissprämie. Berechne seinen Bruttolohn.</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>Grundlohn:          € 1.950,00
+Ersparnissprämie:   € 3.200 × 15 % = € 480,00
+Bruttolohn:         <strong>€ 2.430,00</strong></code></div>
+    </div>
+  </div>
+
+  <!-- AKKORDLOHN -->
+  <div class="lf-panel" id="lf2">
+    <div class="theory-box">
+      <strong>Akkordlohn</strong>: Lohn proportional zur Arbeitsleistung (Stückzahl)<br><br>
+      <strong>Schritt 1 – Minutenfaktor:</strong> (KV-Mindestlohn + Akkordzuschlag 15–25 %) ÷ 60 min/h<br>
+      <strong>Schritt 2 – Akkordlohn/h:</strong> Menge/h × Vorgabezeit × Minutenfaktor<br><br>
+      Der Akkordlohn darf <strong>nie unter den Grundlohn</strong> fallen – auch bei schlechter Leistung, Urlaub oder Krankenstand erhält der Mitarbeiter mindestens den Grundlohn.
+    </div>
+    <div class="card">
+      <div class="card-title">⚡ Akkordlohn Rechner</div>
+      <div class="grid-2">
+        <div>
+          <div class="input-group"><label class="input-label">Mindestlohn KV (€/h)</label><input type="number" id="ak-mindest" class="input-field" value="10.36" step="0.01"></div>
+          <div class="input-group"><label class="input-label">Akkordzuschlag (%)</label><input type="number" id="ak-zuschlag" class="input-field" value="20" step="1"></div>
+          <div class="input-group"><label class="input-label">Gefertigte Menge (Stück/h)</label><input type="number" id="ak-menge" class="input-field" value="15.5" step="0.5"></div>
+          <div class="input-group"><label class="input-label">Vorgabezeit (min/Stück)</label><input type="number" id="ak-vorgabe" class="input-field" value="4" step="0.1"></div>
+          <div class="input-group"><label class="input-label">Arbeitsstunden</label><input type="number" id="ak-stunden" class="input-field" value="8" step="0.5"></div>
+          <button class="calc-btn" onclick="berechneAkkord()">▶ Berechnen</button>
+        </div>
+        <div id="ak-result"></div>
+      </div>
+    </div>
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Aufgabe 1 – Monteur (aus dem Buch)</div>
+      <div class="aufgabe-text">Ein Monteur hat KV-Mindestlohn € 10,36/h, Akkordzuschlag 20 %.<br>a) Grundlohn und Minutenfaktor?<br>b) Er fertigt an einem 8h-Tag 124 Stück (Vorgabezeit 4 min/Stück). Berechne den Akkordlohn.</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>
+a)
+Mindestlohn:     € 10,36/h
++ AK-Zuschlag:   € 10,36 × 20 % = € 2,07/h
+= Grundlohn:     € 12,43/h
+÷ 60 min/h
+= Minutenfaktor: € 0,2072/min
+
+b)
+Menge/h = 124 Stück ÷ 8 h = 15,5 St./h
+Akkordlohn = 15,5 × 4 min × € 0,2072 = <strong>€ 12,85/h</strong>
+Taglohn = € 12,85 × 8 h = € 102,80
+      </code></div>
+    </div>
+    <div class="aufgabe-box">
+      <div class="aufgabe-title">Aufgabe 2 – Textilunternehmen</div>
+      <div class="aufgabe-text">In einem Textilunternehmen gilt Akkordzuschlag 20 %, KV-Mindestlohn € 9,85/h.<br>a) Ermittle Grundlohn und Minutenfaktor.<br>b) An einem 15h-Arbeitsvorgang wurden 1.260 Stück gefertigt, Vorgabezeit 45 s/Stück. Berechne den durchschnittlichen Akkordlohn.</div>
+      <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+      <div class="solution-box"><code>
+a)
+Grundlohn = € 9,85 × 1,20 = € 11,82/h
+Minutenfaktor = € 11,82 / 60 = € 0,197/min
+
+b)
+Menge/h = 1.260 ÷ 15 = 84 St./h
+Vorgabezeit = 45 s = 0,75 min
+Akkordlohn = 84 × 0,75 × € 0,197 = <strong>€ 12,42/h</strong>
+      </code></div>
+    </div>
+  </div>
+
+  <!-- VERGLEICH -->
+  <div class="lf-panel" id="lf3">
+    <div class="card">
+      <div class="card-title">📊 Lohnformen im Vergleich</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+          <thead><tr style="background:var(--dark);color:white;">
+            <th style="padding:12px;text-align:left;">Kriterium</th>
+            <th style="padding:12px;text-align:center;color:#F5A06A;">Zeitlohn</th>
+            <th style="padding:12px;text-align:center;color:#F5A06A;">Prämienlohn</th>
+            <th style="padding:12px;text-align:center;color:#F5A06A;">Akkordlohn</th>
+          </tr></thead>
+          <tbody>
+            <tr style="background:white;"><td style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);">Lohnhöhe abhängig von</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">Zeit × Lohnsatz</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">Grundlohn + Zielerreichung</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">Stückzahl × Minutenfaktor</td></tr>
+            <tr style="background:var(--light);"><td style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);">Leistungsanreiz</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">gering</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">mittel bis hoch</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">sehr hoch</td></tr>
+            <tr style="background:white;"><td style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);">Einkommen stabil?</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">✅ sehr stabil</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">🟡 teils variabel</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">⚠️ variabel</td></tr>
+            <tr style="background:var(--light);"><td style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);">Typische Berufe</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">Buchhalter, Projektleiter, Kontrolle</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">Vertrieb, Produktion</td><td style="padding:10px;text-align:center;border-bottom:1px solid var(--border);">Montage, Fertigung</td></tr>
+            <tr style="background:white;"><td style="padding:10px 12px;font-weight:600;">Nicht geeignet wenn</td><td style="padding:10px;text-align:center;">Leistung klar messbar</td><td style="padding:10px;text-align:center;">–</td><td style="padding:10px;text-align:center;">Maschine gibt Tempo vor (Fließband)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="aufgabe-box" style="margin-top:18px;">
+        <div class="aufgabe-title">Aufgabe – Welche Lohnform passt?</div>
+        <div class="aufgabe-text">Erkläre jeweils, welche Lohnform sinnvoll ist und warum:<br>a) Ein Elektriker wartet Maschinen in einer Fabrik – die Reparaturdauer variiert stark.<br>b) Ein Verkäufer soll neue Kunden gewinnen – das Unternehmen will ihn motivieren.<br>c) Ein Arbeiter montiert Schrauben an einem Fließband – er kann die Geschwindigkeit nicht selbst bestimmen.</div>
+        <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+        <div class="solution-box">
+          a) <strong>Zeitlohn</strong> – die Leistung ist nicht messbar (unterschiedliche Reparaturen), sorgfältige Arbeit wichtiger als Tempo.<br><br>
+          b) <strong>Prämienlohn</strong> (Umsatz- oder Neukundenprämie) – klares Ziel, Leistung messbar, Motivation durch Prämie.<br><br>
+          c) <strong>Zeitlohn</strong> – das Fließband gibt das Tempo vor, der Mitarbeiter kann seine Leistung nicht selbst beeinflussen → Akkordlohn wäre unfair und sinnlos.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 5 ===== -->
+<div class="tab-panel" id="tab4">
+  <div class="module-header">
+    <div class="module-label">Modul 5</div>
+    <div class="module-title">Aufgaben des Personalmanagements</div>
+    <div class="module-desc">Personalsuche, Personalverwaltung, Personalverrechnung und Personalentwicklung – die 4 Kernbereiche.</div>
+  </div>
+
+  <div class="pm-grid">
+    <div class="pm-card active" onclick="showPM(0)"><div class="pm-icon">🔍</div><div class="pm-label">Personalsuche & -auswahl</div></div>
+    <div class="pm-card" onclick="showPM(1)"><div class="pm-icon">📁</div><div class="pm-label">Personalverwaltung</div></div>
+    <div class="pm-card" onclick="showPM(2)"><div class="pm-icon">💶</div><div class="pm-label">Personalverrechnung</div></div>
+    <div class="pm-card" onclick="showPM(3)"><div class="pm-icon">📈</div><div class="pm-label">Personalentwicklung</div></div>
+  </div>
+
+  <div id="pm0" class="pm-section">
+    <div class="card">
+      <div class="card-title">🔍 Personalsuche & -auswahl</div>
+      <div class="theory-box">
+        <strong>Personalbedarfsplanung:</strong> Analyse des zukünftigen Gesamtpersonalbedarfs nach Quantität (Anzahl), Qualität (Ausbildung), Ort und Zeit.<br><br>
+        <strong>Anforderungsprofil:</strong> Welche Eigenschaften, Kenntnisse und Fähigkeiten muss der zukünftige Mitarbeiter mitbringen?<br><br>
+        <strong>Personaleinstellungsbedarf</strong> = Personalbedarf − aktueller Personalbestand − geplante Abgänge
+      </div>
+      <div class="grid-2">
+        <div style="background:var(--light);border-radius:10px;padding:14px;font-size:0.85rem;">
+          <div style="font-weight:700;margin-bottom:8px;color:var(--dark);">Externe Personalsuche</div>
+          <ul style="list-style:none;line-height:2;">
+            <li>→ AMS (Arbeitsmarktservice)</li>
+            <li>→ Online-Stellenbörsen (karriere.at, job.at)</li>
+            <li>→ Stellenanzeige in Tageszeitungen</li>
+            <li>→ Initiativbewerbungen</li>
+            <li>→ Ausbildungsinstitute, Schulen, FH</li>
+            <li>→ Headhunter / Personalberatung</li>
+          </ul>
+        </div>
+        <div style="background:var(--light);border-radius:10px;padding:14px;font-size:0.85rem;">
+          <div style="font-weight:700;margin-bottom:8px;color:var(--dark);">Interne Personalsuche</div>
+          <ul style="list-style:none;line-height:2;">
+            <li>→ Intranet-Ausschreibung</li>
+            <li>→ Rundmail an alle Mitarbeiter</li>
+            <li>→ Anschlagtafel im Betrieb</li>
+            <li>→ Direktes Ansprechen von Kandidaten</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:0.85rem;color:var(--mid);">
+        <strong>Auswahlkriterien:</strong> Bewerbungsschreiben & Lebenslauf | Personalfragebogen | Bewerbungsgespräch | Zeugnisse | Testverfahren | Assessment Center (AC)
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔄 Personalleasing</div>
+      <div class="theory-box">Beim Personalleasing (= Zeitarbeit, Leiharbeit) stellt ein <strong>Personalleasingunternehmen</strong> dem Unternehmen Mitarbeiter <em>zeitweise gegen Entgelt</em> zur Verfügung. Grundlage: Arbeitnehmerüberlassungsvertrag.<br><br>Der Mitarbeiter erhält Lohn vom Leasingunternehmen, erbringt seine Arbeit aber im entleihenden Betrieb.</div>
+      <div class="grid-2">
+        <div style="padding:12px;background:var(--green-light);border-radius:10px;font-size:0.85rem;"><strong style="color:var(--green);">Vorteile</strong><br>Flexibilität bei Auftragsspitzen | kein Aufwand für Personalsuche | schnell verfügbar</div>
+        <div style="padding:12px;background:var(--red-light);border-radius:10px;font-size:0.85rem;"><strong style="color:var(--red);">Nachteile</strong><br>Höhere Kosten als eigene Mitarbeiter | geringere Betriebsbindung | Know-how geht weg</div>
+      </div>
+      <div class="aufgabe-box" style="margin-top:14px;">
+        <div class="aufgabe-title">Aufgabe</div>
+        <div class="aufgabe-text">Die W-ING GmbH sucht einen HTL-Absolventen im Bereich "Technischer Einkauf". Nenne zwei externe und eine interne Suchmöglichkeit. Erstelle ein kurzes Anforderungsprofil.</div>
+        <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+        <div class="solution-box">
+          Extern: Stellenanzeige auf karriere.at, Ausschreibung über das AMS<br>
+          Intern: Rundmail an alle Mitarbeiter<br><br>
+          Anforderungsprofil: HTL-Abschluss (techn. Einkauf), Englischkenntnisse, SAP-Kenntnisse von Vorteil, Berufserfahrung wünschenswert, Teamfähigkeit, selbstständige Arbeitsweise
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pm1" class="pm-section" style="display:none;">
+    <div class="card">
+      <div class="card-title">📁 Personalverwaltung</div>
+      <div class="theory-box">Sammelbegriff für alle <strong>administrativen Tätigkeiten</strong> im Personalbereich – von der Einstellung bis zum Austritt.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:0.85rem;margin-bottom:16px;">
+        <div style="padding:14px;background:var(--light);border-radius:10px;"><div style="font-weight:700;margin-bottom:6px;">📥 Bei Eintritt</div>Arbeitsvertrag erstellen | Anmeldung bei ÖGK <strong>vor Dienstbeginn!</strong> | Personalstammdaten anlegen</div>
+        <div style="padding:14px;background:var(--light);border-radius:10px;"><div style="font-weight:700;margin-bottom:6px;">🔄 Laufend</div>Urlaubsaufzeichnung | Krankenstandserfassung | Datenpflege | Zeitaufzeichnungen | Aktualisierung bei Änderungen</div>
+        <div style="padding:14px;background:var(--light);border-radius:10px;"><div style="font-weight:700;margin-bottom:6px;">📤 Bei Austritt</div>Abmeldung bei ÖGK | Dienstzeugnis ausstellen | Resturlaub abrechnen | Endabrechnung</div>
+        <div style="padding:14px;background:var(--orange-pale);border-radius:10px;"><div style="font-weight:700;color:var(--orange);margin-bottom:6px;">⚠️ DSGVO</div>Der Arbeitgeber muss den Mitarbeiter über gespeicherte personenbezogene Daten informieren und mitteilen, wer sie erhält.</div>
+      </div>
+      <div class="aufgabe-box">
+        <div class="aufgabe-title">Aufgabe</div>
+        <div class="aufgabe-text">Beschreibe die Tätigkeiten der Personalabteilung bei der Einstellung eines neuen Mitarbeiters (vor Dienstbeginn und in den ersten Wochen).</div>
+        <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+        <div class="solution-box">
+          Vor Dienstbeginn: Arbeitsvertrag erstellen und unterzeichnen lassen | Anmeldung bei der ÖGK (ELDA) | Personalstammdaten anlegen<br><br>
+          Erste Wochen: Einweisung dokumentieren | Zeiterfassung einrichten | Zugänge anlegen | Pflichtbelehrungen (Arbeitssicherheit) dokumentieren | laufende Gehaltsabrechnung vorbereiten
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pm2" class="pm-section" style="display:none;">
+    <div class="card">
+      <div class="card-title">💶 Personalverrechnung</div>
+      <div class="theory-box">Aufgabe: <strong>Monatliche Berechnung</strong> der Löhne und Gehälter sowie aller lohnabhängigen Abgaben und deren fristgerechte Abführung an die zuständigen Institutionen.</div>
+      <div style="overflow-x:auto;margin-bottom:16px;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+          <thead><tr style="background:var(--dark);color:white;"><th style="padding:10px 12px;text-align:left;">Institution</th><th style="padding:10px 12px;text-align:left;">Was wird abgeführt?</th><th style="padding:10px 12px;">Fälligkeit</th></tr></thead>
+          <tbody>
+            <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border);">Finanzamt</td><td style="padding:10px 12px;border-bottom:1px solid var(--border);">Lohnsteuer, DB (3,70 %), DZ (0,39 % Tirol)</td><td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;">15. des Folgemonats</td></tr>
+            <tr style="background:var(--light);"><td style="padding:10px 12px;border-bottom:1px solid var(--border);">ÖGK</td><td style="padding:10px 12px;border-bottom:1px solid var(--border);">SV-DNA + SV-DGA + MV-Beitrag (1,53 %)</td><td style="padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;">15. des Folgemonats</td></tr>
+            <tr><td style="padding:10px 12px;">Gemeinde</td><td style="padding:10px 12px;">Kommunalsteuer (3 % der Bruttolohnsumme)</td><td style="padding:10px 12px;text-align:center;">15. des Folgemonats</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="aufgabe-box">
+        <div class="aufgabe-title">Aufgabe – Lohnabhängige Abgaben zuordnen</div>
+        <div class="aufgabe-text">Ordne folgende Abgaben den richtigen Institutionen zu: Lohnsteuer | SV-DGA | MV-Beitrag | Kommunalsteuer | DB | DZ | SV-DNA</div>
+        <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+        <div class="solution-box">
+          <strong>Finanzamt:</strong> Lohnsteuer, DB, DZ<br>
+          <strong>ÖGK:</strong> SV-DNA, SV-DGA, MV-Beitrag<br>
+          <strong>Gemeinde:</strong> Kommunalsteuer
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pm3" class="pm-section" style="display:none;">
+    <div class="card">
+      <div class="card-title">📈 Personalentwicklung</div>
+      <div class="theory-box">Ziel: Den Mitarbeitern die Qualifikationen vermitteln, die sie für aktuelle und zukünftige Aufgaben brauchen – wegen neuer Technologien, veränderter Kundenanforderungen oder Gesetzesänderungen.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div style="padding:16px;background:var(--blue-light);border-radius:12px;border-left:4px solid var(--blue);"><div style="font-weight:700;color:var(--blue);margin-bottom:6px;font-size:0.88rem;">FACHKOMPETENZ</div><div style="font-size:0.83rem;">EDV-Kurse, Sprachkurse, Schweißkurse – fachspezifische Kenntnisse für die konkrete Tätigkeit</div></div>
+        <div style="padding:16px;background:var(--orange-pale);border-radius:12px;border-left:4px solid var(--orange);"><div style="font-weight:700;color:var(--orange);margin-bottom:6px;font-size:0.88rem;">METHODENKOMPETENZ</div><div style="font-size:0.83rem;">Projektmanagement, Kreativitätstechniken, Zeitmanagement, Präsentationstechnik</div></div>
+        <div style="padding:16px;background:var(--green-light);border-radius:12px;border-left:4px solid var(--green);"><div style="font-weight:700;color:var(--green);margin-bottom:6px;font-size:0.88rem;">SOZIALKOMPETENZ</div><div style="font-size:0.83rem;">Teamfähigkeit, Konfliktmanagement, Führungsverhalten, interkulturelle Kompetenz</div></div>
+        <div style="padding:16px;background:var(--light);border-radius:12px;border-left:4px solid #888;"><div style="font-weight:700;color:var(--mid);margin-bottom:6px;font-size:0.88rem;">SELBSTKOMPETENZ</div><div style="font-size:0.83rem;">Eigeninitiative, Leistungsbereitschaft, Verantwortungsbewusstsein, Flexibilität</div></div>
+      </div>
+      <div style="padding:14px;background:var(--light);border-radius:10px;font-size:0.85rem;margin-bottom:14px;"><strong>Mitarbeitergespräch:</strong> Regelmässige Gespräche zwischen Mitarbeiter und Vorgesetztem über bisherige Leistungen, zukünftige Anforderungen und notwendige Weiterbildungsmassnahmen. Beinhaltet auch Feedback in beide Richtungen.</div>
+      <div class="aufgabe-box">
+        <div class="aufgabe-title">Aufgabe – Kompetenzbereich zuordnen</div>
+        <div class="aufgabe-text">Ordne folgende Weiterbildungen dem richtigen Kompetenzbereich zu:<br>a) Ein Techniker absolviert einen SAP-Kurs.<br>b) Eine Teamleiterin nimmt an einem Konfliktmanagement-Seminar teil.<br>c) Ein Mitarbeiter lernt, Präsentationen strukturiert aufzubauen.<br>d) Eine Mitarbeiterin entwickelt mehr Eigeninitiative durch ein Coaching.</div>
+        <button class="solution-toggle" onclick="toggleSolution(this)">Lösung anzeigen</button>
+        <div class="solution-box">
+          a) <strong>Fachkompetenz</strong> – SAP ist ein fachspezifisches Tool<br>
+          b) <strong>Sozialkompetenz</strong> – Konfliktmanagement betrifft die Zusammenarbeit<br>
+          c) <strong>Methodenkompetenz</strong> – Präsentationstechnik ist eine Arbeitsmethode<br>
+          d) <strong>Selbstkompetenz</strong> – Eigeninitiative ist eine persönlichkeitsbezogene Kompetenz
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ===== TABS =====
+function showTab(n) {
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===n));
+}
+function showLFTab(n) {
+  document.querySelectorAll('.lf-tab').forEach((t,i) => t.classList.toggle('active', i===n));
+  document.querySelectorAll('.lf-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+}
+function showPM(n) {
+  document.querySelectorAll('.pm-card').forEach((c,i) => c.classList.toggle('active', i===n));
+  document.querySelectorAll('.pm-section').forEach((s,i) => s.style.display = i===n?'block':'none');
+}
+function toggleSolution(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('show');
+  btn.textContent = box.classList.contains('show') ? 'Lösung verbergen' : 'Lösung anzeigen';
+}
+
+// ===== QUIZ 1: VERTRAGSFORMEN =====
+const scenarios = [
+  { emoji:'💻', text:'Florian bekommt über Instagram eine Nachricht: "Kannst du mir für 3 Wochen eine Website bauen? Zahle € 800, kein Vertrag nötig." Er arbeitet von zuhause, bestimmt seine Zeiten selbst und benutzt seinen eigenen Laptop.', correct:'WV', options:['AV','WV','FDV'], feedback:'Werkvertrag (WV): Florian schuldet ein bestimmtes Werk (fertige Website), nicht seine Arbeitskraft. Er ist frei in Zeit und Ort, verwendet eigene Betriebsmittel – typische WV-Merkmale.' },
+  { emoji:'🏥', text:'Maria wird als Krankenhausassistentin eingestellt. Sie hat feste Arbeitszeiten (Mo–Fr, 8–16 Uhr), bekommt monatlich € 2.300 Gehalt, muss Anweisungen des Chefarztes befolgen und ist in die Betriebsorganisation eingegliedert.', correct:'AV', options:['AV','WV','FDV'], feedback:'Arbeitsvertrag (AV): Weisungsgebundenheit, feste Arbeitszeiten, Eingliederung in die Betriebsorganisation, persönliche Arbeitserbringungspflicht – alle Merkmale des AV sind erfüllt.' },
+  { emoji:'📸', text:'Thomas fotografiert regelmässig für ein Magazin. Er entscheidet selbst wann er arbeitet, kann sich vertreten lassen und bekommt kein fixes Entgelt – nur für tatsächlich gelieferte Fotos. Keine Deadline für einzelne Aufträge.', correct:'FDV', options:['AV','WV','FDV'], feedback:'Freier Dienstvertrag (FDV): Mischform – kein bestimmtes Werk geschuldet, aber auch keine feste Eingliederung. Thomas kann sich vertreten lassen, was beim echten AV nicht möglich wäre.' },
+  { emoji:'🔧', text:'Sabine wird in einer Kfz-Werkstatt als Mechanikerin angestellt. Sie erhält € 13,50/h Lohn, hat 38,5 h/Woche Arbeitszeit laut KV und muss die Werkzeuge und Hebebühnen des Betriebs verwenden.', correct:'AV', options:['AV','WV','FDV'], feedback:'Arbeitsvertrag (AV): Sabine ist Arbeiterin (manuelle Tätigkeit → Entgelt = Lohn). Feste Arbeitszeit, betriebliche Arbeitsmittel, Weisungsgebundenheit – klassischer AV.' },
+  { emoji:'🎨', text:'Ein Unternehmen beauftragt einen Grafiker, bis Ende Oktober ein neues Logo zu gestalten. Vereinbarter Preis: € 1.500 nach Ablieferung. Wie und wo der Grafiker arbeitet, ist dem Unternehmen egal – es zählt nur das fertige Logo.', correct:'WV', options:['AV','WV','FDV'], feedback:'Werkvertrag (WV): Ein klar definiertes Werk (Logo) wird gegen Entgelt nach Fertigstellung erbracht. Keine Weisungsgebundenheit, keine festen Arbeitszeiten, Vergütung nach Ergebnis.' },
+  { emoji:'🚗', text:'Klaus fährt regelmässig für eine Firma Pakete aus – ca. 20 Stunden/Woche. Er bekommt pro Stunde € 12. Er darf sich nicht vertreten lassen, muss zu den vom Unternehmen festgelegten Zeiten fahren, nutzt aber sein eigenes Auto.', correct:'FDV', options:['AV','WV','FDV'], feedback:'Freier Dienstvertrag (FDV): Klaus schuldet kein bestimmtes Werk, ist aber nicht voll eingegliedert. Kein Vertretungsrecht wie beim AV, aber kein festes Ergebnis wie beim WV – typische Grauzone.' },
+];
+
+let score1 = { correct:0, total:0 };
+let answeredScenarios = new Array(scenarios.length).fill(false);
+
+function renderQuiz1() {
+  const cont = document.getElementById('scenarios1');
+  cont.innerHTML = scenarios.map((s,i) => `
+    <div class="scenario-card" id="sc-${i}">
+      <span class="scenario-emoji">${s.emoji}</span>
+      <div class="scenario-text">${s.text}</div>
+      <div class="answer-btns">
+        ${s.options.map(o => `<button class="answer-btn" onclick="answerScenario(${i},'${o}')" id="sc-${i}-${o}">${optLabel(o)}</button>`).join('')}
+      </div>
+      <div class="feedback-box" id="fb-${i}"></div>
+    </div>
+  `).join('');
+}
+function optLabel(o) { return {AV:'Arbeitsvertrag',WV:'Werkvertrag',FDV:'Freier Dienstvertrag'}[o]; }
+function answerScenario(i, ans) {
+  if (answeredScenarios[i]) return;
+  answeredScenarios[i] = true;
+  score1.total++;
+  const s = scenarios[i];
+  const correct = ans === s.correct;
+  if (correct) score1.correct++;
+  s.options.forEach(o => {
+    const btn = document.getElementById(`sc-${i}-${o}`);
+    btn.disabled = true;
+    if (o===ans && correct) btn.classList.add('selected-correct');
+    else if (o===ans && !correct) btn.classList.add('selected-wrong');
+    if (o===s.correct && !correct) btn.classList.add('show-correct');
+  });
+  const fb = document.getElementById(`fb-${i}`);
+  fb.className = 'feedback-box show ' + (correct?'correct':'wrong');
+  fb.innerHTML = (correct?'✅ Richtig! ':'❌ Leider falsch. ') + s.feedback;
+  document.getElementById(`sc-${i}`).classList.add(correct?'correct':'wrong');
+  document.getElementById('score1-correct').textContent = score1.correct;
+  document.getElementById('score1-total').textContent = score1.total;
+}
+function resetQuiz1() {
+  score1 = {correct:0,total:0};
+  answeredScenarios = new Array(scenarios.length).fill(false);
+  document.getElementById('score1-correct').textContent='0';
+  document.getElementById('score1-total').textContent='0';
+  renderQuiz1();
+}
+
+// ===== SORTIER QUIZ =====
+const sortierItems = [
+  { text:'Buchhalter – bearbeitet Rechnungen und Buchhaltungsunterlagen', correct:'Angestellter' },
+  { text:'Schweisser in einer Metallwerkstatt', correct:'Arbeiter' },
+  { text:'HTL-Absolvent im 1. Lehrjahr als Bürokaufmann', correct:'Lehrling' },
+  { text:'Sekretärin im Kanzleidienst', correct:'Angestellter' },
+  { text:'Zimmermann auf der Baustelle', correct:'Arbeiter' },
+  { text:'Friseurlehrling im 2. Lehrjahr', correct:'Lehrling' },
+  { text:'Technischer Zeichner in einem Ingenieurbüro', correct:'Angestellter' },
+  { text:'Montagefacharbeiter in der Produktion', correct:'Arbeiter' },
+  { text:'Projektleiterin in einer IT-Firma', correct:'Angestellter' },
+  { text:'Kochlehrling im 3. Lehrjahr', correct:'Lehrling' },
+];
+let answeredSortier = new Array(sortierItems.length).fill(false);
+
+function renderSortierQuiz() {
+  const cont = document.getElementById('sortier-quiz');
+  cont.innerHTML = sortierItems.map((item,i) => `
+    <div class="scenario-card" id="sort-${i}" style="margin-bottom:10px;">
+      <div class="scenario-text" style="margin-bottom:10px;">${item.text}</div>
+      <div class="answer-btns">
+        ${['Angestellter','Arbeiter','Lehrling'].map(o => `<button class="answer-btn" onclick="answerSortier(${i},'${o}')" id="sort-${i}-${o.replace('/','_')}">${o}</button>`).join('')}
+      </div>
+      <div class="feedback-box" id="sfb-${i}"></div>
+    </div>
+  `).join('');
+}
+function answerSortier(i, ans) {
+  if (answeredSortier[i]) return;
+  answeredSortier[i] = true;
+  const item = sortierItems[i];
+  const correct = ans === item.correct;
+  ['Angestellter','Arbeiter','Lehrling'].forEach(o => {
+    const btn = document.getElementById(`sort-${i}-${o.replace('/','_')}`);
+    if (!btn) return;
+    btn.disabled = true;
+    if (o===ans && correct) btn.classList.add('selected-correct');
+    else if (o===ans && !correct) btn.classList.add('selected-wrong');
+    if (o===item.correct && !correct) btn.classList.add('show-correct');
+  });
+  const fb = document.getElementById(`sfb-${i}`);
+  fb.className = 'feedback-box show ' + (correct?'correct':'wrong');
+  fb.innerHTML = correct ? '✅ Richtig!' : `❌ Falsch – korrekt wäre: <strong>${item.correct}</strong>`;
+}
+
+// ===== BRUTTO NETTO =====
+function berechneNetto() {
+  const brutto = parseFloat(document.getElementById('brutto-input').value)||0;
+  const avabKind = parseInt(document.getElementById('avab-input').value)||0;
+  const faboKinder = parseInt(document.getElementById('fabo-input').value)||0;
+  const gwb = parseFloat(document.getElementById('gwb-input').value)||0;
+  const fb = parseFloat(document.getElementById('fb-input').value)||0;
+  const pendlerAktiv = document.getElementById('pp-check').checked;
+  const pp = pendlerAktiv ? (parseFloat(document.getElementById('pp-input').value)||0) : 0;
+  const peKm = pendlerAktiv ? (parseFloat(document.getElementById('pe-km-input').value)||0) : 0;
+  const peEingabe = pendlerAktiv ? (parseFloat(document.getElementById('pe-input').value)||0) : 0;
+
+  // GWB Validierung
+  const gwbMax = Math.min(brutto * 0.01, 42.30);
+  const gwbError = document.getElementById('gwb-error');
+  if (gwb > gwbMax) {
+    gwbError.style.display = 'block';
+    gwbError.innerHTML = `❌ Ungültiger Wert! Der Gewerkschaftsbeitrag beträgt 1 % des Bruttogehalts (= € ${fmt(brutto*0.01)}), maximal jedoch € 42,30. Korrekter Maximalwert: <strong>€ ${fmt(gwbMax)}</strong>`;
+    return;
+  } else {
+    gwbError.style.display = 'none';
+  }
+
+  // Pendlereuro Validierung
+  if (pendlerAktiv && peKm > 0) {
+    const peKorrekt = Math.round(peKm * 6 / 12 * 100) / 100;
+    const peError = document.getElementById('pe-error');
+    if (Math.abs(peEingabe - peKorrekt) > 0.01) {
+      peError.style.display = 'block';
+      peError.innerHTML = `❌ Der Pendlereuro stimmt nicht! Formel: ${peKm} km × € 6,00 ÷ 12 = <strong>€ ${fmt(peKorrekt)}/Monat</strong>`;
+      return;
+    } else {
+      peError.style.display = 'none';
+    }
+  }
+  const pe = pendlerAktiv && peKm > 0 ? Math.round(peKm * 6 / 12 * 100) / 100 : 0;
+
+  let svRate;
+  if (brutto<=2225) svRate=0.1512;
+  else if (brutto<=2427) svRate=0.1612;
+  else if (brutto<=2630) svRate=0.1712;
+  else svRate=0.1807;
+
+  const svBasis = Math.min(brutto,6930);
+  const svDNA = svBasis*svRate;
+  let lstBMG = Math.max(0, brutto-svDNA-gwb-pp-fb);
+  const lstVorFabo = berechneLST(lstBMG, avabKind);
+  const fabo = faboKinder*166.68;
+  const lst = Math.max(0, lstVorFabo-fabo);
+  const netto = brutto-svDNA-lst+pe;
+  const svSatzLabel = brutto<=2225?'15,12 %':brutto<=2427?'16,12 %':brutto<=2630?'17,12 %':'18,07 %';
+
+  document.getElementById('result-content').innerHTML = `
+    <div class="result-row"><div class="result-op">=</div><div class="result-label">Bruttobezug</div><div class="result-val">€ ${fmt(brutto)}</div></div>
+    <div class="result-row highlight"><div class="result-op">−</div><div class="result-label">SV-DNA <span style="font-size:0.75rem;color:#777">${svSatzLabel}</span></div><div class="result-val">€ ${fmt(svDNA)}</div></div>
+    ${gwb>0?`<div class="result-row highlight"><div class="result-op">−</div><div class="result-label">Gewerkschaftsbeitrag</div><div class="result-val">€ ${fmt(gwb)}</div></div>`:''}
+    ${pp>0?`<div class="result-row highlight"><div class="result-op">−</div><div class="result-label">Pendlerpauschale</div><div class="result-val">€ ${fmt(pp)}</div></div>`:''}
+    ${fb>0?`<div class="result-row highlight"><div class="result-op">−</div><div class="result-label">Freibetrag</div><div class="result-val">€ ${fmt(fb)}</div></div>`:''}
+    <div class="result-row" style="border-top:1px solid #333;margin-top:4px;padding-top:8px;"><div class="result-op">=</div><div class="result-label">LSt-Bemessungsgrundlage</div><div class="result-val">€ ${fmt(lstBMG)}</div></div>
+    <div class="result-row highlight"><div class="result-op">−</div><div class="result-label">Lohnsteuer (vor FABO)</div><div class="result-val">€ ${fmt(lstVorFabo)}</div></div>
+    ${fabo>0?`<div class="result-row" style="color:#5CB85C"><div class="result-op">−</div><div class="result-label">FABO Plus (${faboKinder} Kind${faboKinder>1?'er':''})</div><div class="result-val">€ ${fmt(fabo)}</div></div>`:''}
+    ${pe>0?`<div class="result-row" style="color:#5CB85C"><div class="result-op">+</div><div class="result-label">Pendlereuro (${peKm} km × € 6,00 ÷ 12)</div><div class="result-val">€ ${fmt(pe)}</div></div>`:''}
+    <div class="result-row netto-row"><div class="result-op" style="color:var(--orange)">→</div><div class="result-label">Nettobezug</div><div class="result-val" style="color:var(--orange-light)">€ ${fmt(netto)}</div></div>
+    <div style="margin-top:6px;font-size:0.75rem;color:#777;">DG trägt zusätzlich: SV-DGA ≈ € ${fmt(brutto*0.2098)} | MV-Beitrag € ${fmt(brutto*0.0153)}</div>
+  `;
+}
+
+function berechneLST(bmg, avabKind) {
+  const tabelle = [
+    [0,1139.25,0,[0,0,0,0,0,0]],
+    [1139.26,1843.67,0.20,[269.18,320.18,338.18,360.93,383.68,406.43]],
+    [1843.68,3049.17,0.30,[453.55,504.55,522.55,545.30,568.05,590.80]],
+    [3049.18,5874.75,0.40,[758.46,809.46,827.46,850.21,872.96,895.71]],
+    [5874.76,8749.25,0.48,[1228.44,1279.44,1297.44,1320.19,1342.94,1365.69]],
+    [8749.26,83344.33,0.50,[1403.43,1454.43,1472.43,1495.18,1517.93,1540.68]],
+    [83344.34,Infinity,0.55,[5570.65,5621.65,5639.65,5662.40,5685.15,5707.90]],
+  ];
+  const ki = Math.min(avabKind,5);
+  for (const [from,to,rate,abz] of tabelle) {
+    if (bmg>=from && bmg<=to) return Math.max(0, bmg*rate-abz[ki]);
+  }
+  return 0;
+}
+function fmt(n) { return n.toFixed(2).replace('.',','); }
+
+// ===== PERSONALKOSTEN =====
+document.getElementById('pk-lnk').addEventListener('change', function() {
+  document.getElementById('pk-custom-wrap').style.display = this.value==='custom'?'block':'none';
+});
+function berechnePersonalkosten() {
+  const brutto = parseFloat(document.getElementById('pk-brutto').value)||0;
+  const lnkSel = document.getElementById('pk-lnk').value;
+  const lnk = lnkSel==='custom'?(parseFloat(document.getElementById('pk-lnk-custom').value)||52):parseFloat(lnkSel);
+  const anz = parseInt(document.getElementById('pk-anz').value)||1;
+  const jpk1 = brutto*(1+lnk/100)*12;
+  const jpkGes = jpk1*anz;
+  const lnkBetrag = brutto*(lnk/100)*12;
+  document.getElementById('pk-result').innerHTML = `
+    <div style="background:var(--dark);border-radius:12px;padding:16px;color:white;">
+      <div class="result-title">Ergebnis</div>
+      <div class="result-row"><div class="result-op">=</div><div class="result-label">Brutto/Monat</div><div class="result-val">€ ${fmt(brutto)}</div></div>
+      <div class="result-row highlight"><div class="result-op">+</div><div class="result-label">LNK/Jahr (${lnk} %)</div><div class="result-val">€ ${fmt(lnkBetrag)}</div></div>
+      <div class="result-row" style="font-weight:900;font-size:1.05rem;border-top:2px solid var(--orange);margin-top:6px;padding-top:10px;border-bottom:none;"><div class="result-op" style="color:var(--orange)">→</div><div class="result-label">JPK pro Mitarbeiter</div><div class="result-val" style="color:var(--orange-light)">€ ${fmt(jpk1)}</div></div>
+      ${anz>1?`<div class="result-row" style="border-bottom:none;font-size:0.88rem;"><div class="result-op"></div><div class="result-label">Gesamt (${anz} Mitarbeiter)</div><div class="result-val" style="color:var(--orange-light)">€ ${fmt(jpkGes)}</div></div>`:''}
+    </div>`;
+  document.getElementById('ss-jpk').value = jpk1.toFixed(2);
+}
+function berechneStundensatz() {
+  const anw = parseFloat(document.getElementById('ss-anw').value)||1594;
+  const ausl = parseFloat(document.getElementById('ss-ausl').value)||90;
+  const jpk = parseFloat(document.getElementById('ss-jpk').value)||0;
+  if (jpk===0) { alert('Bitte zuerst Jahrespersonalkosten berechnen oder eingeben!'); return; }
+  const verrechenbar = anw*(ausl/100);
+  const stundensatz = jpk/verrechenbar;
+  document.getElementById('ss-result').innerHTML = `
+    <div style="background:var(--dark);border-radius:12px;padding:16px;color:white;">
+      <div class="result-title">Stundensatz</div>
+      <div class="result-row"><div class="result-op">=</div><div class="result-label">Anwesenheitszeit</div><div class="result-val">${anw} h/Jahr</div></div>
+      <div class="result-row highlight"><div class="result-op">×</div><div class="result-label">Auslastungsgrad</div><div class="result-val">${ausl} %</div></div>
+      <div class="result-row"><div class="result-op">=</div><div class="result-label">Verrechenbare Std.</div><div class="result-val">${verrechenbar.toFixed(0)} h/Jahr</div></div>
+      <div class="result-row" style="font-weight:900;font-size:1.15rem;border-top:2px solid var(--orange);margin-top:6px;padding-top:10px;border-bottom:none;"><div class="result-op" style="color:var(--orange)">→</div><div class="result-label">Stundensatz</div><div class="result-val" style="color:var(--orange-light)">€ ${fmt(stundensatz)}/h</div></div>
+    </div>`;
+}
+
+// ===== LOHNFORMEN =====
+function berechneZeitlohn() {
+  const sl = parseFloat(document.getElementById('zl-stunde').value)||0;
+  const st = parseFloat(document.getElementById('zl-stunden').value)||0;
+  const brutto = sl*st;
+  document.getElementById('zl-result').innerHTML = `
+    <div style="background:var(--dark);border-radius:12px;padding:16px;color:white;">
+      <div class="result-title">Zeitlohn</div>
+      <div class="result-row"><div class="result-label">Stundenlohn</div><div class="result-val">€ ${fmt(sl)}/h</div></div>
+      <div class="result-row highlight"><div class="result-label">× Stunden</div><div class="result-val">${st} h</div></div>
+      <div class="result-row" style="font-weight:900;font-size:1.1rem;border-top:2px solid var(--orange);margin-top:6px;padding-top:8px;border-bottom:none;"><div class="result-label">= Bruttolohn</div><div class="result-val" style="color:var(--orange-light)">€ ${fmt(brutto)}</div></div>
+    </div>`;
+}
+function berechnePraemienlohn() {
+  const grund = parseFloat(document.getElementById('pl-grund').value)||0;
+  const praemie = parseFloat(document.getElementById('pl-praemie').value)||0;
+  const praemieBetrag = grund*praemie/100;
+  const brutto = grund+praemieBetrag;
+  document.getElementById('pl-result').innerHTML = `
+    <div style="background:var(--dark);border-radius:12px;padding:16px;color:white;">
+      <div class="result-title">Prämienlohn</div>
+      <div class="result-row"><div class="result-label">Grundlohn</div><div class="result-val">€ ${fmt(grund)}</div></div>
+      <div class="result-row highlight"><div class="result-label">+ Prämie (${praemie} %)</div><div class="result-val">€ ${fmt(praemieBetrag)}</div></div>
+      <div class="result-row" style="font-weight:900;font-size:1.1rem;border-top:2px solid var(--orange);margin-top:6px;padding-top:8px;border-bottom:none;"><div class="result-label">= Bruttolohn</div><div class="result-val" style="color:var(--orange-light)">€ ${fmt(brutto)}</div></div>
+    </div>`;
+}
+function berechneAkkord() {
+  const mindest = parseFloat(document.getElementById('ak-mindest').value)||0;
+  const zuschlag = parseFloat(document.getElementById('ak-zuschlag').value)||0;
+  const menge = parseFloat(document.getElementById('ak-menge').value)||0;
+  const vorgabe = parseFloat(document.getElementById('ak-vorgabe').value)||0;
+  const stunden = parseFloat(document.getElementById('ak-stunden').value)||0;
+  const grundlohn = mindest*(1+zuschlag/100);
+  const minutenfaktor = grundlohn/60;
+  const akkordlohnH = menge*vorgabe*minutenfaktor;
+  const tagesLohn = akkordlohnH*stunden;
+  const mindestLohnTag = mindest*stunden;
+  document.getElementById('ak-result').innerHTML = `
+    <div style="background:var(--dark);border-radius:12px;padding:16px;color:white;">
+      <div class="result-title">Akkordlohn</div>
+      <div class="result-row"><div class="result-label">Grundlohn</div><div class="result-val">€ ${fmt(grundlohn)}/h</div></div>
+      <div class="result-row"><div class="result-label">Minutenfaktor</div><div class="result-val">€ ${minutenfaktor.toFixed(4)}/min</div></div>
+      <div class="result-row highlight"><div class="result-label">Akkordlohn/h</div><div class="result-val">€ ${fmt(akkordlohnH)}/h</div></div>
+      <div class="result-row" style="font-weight:900;font-size:1.05rem;border-top:2px solid var(--orange);margin-top:6px;padding-top:8px;border-bottom:none;"><div class="result-label">Taglohn (${stunden} h)</div><div class="result-val" style="color:var(--orange-light)">€ ${fmt(tagesLohn)}</div></div>
+      <div style="margin-top:6px;font-size:0.73rem;color:#777;">Mindestlohn-Check: € ${fmt(mindestLohnTag)} → ${tagesLohn>=mindestLohnTag?'✅ Mindestlohn erfüllt':'⚠️ Grundlohn gilt!'}</div>
+    </div>`;
+}
+
+// INIT
+renderQuiz1();
+renderSortierQuiz();
+
+function togglePendler() {
+  const checked = document.getElementById('pp-check').checked;
+  document.getElementById('pendler-felder').style.display = checked ? 'block' : 'none';
+  if (!checked) {
+    document.getElementById('pp-input').value = 0;
+    document.getElementById('pe-km-input').value = '';
+    document.getElementById('pe-input').value = '';
+    if (document.getElementById('pe-error')) document.getElementById('pe-error').style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>

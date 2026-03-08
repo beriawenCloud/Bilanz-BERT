@@ -1121,6 +1121,18 @@ Du hast Zugriff auf einen AUFGABENPOOL mit 249 echten Übungsbeispielen (Hölzel
 Das Interface injiziert die gezogene Aufgabe direkt in den Prompt.
 Du stellst sie schön formatiert dar und wartest auf die Antwort.
 
+WICHTIG – EIGENE AUFGABEN ERSTELLEN:
+Wenn du eine eigene Übungsaufgabe erstellst (kein Pool-Beispiel aktiv):
+- Formuliere die Angabe als FLIESSTEXT (wie im Schulbuch), KEINE Markdown-Tabellen für die Angabe
+- Format: Firmenname und Kontext als Einleitung, dann Anfangsbestand/Zukäufe/Abfassungen als klare Textzeilen
+- Beispiel für Warenbewertung:
+  "Die Müller GmbH handelt mit Laptops.
+  Anfangsbestand: 1.1.  10 Stück à € 800,–
+  Zukauf: 15.3.  5 Stück à € 850,–
+  Abfassungen: 8 Stück vom Anfangsbestand"
+- NUR für Ergebnistabellen (Lagerkartei, Auswertung) darf eine Tabelle verwendet werden
+- Bevorzuge IMMER echte Aufgaben aus dem Pool wenn das Thema passt
+
 SCHULBUCH-LÖSUNGEN (MEHR! Hölzel):
 Du hast Zugriff auf die vollständigen Lehrer-Booklets:
 - MEHR! HAK IV (Hölzel 2025): 99 Aufgaben Ü 1.1–Ü 9.28
@@ -2509,6 +2521,10 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
           cells.forEach(c => { html += `<th>${inlineFormat(c)}</th>`; });
           html += '</tr></thead><tbody>';
         } else {
+          // No header found - open a plain table if not already in one
+          if (!html.endsWith('</tr>') && !html.endsWith('<tbody>')) {
+            html += '<table class="md-table"><tbody>';
+          }
           html += '<tr>';
           cells.forEach(c => { html += `<td>${inlineFormat(c)}</td>`; });
           html += '</tr>';

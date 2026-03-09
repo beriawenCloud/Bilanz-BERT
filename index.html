@@ -463,13 +463,14 @@
     overflow: hidden;
     table-layout: fixed;
   }
-  .buchung-table td:nth-child(1) { width: 38%; }
-  .buchung-table td:nth-child(2) { width: 12%; text-align: right; }
-  .buchung-table td:nth-child(3) { width: 38%; }
-  .buchung-table td:nth-child(4) { width: 12%; text-align: right; }
+  /* 4-Spalten-Layout: Soll-Konto | Soll-Betrag | Haben-Konto | Haben-Betrag */
+  .buchung-table col:nth-child(1) { width: 40%; }
+  .buchung-table col:nth-child(2) { width: 12%; }
+  .buchung-table col:nth-child(3) { width: 36%; }
+  .buchung-table col:nth-child(4) { width: 12%; }
   .buchung-table thead { display: table-header-group; }
   .buchung-table thead th {
-    padding: 6px 16px;
+    padding: 6px 12px;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -478,33 +479,44 @@
     background: rgba(200,169,110,0.08);
     border-bottom: 1px solid rgba(200,169,110,0.2);
   }
-  .buchung-table thead th:nth-child(1) { text-align: right; padding-right: 20px; }
-  .buchung-table thead th:nth-child(2) { width: 32px; text-align: center; }
-  .buchung-table thead th:nth-child(3) { text-align: left; padding-left: 20px; }
+  .buchung-table thead th:nth-child(1) { text-align: left; padding-left: 12px; }
+  .buchung-table thead th:nth-child(2) { text-align: right; padding-right: 12px; }
+  .buchung-table thead th:nth-child(3) { text-align: left; padding-left: 16px; border-left: 1px solid rgba(200,169,110,0.2); }
+  .buchung-table thead th:nth-child(4) { text-align: right; padding-right: 12px; }
   .buchung-table tbody td {
-    padding: 6px 16px;
+    padding: 6px 12px;
     vertical-align: top;
     border-bottom: 1px solid rgba(255,255,255,0.04);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .buchung-table tbody tr:last-child td { border-bottom: none; }
   .buchung-table tbody td:nth-child(1) {
-    text-align: right;
-    padding-right: 20px;
+    text-align: left;
+    padding-left: 12px;
   }
   .buchung-table tbody td:nth-child(2) {
-    width: 32px;
-    text-align: center;
-    color: rgba(200,169,110,0.4);
-    padding: 6px 4px;
-    font-size: 15px;
+    text-align: right;
+    padding-right: 12px;
+    color: #9ca3af;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
   .buchung-table tbody td:nth-child(3) {
-    padding-left: 20px;
+    padding-left: 16px;
+    border-left: 1px solid rgba(200,169,110,0.15);
+  }
+  .buchung-table tbody td:nth-child(4) {
+    text-align: right;
+    padding-right: 12px;
+    color: #9ca3af;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
   .konto-ertrag  { color: #4cd282; font-weight: 600; }
   .konto-aufwand { color: #f87171; font-weight: 600; }
   .konto-neutral { color: rgba(229,160,80,0.9); }
-  .buchung-table tbody tr:last-child td { border-bottom: none; }
 
 
   /* ── KLASSEN-SIDEBAR ── */
@@ -1576,7 +1588,7 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
 
     function closeBuchung() {
       if (inBuchung && buchungRows.length > 0) {
-        html += '<table class="buchung-table"><thead><tr><th>Soll</th><th>Betrag (€)</th><th>Haben</th><th>Betrag (€)</th></tr></thead><tbody>';
+        html += '<table class="buchung-table"><colgroup><col style="width:40%"><col style="width:11%"><col style="width:38%"><col style="width:11%"></colgroup><thead><tr><th>Soll</th><th style="text-align:right">Betrag (€)</th><th style="border-left:1px solid rgba(200,169,110,0.2)">Haben</th><th style="text-align:right">Betrag (€)</th></tr></thead><tbody>';
         buchungRows.forEach(row => {
           const s = splitKontoBetrag(row.soll || '');
           const h = splitKontoBetrag(row.haben || '');
@@ -1584,9 +1596,9 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
           const habenClass = h.konto ? kontoClass(h.konto, 'haben') : 'konto-neutral';
           html += `<tr>` +
             `<td class="${sollClass}">${inlineFormat(s.konto)}</td>` +
-            `<td style="text-align:right;color:#9ca3af;">${s.betrag}</td>` +
+            `<td>${s.betrag}</td>` +
             `<td class="${habenClass}">${inlineFormat(h.konto)}</td>` +
-            `<td style="text-align:right;color:#9ca3af;">${h.betrag}</td>` +
+            `<td>${h.betrag}</td>` +
             `</tr>`;
         });
         html += '</tbody></table>';

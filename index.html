@@ -685,16 +685,11 @@
 STIL: Freundlich, geduldig, ermutigend. Erkläre immer das WARUM. Verwende Emojis sparsam. Antworte auf Deutsch. Beziehe dich auf österreichisches Rechnungswesen (Hölzel Verlag, UGB).
 
 BUCHUNGSSÄTZE – FORMATIERUNG (sehr wichtig!):
-Verwende für JEDEN Buchungssatz genau dieses Format (Soll / Haben mit Betrag):
+Verwende für JEDEN Buchungssatz dieses Format:
 2800 Bank 1.200,00 / 4000 Handelswarenerlöse 1.000,00
-                   / 3500 Umsatzsteuer 200,00
+/ 3500 Umsatzsteuer 200,00
 
-Regeln:
-- Kontonummer IMMER zuerst, dann Kontoname (z.B. "2800 Bank")
-- Betrag direkt nach dem Kontonamen, VOR dem /
-- Mehrere Haben-Konten: jede Zeile beginnt mit /
-- Beträge mit Komma und 2 Stellen (z.B. 1.200,00)
-- Bei Umbuchungen Belegkürzel voranstellen (z.B. "U 12 2800 Bank 1.200,00 / ...")
+Regeln: Kontonummer + Name + Betrag VOR dem /. Mehrere Haben-Konten: neue Zeile mit /. Beträge: 1.200,00
 
 AUFGABEN-VERHALTEN:
 - Bei Schulbuchaufgaben (Ü X.Y oder K X.Y): Erkläre schrittweise, zeige nicht sofort die komplette Lösung
@@ -1566,13 +1561,29 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
       else                  return 'konto-ertrag';
     }
 
+    function splitKontoBetrag(text) {
+      // Trennt "2800 Bank 1.200,00" in {konto: "2800 Bank", betrag: "1.200,00"}
+      const m = text.match(/^(.*?)\s+(\d[\d.,]+)\s*€?\s*$/) ||
+                text.match(/^(.*?)\s+(\d[\d.,]+)$/) ||
+                text.match(/^(.*?)\s+€\s*([\d.,]+)$/);
+      if (m) return { konto: m[1].trim(), betrag: m[2].trim() };
+      return { konto: text.trim(), betrag: '' };
+    }
+
     function closeBuchung() {
       if (inBuchung && buchungRows.length > 0) {
-        html += '<table class="buchung-table"><thead><tr><th>Soll</th><th></th><th>Haben</th></tr></thead><tbody>';
+        html += '<table class="buchung-table"><thead><tr><th>Soll</th><th>Betrag (€)</th><th>Haben</th><th>Betrag (€)</th></tr></thead><tbody>';
         buchungRows.forEach(row => {
-          const sollClass = row.soll ? kontoClass(row.soll, 'soll') : 'konto-neutral';
-          const habenClass = row.haben ? kontoClass(row.haben, 'haben') : 'konto-neutral';
-          html += `<tr><td class="${sollClass}">${inlineFormat(row.soll)}</td><td>|</td><td class="${habenClass}">${inlineFormat(row.haben)}</td></tr>`;
+          const s = splitKontoBetrag(row.soll || '');
+          const h = splitKontoBetrag(row.haben || '');
+          const sollClass = s.konto ? kontoClass(s.konto, 'soll') : 'konto-neutral';
+          const habenClass = h.konto ? kontoClass(h.konto, 'haben') : 'konto-neutral';
+          html += `<tr>` +
+            `<td class="${sollClass}">${inlineFormat(s.konto)}</td>` +
+            `<td style="text-align:right;color:#9ca3af;">${s.betrag}</td>` +
+            `<td class="${habenClass}">${inlineFormat(h.konto)}</td>` +
+            `<td style="text-align:right;color:#9ca3af;">${h.betrag}</td>` +
+            `</tr>`;
         });
         html += '</tbody></table>';
         inBuchung = false;

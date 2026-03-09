@@ -533,25 +533,7 @@
     <div style="text-align:center;margin-top:16px;color:#4b5563;font-size:0.75rem;">Nur für autorisierte Benutzer · GALS</div>
   </div>
 </div>
-  <!-- KLASSEN-AUSWAHL SCREEN -->
-  <div id="klassenScreen" class="hidden">
-    <div class="klassen-title">
-      📒 Bilanz-Bert
-      <span>Welche Klasse besuchst du?</span>
-    </div>
-    <div class="klassen-buttons">
-      <button class="klassen-btn" onclick="waehleKlasse('HAK')">
-        <div class="klassen-icon">🏦</div>
-        4. HAK
-        <div class="klassen-sub">Handelsakademie</div>
-      </button>
-      <button class="klassen-btn" onclick="waehleKlasse('HLW')">
-        <div class="klassen-icon">🌿</div>
-        4. HLW
-        <div class="klassen-sub">Höhere Lehranstalt</div>
-      </button>
-    </div>
-  </div>
+  
 
 
 
@@ -592,7 +574,23 @@
   </div>
 </header>
 
-<div class="main">
+<div class="main" style="display:flex;">
+  <!-- KLASSEN-SIDEBAR -->
+  <nav id="klassenSidebar" style="width:105px;min-width:105px;background:#0a0e17;border-right:1px solid rgba(200,169,110,0.12);padding:12px 6px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;">
+    <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;color:rgba(200,169,110,0.5);padding:6px 8px 3px;text-transform:uppercase;">HAK</div>
+    <button class="sb-btn" id="btn_HAK_I" onclick="waehleKlasse('I','HAK')">I. Jg</button>
+    <button class="sb-btn" id="btn_HAK_II" onclick="waehleKlasse('II','HAK')">II. Jg</button>
+    <button class="sb-btn" id="btn_HAK_III" onclick="waehleKlasse('III','HAK')">III. Jg</button>
+    <button class="sb-btn" id="btn_HAK_IV" onclick="waehleKlasse('IV','HAK')">IV. Jg</button>
+    <button class="sb-btn" id="btn_HAK_V" onclick="waehleKlasse('V','HAK')">V. Jg</button>
+    <div style="height:1px;background:rgba(200,169,110,0.1);margin:6px 4px;"></div>
+    <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;color:rgba(200,169,110,0.5);padding:3px 8px;text-transform:uppercase;">HLW</div>
+    <button class="sb-btn" id="btn_HLW_I" onclick="waehleKlasse('I','HLW')">I. Jg</button>
+    <button class="sb-btn" id="btn_HLW_II" onclick="waehleKlasse('II','HLW')">II. Jg</button>
+    <button class="sb-btn" id="btn_HLW_III" onclick="waehleKlasse('III','HLW')">III. Jg</button>
+    <button class="sb-btn" id="btn_HLW_IV" onclick="waehleKlasse('IV','HLW')">IV. Jg</button>
+    <button class="sb-btn" id="btn_HLW_V" onclick="waehleKlasse('V','HLW')">V. Jg</button>
+  </nav>
   <div class="chat-view">
     <div class="chat-messages" id="chatMessages">
       <div class="welcome-block" id="welcomeBlock">
@@ -1478,16 +1476,7 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
           currentToken = session.token;
           currentUser = { email: session.email };
           document.getElementById('loginScreen').style.display = 'none';
-          // Schultyp wiederherstellen
-          const savedTyp = localStorage.getItem('bb_schultyp');
-          if (savedTyp) {
-            const sel = document.getElementById('schulTypSelect');
-            if (sel) sel.value = savedTyp;
-            schulTyp = savedTyp;
-          } else {
-            const ks = document.getElementById('klassenScreen');
-            if (ks) { ks.style.display = 'flex'; ks.classList.remove('hidden'); }
-          }
+
           if (session.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
             document.getElementById('adminMenuBtn').style.display = 'flex';
           }
@@ -1662,15 +1651,7 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
         const ls = document.getElementById('loginScreen');
         ls.style.display = 'none';
         ls.classList.add('hidden');
-        // Schultyp bereits gespeichert?
-        const savedTyp = localStorage.getItem('bb_schultyp');
-        if (savedTyp) {
-          waehleKlasse(savedTyp);
-        } else {
-          const ks = document.getElementById('klassenScreen');
-          ks.style.display = 'flex';
-          ks.classList.remove('hidden');
-        }
+        restoreSidebar();
       }, 500);
       // Admin-Button einblenden falls Admin
       if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
@@ -1749,16 +1730,30 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
     loadUsers();
   }
 
-  function waehleKlasse(typ) {
-    // Schultyp speichern
-    localStorage.setItem('bb_schultyp', typ);
+  function waehleKlasse(jahrgang, schultyp) {
+    // Speichern
+    localStorage.setItem('bb_jahrgang', jahrgang);
+    localStorage.setItem('bb_schultyp', schultyp);
     // Selector setzen
+    schulTyp = schultyp;
     const sel = document.getElementById('schulTypSelect');
-    if (sel) sel.value = typ;
-    schulTyp = typ;
-    // Screen ausblenden
-    document.getElementById('klassenScreen').classList.add('hidden');
-    document.getElementById('klassenScreen').style.display = 'none';
+    if (sel) sel.value = schultyp;
+    jahrgangFilter = jahrgang;
+    const jsel = document.getElementById('jahrgangSelect');
+    if (jsel) jsel.value = jahrgang;
+    // Sidebar aktiv setzen
+    document.querySelectorAll('.sb-btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = document.getElementById('btn_' + schultyp + '_' + jahrgang.toUpperCase());
+    if (activeBtn) activeBtn.classList.add('active');
+    // klassenScreen ausblenden falls sichtbar
+    const ks = document.getElementById('klassenScreen');
+    if (ks) { ks.style.display = 'none'; ks.classList.add('hidden'); }
+  }
+
+  function restoreSidebar() {
+    const j = localStorage.getItem('bb_jahrgang') || 'IV';
+    const s = localStorage.getItem('bb_schultyp') || 'HAK';
+    waehleKlasse(j, s);
   }
 
   function openAdmin() {

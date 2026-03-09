@@ -458,16 +458,35 @@
 
   .buchung-table {
     border-collapse: collapse;
-    margin: 10px 0;
+    margin: 12px 0;
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid rgba(200,169,110,0.3);
+    border-radius: 8px;
+    overflow: hidden;
   }
-  .buchung-table thead { display: none; }
+  .buchung-table thead { display: table-header-group; }
+  .buchung-table thead th {
+    padding: 6px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(200,169,110,0.8);
+    background: rgba(200,169,110,0.08);
+    border-bottom: 1px solid rgba(200,169,110,0.2);
+  }
+  .buchung-table thead th:nth-child(1) { text-align: right; padding-right: 20px; }
+  .buchung-table thead th:nth-child(2) { width: 32px; text-align: center; }
+  .buchung-table thead th:nth-child(3) { text-align: left; padding-left: 20px; }
   .buchung-table tbody td {
-    padding: 5px 16px;
+    padding: 6px 16px;
     vertical-align: top;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
   }
+  .buchung-table tbody tr:last-child td { border-bottom: none; }
   .buchung-table tbody td:nth-child(1) {
     text-align: right;
     padding-right: 20px;
@@ -475,15 +494,15 @@
   .buchung-table tbody td:nth-child(2) {
     width: 32px;
     text-align: center;
-    color: rgba(255,200,80,0.5);
-    padding: 5px 4px;
+    color: rgba(200,169,110,0.4);
+    padding: 6px 4px;
     font-size: 15px;
   }
   .buchung-table tbody td:nth-child(3) {
     padding-left: 20px;
   }
-  .konto-ertrag  { color: rgba(76,210,130,0.95); }
-  .konto-aufwand { color: rgba(220,80,80,0.95); }
+  .konto-ertrag  { color: #4cd282; font-weight: 600; }
+  .konto-aufwand { color: #f87171; font-weight: 600; }
   .konto-neutral { color: rgba(229,160,80,0.9); }
   .buchung-table tbody tr:last-child td { border-bottom: none; }
 
@@ -1307,412 +1326,7 @@ GEWERKSCHAFTSBEITRAG: 1 % des Bruttogehalts, max. € 42,30
 AUFGABENPOOL – ECHTE BEISPIELE (Hölzel Verlag, IV. Jahrgang 2025)
 Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
 ════════════════════════════════════════════════════════
-
-── Ü 1: Einzelbewertung von Forderungen (Herbert Huber OG) ──
-AUFGABE:
-Aktuelles Jahr, 31.12. (U 41): Forderung gegen Elias Hofer (20046), € 4.800 inkl. 20% USt, ist zweifelhaft. Voraussichtlich nur 40% einbringlich. Auf Konto 2080 besteht bereits eine EWB von € 1.200.
-Nächstes Jahr:
-- 20.3. (S 87): Elias Hofer ist zahlungsunfähig, Sanierungsverfahren mit Eigenverwaltung. 60% der Nettoforderung sind als Verlust abzuschreiben (inkl. USt-Korrektur).
-- 15.10. (B 163): Elias Hofer überweist € 1.920.
-- 31.12. (U 39): Forderung gegen Gruber, € 1.800 inkl. 20% USt, ist zweifelhaft; voraussichtlich 80% einbringlich. (EWB-Anpassung ausgehend vom Vorjahreswert € 1.600)
-Aufgabe: a) Stelle alle Buchungssätze auf. b) EK-Auswirkung je Buchung (↑ = EK steigt, ↓ = EK sinkt, 0 = keine Auswirkung)
-MUSTERLÖSUNG:
-Aktuelles Jahr:
-Auszuweisende WB: 4.800 / 1,2 × 0,4 = 1.600; bestehende WB: 1.200 → Zuweisung: 400
-U 41: 7806 Zuweisungen an WB / 2080 EWB Lieferforderungen 400 (↓)
-Nächstes Jahr:
-Nettoforderung: 4.800/1,2 = 4.000; Abschreibung 60%: 2.400; USt: 480
-S 87: 7802 Abschreibungen Forderungen 2.400 / 3500 USt 480 / an 20046 Elias Hofer 2.880 (↓)
-B 163: 2800 Bank / 20046 Elias Hofer 1.920 (0)
-Auszuweisende WB: 1.800/1,2 × 0,8 = 1.200; vorherige WB: 1.600 → Auflösung: 400
-U 39: 2080 EWB Lieferforderungen / 4870 Erträge Auflösung WB 400 (↑)
-
-── Ü 2: Einzelbewertung von Forderungen (Nicole Roth e.U.) ──
-AUFGABE:
-31.12. (U 43): Forderung gegen Jakob Reichert (20043), € 3.600 inkl. 20% USt, zweifelhaft; voraussichtlich 60% einbringlich. EWB auf 2080 besteht bereits mit € 2.500.
-Nächstes Jahr:
-- 9.4. (S 126): Jakob Reichert zahlungsunfähig, Sanierungsverfahren, 60% Verlust.
-- 6.8. (B 142): € 1.440 Bankeingang (vereinbarte Quote).
-- 31.12. (U 40): Forderung gegen Otto Berger (20019), € 5.400 inkl. 20% USt, zweifelhaft; voraussichtlich 90% einbringlich. EWB derzeit € 1.800.
-Aufgabe: a) Buchungssätze b) EK-Auswirkung
-MUSTERLÖSUNG:
-WB: 3.600/1,2 × 0,4 = 1.200; bestehend: 2.500 → Auflösung: 700
-U 43: 2080 EWB / 4870 Erträge Auflösung WB 700 (↑)
-Nächstes Jahr: 3.600/1,2 = 3.000; 60% = 1.800; USt: 360
-S 126: 7802 Abschr. Ford. 1.800 / 3500 USt 360 / an 20043 Jakob Reichert 2.160 (↓)
-B 142: 2800 Bank / 20043 Jakob Reichert 1.440 (0)
-WB: 5.400/1,2 × 0,1 = 450; bestehend: 1.800 → Auflösung nein, Zuweisung: 5.400/1,2×0,1=450, bestehend 1.800 → Zuweisung 2.250
-U 40: 7806 / 2080 EWB 2.250 (↓)
-
-── Ü 3: Einzelbewertung Forderungen (Gebhart GmbH) ──
-AUFGABE:
-Saldenbilanz per 31.12.: 2000 Lieferforderungen S 89.840 / 2080 EWB H 600.
-- Peter Walzer (20051): Forderung € 7.200, vollkommen uneinbringlich (U 47).
-- Theodor Paul (20072): Forderung € 8.640, voraussichtlich nur 40% einbringlich. EWB derzeit € 600 (U 48).
-Aufgabe: a) Buchungssätze per 31.12. b) EK-Auswirkung
-MUSTERLÖSUNG:
-Peter Walzer: Netto 7.200/1,2=6.000; USt 1.200
-U 47: 7802 Abschr. Ford. 6.000 / 3500 USt 1.200 / an 20051 Peter Walzer 7.200 (↓)
-Theodor Paul: WB = 8.640/1,2 × 0,6 = 4.320; bestehend 600 → Zuweisung 3.720
-U 48: 7806 / 2080 EWB 3.720 (↓)
-
-── Ü 4: Einzelbewertung Forderungen (Max Kaiser e.U.) ──
-AUFGABE:
-Saldenbilanz: 2000 S 695.976 / 2080 H 3.500.
-- Weber GmbH (20047): Forderung € 10.080, vollkommen uneinbringlich (U 43).
-- Werner Auer (20059): Forderung € 12.096, nur 20% einbringlich. EWB derzeit € 3.500 (U 44).
-MUSTERLÖSUNG:
-Weber GmbH: 10.080/1,2=8.400 Netto; USt 1.680
-U 43: 7802 8.400 / 3500 1.680 / an 20047 Weber GmbH 10.080 (↓)
-Werner Auer: WB = 12.096/1,2 × 0,8 = 8.064; bestehend 3.500 → Zuweisung 4.564
-U 44: 7806 / 2080 EWB 4.564 (↓)
-
-── Ü 5: Forderungen in fremder Währung – Export (Interpac GmbH) ──
-AUFGABE:
-Verkauf an Leon Keller GmbH (20534), Schweiz, CHF 1.250, 30 Tage Ziel.
-A 748 vom 15.12. zu Kurs 0,9402 gebucht → 1.329,50.
-Kurs am 31.12.: 0,9472.
-Aufgabe: a) Bewertung + Buchung falls erforderlich b) EK c) Kundenkonto darstellen
-MUSTERLÖSUNG:
-Wert bei Buchung: 1.250/0,9402 = 1.329,50; Wert am Stichtag: 1.250/0,9472 = 1.319,68 → Kursverlust 9,82
-→ Strenges NWP: Wertminderung MUSS gebucht werden
-U 78: 7815 Fremdwährungskursverluste 9,82 / an 20534 Leon Keller GmbH 9,82 (↓)
-Bilanzansatz: 1.319,68
-Kundenkonto 20534: S: A748 1.329,50 / H: U78 9,82 / Saldo 1.319,68
-
-── Ü 6: Forderungen in fremder Währung – Export (Airflow GmbH) ──
-AUFGABE:
-Verkauf an Elkem (20316), Norwegen, NOK 213.900, 60 Tage Ziel.
-A 908 vom 18.12. zu Kurs 11,445 gebucht → 18.689,38.
-30.12. (B 167): Teilzahlung NOK 106.950 zu Kurs 11,335 abzgl. € 29 Spesen → Gutschrift € 9.406,38 (noch nicht verbucht).
-Kurs am 31.12.: 11,248.
-Aufgabe: a) B 167 verbuchen b) Restforderung bewerten + Buchung c) EK d) Kundenkonto
-MUSTERLÖSUNG:
-a) 106.950/11,335 = 9.435,38; Kursgewinn vs. Buchwert 106.950/11,445=9.344,69 → Kursgewinn 90,69
-B 167: 2800 Bank 9.406,38 / 7790 Spesen 29 / an 20316 Elkem 9.435,38 (↓ Spesen)
-Kursgewinn: 20316 Elkem 90,69 / an 4840 Fremdwährungskursgewinne 90,69 (↑)
-b) Restforderung NOK 106.950: Buchwert 9.344,69; Stichtagswert 106.950/11,248=9.508,36 → Kursgewinn → KEINE Buchung (gemildertes NWP gilt NICHT für UV → strenges NWP gilt → Gewinne nicht verbuchen)
-Bilanzansatz: 9.344,69
-
-── Ü 7: Verbindlichkeiten in fremder Währung – Import (Livios GmbH) ──
-AUFGABE:
-Kauf von Matteo Wyss GmbH (33087), Schweiz, CHF 1.850.
-E 784 vom 3.12. zu Kurs 0,9793 gebucht → 1.889,10 (5000 HW-Einsatz / 33087).
-Kurs am 31.12.: 0,9593.
-Aufgabe: a) Bewertung + Buchung b) EK c) Lieferantenkonto
-MUSTERLÖSUNG:
-Buchwert: 1.850/0,9793=1.889,10; Stichtagswert: 1.850/0,9593=1.928,49 → Kursverlust 39,39
-→ Strenges Höchstwertprinzip: Erhöhung MUSS gebucht werden
-U 48: 7815 Fremdwährungskursverluste 39,39 / an 33087 Matteo Wyss 39,39 (↓)
-Bilanzansatz: 1.928,49
-
-── Ü 8: Verbindlichkeiten in fremder Währung – Import (Elias Auer GmbH) ──
-AUFGABE:
-Kauf von Casio Computer Co. Ltd. (33237), Japan, JPY 2.145.000.
-E 1845 vom 21.12. zu Kurs 156,34 gebucht → 13.720,10.
-29.12. (B 211): Teilzahlung JPY 643.500 zu Kurs 156,23, Spesen € 29 → Lastschrift 4.147,93 (noch nicht verbucht).
-Kurs am 31.12.: 156,0907.
-Aufgabe: a) B 211 verbuchen b) Restverbindlichkeit bewerten c) EK d) Lieferantenkonto
-MUSTERLÖSUNG:
-a) 643.500/156,23 = 4.118,93; Buchwert 643.500/156,34=4.116,03 → Kursverlust 2,90
-B 211: 33237 Casio 4.118,93 / 7790 Spesen 29 / an 2800 Bank 4.147,93 (↓)
-Kursverlust: 7815 2,90 / an 33237 Casio 2,90 (↓)
-b) Restverbindl. JPY 1.501.500: Buchwert 9.604,07; Stichtagswert 1.501.500/156,0907=9.619,41 → Kursverlust 15,34
-U 67: 7815 15,34 / an 33237 Casio 15,34 (↓)
-Bilanzansatz: 9.619,41
-
-════════════════════════════════════════════════════════
-Kapitel 2: Rechnungsabgrenzung
-════════════════════════════════════════════════════════
-
-── Ü 9: Eigene Vorauszahlung – Jahresende (Schicher KG) ──
-AUFGABE:
-5.9. (B 121): Betriebsbündelversicherung € 8.550 für 12 Monate bezahlt (5.9. bis 4.9. nächstes Jahr).
-31.12. (U 51): Versicherungsaufwand abgrenzen.
-1.1. nächstes Jahr (U 4): Rechnungsabgrenzung auslösen.
-MUSTERLÖSUNG:
-5.9.: 7700 Versicherungsaufwand 8.550 / an 2800 Bank 8.550 (↓)
-Abgrenzung: 8.550/12×8 = 5.700 (8 Monate betreffen nächstes Jahr)
-U 51: 2900 ARA 5.700 / an 7700 Versicherungsaufwand 5.700 (↑)
-U 4: 7700 Versicherungsaufwand 5.700 / an 2900 ARA 5.700 (↓)
-
-── Ü 10: Eigene Vorauszahlung – Jahresende (Bettina Haudej OG) ──
-AUFGABE:
-5.12. (S 146): Miete Lagerhalle Jänner + Februar nächstes Jahr, € 1.500 + € 300 USt = € 1.800, via Kreditkarte (3180).
-31.12. (U 45): Mietaufwand abgrenzen.
-1.1. nächstes Jahr (U 3): Auflösen.
-MUSTERLÖSUNG:
-S 146: 7400 Mietaufwand 1.500 / 2500 Vorsteuer 300 / an 3180 Verbindlichk. Kreditkartenuntern. 1.800 (↓)
-Abgrenzung: 1.500/2×1 = 750 (1 Monat = Dezember bereits abgegrenzt, aber Zahlung für Jän+Feb = 2 Monate, davon 1 Monat nächstes Jahr)
-Hinweis: Dezember gehört zum alten Jahr, Jänner + Februar = 2 Monate bezahlt für nächstes Jahr → aber Zahlung am 5.12. für Jän+Feb = 2 Monate voraus → ARA: 1.500/2×1 = 750 für den in nächstes Jahr fallenden Monat
-U 45: 2900 ARA 750 / an 7400 Mietaufwand 750 (↑)
-U 3: 7400 Mietaufwand 750 / an 2900 ARA 750 (↓)
-
-── Ü 11: Eigene Vorauszahlung – Jahresende (Josefine Pichler e.U.) ──
-AUFGABE:
-28.11. (B 127): Darlehen € 80.000 aufgenommen. Zinsen 6% p.a., halbjährlich im Vorhinein. Erste Zinszahlung: 28.11. für 6 Monate (28.11. bis 27.5. nächstes Jahr) = € 2.400.
-31.12. (U 51): Zinsenaufwand abgrenzen.
-1.1. nächstes Jahr (U 5): Auflösen.
-MUSTERLÖSUNG:
-B 127: 8315 Zinsenaufwand für Darlehen 2.400 / an 2800 Bank 2.400 (↓)
-Abgrenzung: 2.400/6×5 = 2.000 (5 Monate fallen in nächstes Jahr: Dez ist 1 Monat altes Jahr)
-U 51: 2900 ARA 2.000 / an 8315 Zinsenaufwand 2.000 (↑)
-U 5: 8315 Zinsenaufwand 2.000 / an 2900 ARA 2.000 (↓)
-
-── Ü 12: Eigene Vorauszahlung – sofortige Abgrenzung (Hänsel GmbH) ──
-AUFGABE:
-25.6.2025 (E 880): Wartungsvertrag für Maschinen 1.7.2025–30.6.2026, € 4.000 + € 800 USt = € 4.800 von Fink Maschinen GmbH (33544). Sofort abgrenzen.
-29.6.2025 (B 26): Überweisung € 4.800.
-1.1.2026 (U 4): Auflösen.
-MUSTERLÖSUNG:
-Abgrenzung: 4.000/12×6 = 2.000 fallen in 2026 → ARA 2.000 sofort bei Buchung
-E 880: 7205 Maschinenwartung 2.000 / 2500 Vorsteuer 800 / 2900 ARA 2.000 / an 33544 Fink Maschinen 4.800 (↓)
-B 26: 33544 Fink Maschinen 4.800 / an 2800 Bank 4.800 (0)
-U 4: 7205 Maschinenwartung 2.000 / an 2900 ARA 2.000 (↓)
-
-── Ü 13: Fremde Vorauszahlung – Jahresende (Müller & Müller KG) ──
-AUFGABE:
-1.12. (B 137): Miete Lagerhalle für 3 Monate (Dez + Jän + Feb) kassiert, € 3.300 + € 660 USt = € 3.960.
-31.12. (U 47): Mietertrag abgrenzen.
-1.1. nächstes Jahr (U 3): Auflösen.
-MUSTERLÖSUNG:
-B 137: 2800 Bank 3.960 / an 4810 Mieterträge 3.300 / an 3500 USt 660 (↑)
-Abgrenzung: 3.300/3×2 = 2.200 (2 Monate Jän+Feb fallen in nächstes Jahr)
-U 47: 4810 Mieterträge 2.200 / an 3900 PRA 2.200 (↓)
-U 3: 3900 PRA 2.200 / an 4810 Mieterträge 2.200 (↑)
-
-── Ü 14: Fremde Vorauszahlung – Jahresende (Gelati GmbH) ──
-AUFGABE:
-4.11. (B 144): Darlehen an Nah & Frisch Markt Josef Maierhofer GmbH vergeben. Zinsen 6% p.a., halbjährlich im Vorhinein kassiert. Zinszahlung 4.11. für 6 Monate = € 900.
-31.12. (U 42): Zinsertrag abgrenzen.
-1.1. nächstes Jahr (U 5): Auflösen.
-MUSTERLÖSUNG:
-B 144: 2800 Bank 900 / an 8051 Zinsenerträge aus gew. Darlehen 900 (↑)
-Abgrenzung: 900/6×4 = 600 (4 Monate Dez–März fallen in nächstes Jahr)
-Hinweis: November=2 Monate altes Jahr, Dez+Jän+Feb+März = 4 Monate nächstes Jahr
-U 42: 8051 Zinsenerträge 600 / an 3900 PRA 600 (↓)
-U 5: 3900 PRA 600 / an 8051 Zinsenerträge 600 (↑)
-
-── Ü 15: Fremde Vorauszahlung – sofortige Abgrenzung (Data X GmbH) ──
-AUFGABE:
-27.7.2025 (A 640): Softwarelizenz an Code Nova GmbH (20145), 1.8.2025–31.7.2026, € 3.000 + € 600 USt. Sofort abgrenzen.
-31.7.2025 (B 20): Überweisung € 3.600.
-1.1.2026 (U 4): Auflösen.
-MUSTERLÖSUNG:
-Abgrenzung: 3.000/12×7 = 1.750 fallen in 2026 → PRA sofort
-A 640: 20145 Code Nova 3.600 / an 4005 Erlöse Softwarelizenzen 1.250 / an 3500 USt 600 / an 3900 PRA 1.750 (↑ nur 1.250)
-B 20: 2800 Bank 3.600 / an 20145 Code Nova 3.600 (0)
-U 4: 3900 PRA 1.750 / an 4005 Erlöse Softwarelizenzen 1.750 (↑)
-
-── Ü 16: Fremder Rückstand (Klara Fleischmann KG) ──
-AUFGABE:
-Darlehen an Franz Huber KG, 10% p.a., Zinsen halbjährlich im Nachhinein.
-31.12. (U 44): Zinsen für Nov + Dez (2 Monate) = Rückstand einbuchen.
-3.5. nächstes Jahr (B 62): Franz Huber zahlt € 300 Zinsen für 6 Monate.
-MUSTERLÖSUNG:
-Zinsen 6 Monate: 6.000 × 10% / 2 = 300; davon 2 Monate altes Jahr: 300/6×2 = 100
-U 44: 2330 Forderung aus Darlehenszinsen 100 / an 8051 Zinsenerträge aus gew. Darlehen 100 (↑)
-B 62: 2800 Bank 300 / an 2330 Ford. Darlehenszinsen 100 / an 8051 Zinsenerträge 200 (↑ 200)
-
-── Ü 17: Eigener Rückstand (Fritz Paropa KG) ──
-AUFGABE:
-31.12. (U 51): Kammerumlage 4. Quartal € 124 noch nicht bezahlt – einbuchen.
-14.2. nächstes Jahr (B 24): Überweisung € 124.
-MUSTERLÖSUNG:
-U 51: 7780 Kammerumlage 124 / an 3540 Verbindlichkeiten Finanzamt 124 (↓)
-B 24: 3540 Verbindlichkeiten Finanzamt 124 / an 2800 Bank 124 (0)
-
-── Ü 18: Eigener Rückstand (Sepp Stadtmann GmbH) ──
-AUFGABE:
-Darlehen € 100.000, 4,8% p.a., Zinsen halbjährlich im Nachhinein.
-31.12. (U 59): Zinsen für Nov + Dez einbuchen (2 Monate Rückstand).
-30.4. nächstes Jahr (B 65): Überweisung € 2.400 Zinsen für 6 Monate.
-MUSTERLÖSUNG:
-Zinsen 6 Monate: 100.000 × 4,8% / 2 = 2.400; 2 Monate altes Jahr: 2.400/6×2 = 800
-U 59: 8315 Zinsenaufwand 800 / an 3160 Verbindlichkeiten aus Darlehenszinsen 800 (↓)
-B 65: 3160 Verbindlichk. Darlehenszinsen 800 / 8315 Zinsenaufwand 1.600 / an 2800 Bank 2.400 (↓ 1.600)
-
-── Ü 19: Rückstände gemischt (Jerolitsch GmbH) ──
-AUFGABE:
-1. 31.12. (U 44): Miete Dezember € 800 + € 160 USt = € 960 noch nicht bezahlt, Gegenkonto 3800. 10.1. nächstes Jahr (B 5): Überweisung.
-2. 31.12. (U 45): Rechnung Uster GmbH (33490) für Heizungsreparatur € 1.300 + € 260 USt eingeht. 17.1. nächstes Jahr (B 8): Überweisung.
-MUSTERLÖSUNG:
-1. U 44: 7400 Mietaufwand 800 / 2500 Vorsteuer 160 / an 3800 Sonst. Verbindlichkeiten 960 (↓)
-   B 5: 3800 Sonst. Verbindlichkeiten 960 / an 2800 Bank 960 (0)
-2. U 45: 7200 Instandhaltung 1.300 / 2500 Vorsteuer 260 / an 33490 Uster GmbH 1.560 (↓)
-   B 8: 33490 Uster GmbH 1.560 / an 2800 Bank 1.560 (0)
-
-── Ü 20: Rückstände gemischt (Hildegard Domes KG) ──
-AUFGABE:
-1. 31.12. (U 51): SV-Dienstgeberanteil Angestellte Dezember € 1.279,78 noch nicht verbucht.
-   14.1. nächstes Jahr (B 7): SV-Gesamtbeitrag € 2.382,05 überwiesen.
-2. 31.12. (U 52): Kammerumlage 4. Quartal € 215,60 einbuchen.
-   14.2. nächstes Jahr (B 27): Überweisung.
-MUSTERLÖSUNG:
-1. U 51: 6560 Gesetzl. Sozialaufwand Angest. 1.279,78 / an 3600 Verbindlichk. Gesundheitskasse 1.279,78 (↓)
-   B 7: 3600 Verbindlichk. Gesundheitskasse 2.382,05 / an 2800 Bank 2.382,05 (0)
-2. U 52: 7780 Kammerumlage 215,60 / an 3540 Verbindlichkeiten Finanzamt 215,60 (↓)
-   B 27: 3540 Verbindlichk. Finanzamt 215,60 / an 2800 Bank 215,60 (0)
-
-── Ü 21: Rechnungsabgrenzung gemischt (Claudia Cardinale OG) ──
-AUFGABE:
-1. 4.8.: Feuerversicherung € 720 für 5.8. bis 4.8. nächstes Jahr bezahlt. 31.12. (U 49): Abgrenzen.
-2. 31.12. (U 50): Kommunalsteuer Angestellte Dezember € 303 noch nicht verbucht.
-MUSTERLÖSUNG:
-1. Abgrenzung: 720/12×7 = 420 (7 Monate Jän–Jul nächstes Jahr)
-   U 49: 2900 ARA 420 / an 7700 Versicherungsaufwand 420 (↑)
-2. U 50: 6680 Kommunalsteuer Angestellte 303 / an 3610 Verbindlichkeiten Gemeinde 303 (↓)
-
-── Ü 22: Rechnungsabgrenzung gemischt (Pia Meiditsch e.U.) ──
-AUFGABE:
-1. 1.9. (B 95): Betriebsgebäudeversicherung € 825 für 12 Monate (2.9.–1.9. nächstes Jahr). Sofort abgrenzen.
-2. 28.10. (B 118): Miete Lagerhalle für 5 Monate (1.11.–31.3. nächstes Jahr) kassiert, € 4.000 + € 800 USt. Sofort abgrenzen.
-3. 31.12. (U 45): Kammerumlage 4. Quartal € 169,20 einbuchen.
-4. 31.12. (U 46): Miete Dezember für Verkaufsraum € 1.100 + € 220 USt = € 1.320, Gegenkonto 33120 Josef Maier. Zahlung 4.1. nächstes Jahr.
-MUSTERLÖSUNG:
-1. 825/12×8 = 550 für nächstes Jahr (Okt–Sep, Sept ist 4 Monate altes Jahr)
-   B 95: 7700 Versicherungsaufwand 275 / 2900 ARA 550 / an 2800 Bank 825 (↓)
-2. 4.000/5×3 = 2.400 für nächstes Jahr (Jän–März)
-   B 118: 2800 Bank 4.800 / an 4810 Mieterträge 1.600 / an 3500 USt 800 / an 3900 PRA 2.400 (↑ 1.600)
-3. U 45: 7780 Kammerumlage 169,20 / an 3540 Verbindlichkeiten Finanzamt 169,20 (↓)
-4. U 46: 7400 Mietaufwand 1.100 / 2500 Vorsteuer 220 / an 33120 Josef Maier 1.320 (↓)
-   1.1. U 2: 7700 Versicherungsaufwand 550 / an 2900 ARA 550
-   1.1. U 3: 3900 PRA 2.400 / an 4810 Mieterträge 2.400 (↑)
-
-════════════════════════════════════════════════════════
-Kapitel 3: Rückstellungen
-════════════════════════════════════════════════════════
-
-── Ü 23: Rückstellung allgemein (Karl Vogt e.U.) ──
-AUFGABE:
-31.12. (U 36): Rückstellung für Rechtsberatungskosten € 4.000 bilden.
-4.3. nächstes Jahr (E 41): Honorarnote Müller & Sohn (33108) € 4.500 + € 900 USt = € 5.400.
-MUSTERLÖSUNG:
-U 36: 7750 Rechts- und Beratungsaufwand 4.000 / an 3040 RSt f. Rechts- u. Beratungsaufw. 4.000 (↓)
-E 41: 3040 RSt f. Rechts- u. Beratungsaufw. 4.000 / 7840 Aufwand für Vorperioden 500 / 2500 Vorsteuer 900 / an 33108 Müller & Sohn 5.400 (↓ 500)
-
-── Ü 24: Rückstellung für Schadensfall (Verena Schmidt GmbH) ──
-AUFGABE:
-31.12. (U 38): Rückstellung € 3.000 für Schadenersatz an Kunden Hermann Holzer.
-2.5. nächstes Jahr (B 70): Überweisung € 2.000 an Hermann Holzer.
-MUSTERLÖSUNG:
-U 38: 7819 Sonstige Schadensfälle 3.000 / an 3060 RSt f. Gewährl.- u. Schadenersatzverpfl. 3.000 (↓)
-B 70: 3060 RSt 2.000 / an 2800 Bank 2.000 (0)
-     3060 RSt 1.000 / an 4700 Erträge Auflösung RSt 1.000 (↑)
-
-── Ü 25: Körperschaftsteuerrückstellung (Eva Steiner GmbH) ──
-AUFGABE:
-Steuerlicher Gewinn 2025: € 499.600. KöSt-Vorauszahlungen: € 106.500 (auf 3020 bereits gebucht).
-KöSt-Schuld laut Finanzamt: € 114.908. Zahlung 28.8.2026.
-a) KöSt berechnen b) RSt ermitteln + verbuchen (U 82) c) Ausgleich verbuchen d) EK-Auswirkung
-MUSTERLÖSUNG:
-a) 499.600 × 23% = 114.908
-b) 114.908 – 106.500 = 8.408 RSt
-   U 82: 8500 Körperschaftsteuer 8.408 / an 3020 RSt KöSt 8.408 (↓)
-c) Überweisungsbetrag: 114.908 – 106.500 = 8.408 = RSt → keine Differenz
-   B 127: 3020 RSt KöSt 8.408 / an 2800 Bank 8.408 (0)
-
-── Ü 26: Körperschaftsteuerrückstellung (Otto Unger GmbH) ──
-AUFGABE:
-Steuerlicher Gewinn 2025: € 298.600. Vorauszahlungen: € 65.000. KöSt-Schuld: € 68.678. Zahlung 4.9.2026.
-MUSTERLÖSUNG:
-a) 298.600 × 23% = 68.678
-b) 68.678 – 65.000 = 3.678
-   U 74: 8500 KöSt 3.678 / an 3020 RSt KöSt 3.678 (↓)
-c) B 114: 3020 RSt KöSt 3.678 / an 2800 Bank 3.678 (0)
-
-── Ü 27: Garantierückstellung (Jennifer Schwarz OG) ──
-AUFGABE:
-31.12.2025 (U 42): Garantiesumme € 1.900.000, Satz 1,6%. Bestehende RSt: 0.
-31.12.2026 (U 46): Garantiesumme € 2.200.000, Satz 1,4%.
-31.12.2027 (U 44): Garantiesumme € 1.700.000, Satz 1,5%.
-MUSTERLÖSUNG:
-2025: 1.900.000 × 1,6% = 30.400; bestehend 0 → Zuweisung 30.400
-U 42: 7810 Zuweisungen Garantierückst. 30.400 / an 3060 Garantierückstellungen 30.400 (↓)
-2026: 2.200.000 × 1,4% = 30.800; bestehend 30.400 → Zuweisung 400
-U 46: 7810 / 3060 400 (↓)
-2027: 1.700.000 × 1,5% = 25.500; bestehend 30.800 → Auflösung 5.300
-U 44: 3060 Garantierückstellungen 5.300 / an 4700 Erträge Auflösung RSt 5.300 (↑)
-
-── Ü 28: Garantierückstellung (Hubert Steger GmbH) ──
-AUFGABE:
-Auf Konto 3060 steht derzeit: € 21.400.
-31.12.2025 (U 48): Garantierückstellung soll € 18.600 betragen.
-31.12.2026 (U 45): Garantierückstellung soll € 23.300 betragen.
-MUSTERLÖSUNG:
-2025: 18.600 – 21.400 = –2.800 → Auflösung
-U 48: 3060 Garantierückstellungen 2.800 / an 4700 Erträge Auflösung RSt 2.800 (↑)
-2026: 23.300 – 18.600 = 4.700 → Zuweisung
-U 45: 7810 Zuweisungen 4.700 / an 3060 Garantierückstellungen 4.700 (↓)
-
-── Ü 29: Urlaubsrückstellung Arbeiter (Thomas Grabner OG) ──
-AUFGABE:
-Zwei Arbeiter haben nicht genutzten Urlaub:
-- Rainer Huber: 10 Tage × € 150/Tag
-- Luca Klammer: 8 Tage × € 125/Tag
-Lohnnebenkosten 32%. Auf 3050 besteht noch kein Saldo.
-31.12.2026 (U 45): Rückstellung soll € 2.622 betragen.
-MUSTERLÖSUNG:
-Rainer Huber: 10 × (150 + 48) = 1.980; Luca Klammer: 8 × (125 + 40) = 1.320 → Gesamt: 3.300
-Reine Löhne: 1.980+1.320 = 3.300; LNK-Anteil (32%): 3.300/1,32 × 0,32 = 800 (abgeleitet); Nettolöhne: 2.500
-U 41: 6050 Zuweis. Urlaubsrückst. Arbeiter 2.500 / 6650 Zuweis. Urlaubsrückst. LNK 800 / an 3050 RSt nicht kons. Urlaube 3.300 (↓)
-2026: 2.622 – 3.300 = –678 → Auflösung; LNK-Anteil: 678/1,32×0,32 = 164; Nettolöhne: 514
-U 45: 3050 RSt nicht kons. Urlaube 678 / an 6050 514 / an 6650 164 (↑)
-
-── Ü 30: Urlaubsrückstellung Angestellte (Verena Kugler KG) ──
-AUFGABE:
-Drei Angestellte nicht genutzter Urlaub:
-- Melanie Achs: € 750; Günter Schiller: € 1.150; Jürgen Ulmer: € 1.200
-Gehaltsnebenkosten 32%. Auf 3050 steht bereits € 3.452.
-31.12.2026 (U 46): Rückstellung soll € 2.816 betragen.
-MUSTERLÖSUNG:
-Gesamt: 750+1.150+1.200 = 3.100; inkl. 32% GNK: 3.100×1,32 = 4.092
-bestehend: 3.452 → Zuweisung: 640; GNK-Anteil: 640/1,32×0,32 = 155 (gerundet); Netto: 485
-U 42: 6250 Zuweis. Urlaubsrückst. Angest. 485 / 6650 LNK 155 / an 3050 640 (↓)
-2026: 2.816 – 4.092 = –1.276 → Auflösung; GNK: 1.276/1,32×0,32 = 309; Netto: 967
-U 46: 3050 1.276 / an 6250 967 / an 6650 309 (↑)
-
-── Ü 31: Rückstellungen gemischt (Edelsee GmbH) ──
-AUFGABE:
-31.12.:
-1. Garantiesumme € 700.000, Satz 2,5%. Auf 3060 besteht € 19.000 (U 46).
-2. Konventionalstrafe an Karl Mert (20017) erwartet: € 2.000 (U 47).
-3. Prozesskosten-RSt € 7.000 (U 48).
-4. Urlaubsrückstellung Angestellte: € 6.825 soll. Auf 3050 steht € 4.800 (U 49).
-Nächstes Jahr:
-- 12.3.: Karl Mert (20017) erhält Gutschrift € 2.500 (S 117).
-- 25.9.: Prozess verloren, Überweisung € 6.000 + € 1.000 USt (B 166), verbleibende RSt auflösen.
-MUSTERLÖSUNG:
-1. 700.000×2,5%=17.500; bestehend 19.000 → Auflösung 1.500
-   U 46: 3060 1.500 / an 4700 Erträge Auflösung RSt 1.500 (↑)
-2. U 47: 7811 Konventionalstrafen 2.000 / an 3090 Sonstige RSt 2.000 (↓)
-3. U 48: 7750 Rechts- u. Beratungsaufw. 7.000 / an 3040 RSt Rechts- u. Beratungsaufw. 7.000 (↓)
-4. Zuweisung: 6.825–4.800=2.025; GNK: 2.025/1,32×0,32=491; Netto: 1.534
-   U 49: 6250 1.534 / 6650 491 / an 3050 2.025 (↓)
-Nächstes Jahr:
-S 117: 3090 Sonst. RSt 2.000 / 7840 Aufw. Vorperioden 500 / an 20017 Karl Mert 2.500 (↓)
-B 166: 3040 RSt 6.000 / 2500 Vorsteuer 1.000 / an 2800 Bank 7.000 (0) dann: 3040 RSt 1.000 / an 4700 Erträge Auflösung 1.000 (↑)
-
-── Ü 32: Rückstellungen gemischt (Walter Treiber e.U.) ──
-AUFGABE:
-31.12.:
-1. Konventionalstrafe an Karl Leo Berger (20012): € 4.000 (U 46).
-2. Garantiesumme € 510.000, Satz 2%. Auf 3060 steht € 9.100 (U 47).
-3. RSt Rechts- und Beratungskosten: € 6.000 (U 48).
-4. Urlaubsrückstellung Angestellte: € 5.305 soll. Auf 3050 steht € 7.240 (U 46 – gleiche Nr. wie 1.).
-Nächstes Jahr:
-- 18.2.: Leo Berger erhält Gutschrift € 3.000 (S 113); verbleibende RSt auflösen.
-- 25.3.: Honorarnote Dr. Malzer (33045) € 6.200 + € 1.240 USt = € 7.440 (E 141).
-MUSTERLÖSUNG:
-1. U 46: 7811 Konventionalstrafen 4.000 / an 3090 Sonst. RSt 4.000 (↓)
-2. 510.000×2%=10.200; bestehend 9.100 → Zuweisung 1.100
-   U 47: 7810 / 3060 1.100 (↓)
-3. U 48: 7750 / 3040 6.000 (↓)
-4. 5.305–7.240=–1.935 → Auflösung; GNK: 1.935/1,32×0,32=469; Netto: 1.466
-   U 46: 3050 1.935 / an 6250 1.466 / an 6650 469 (↑)
-Nächstes Jahr:
-S 113: 3090 3.000 / an 20012 Leo Berger 3.000 (0); dann: 3090 1.000 / an 4700 1.000 (↑)
-E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 33045 Dr. Malzer 7.440 (↓ 200)`;
+`;
 
 
   // AUFGABENPOOL – HAK II & III (Hölzel Verlag) – 146 Aufgaben
@@ -1826,6 +1440,21 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
 
   let currentToken = null;
   let currentUser = null;
+  const MAX_DAILY = 20;
+
+  function getTodayKey() {
+    return 'bb_count_' + new Date().toISOString().slice(0,10);
+  }
+  function getMsgCount() {
+    return parseInt(sessionStorage.getItem(getTodayKey()) || '0');
+  }
+  function incMsgCount() {
+    const key = getTodayKey();
+    sessionStorage.setItem(key, getMsgCount() + 1);
+  }
+  function getRemainingMsg() {
+    return MAX_DAILY - getMsgCount();
+  }
 
   // Admin-Email (du!) – hier eintragen
   const ADMIN_EMAIL = 'sandra.gall@hak-reutte.ac.at';
@@ -2307,6 +1936,12 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
     const text = input.value.trim();
     if (!text || isLoading) return;
 
+    // Tages-Limit prüfen
+    if (getMsgCount() >= MAX_DAILY) {
+      addMessage('assistant', '⚠️ Du hast dein Tageslimit von ' + MAX_DAILY + ' Anfragen erreicht. Morgen kannst du wieder fragen! 😊');
+      return;
+    }
+
     // Hide welcome
     const wb = document.getElementById('welcomeBlock');
     if (wb) wb.style.display = 'none';
@@ -2364,6 +1999,13 @@ E 141: 3040 RSt 6.000 / 7840 Aufw. Vorperioden 200 / 2500 Vorsteuer 1.240 / an 3
       const reply = data.content?.map(b => b.text || '').join('') || 'Entschuldigung, ich konnte keine Antwort generieren.';
       messages.push({ role: 'assistant', content: reply });
       addMessage('assistant', reply);
+      incMsgCount();
+      
+      // Restliche Anfragen anzeigen wenn weniger als 5
+      const remaining = getRemainingMsg();
+      if (remaining <= 5 && remaining > 0) {
+        addMessage('assistant', `ℹ️ Noch ${remaining} Anfragen heute verfügbar.`);
+      }
 
     } catch (err) {
       removeTyping(typingId);

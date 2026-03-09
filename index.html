@@ -1452,8 +1452,8 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
     return parseInt(localStorage.getItem(getTodayKey()) || '0');
   }
   function incMsgCount() {
-    const key = getTodayKey();
-    sessionStorage.setItem(key, getMsgCount() + 1);
+    localStorage.setItem(getTodayKey(), getMsgCount() + 1);
+    updateLimitDisplay();
   }
   function getRemainingMsg() {
     return Math.max(0, MAX_DAILY - getMsgCount());

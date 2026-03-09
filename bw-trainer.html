@@ -1641,18 +1641,72 @@ const MODULES = [
       `<strong>Employer Branding</strong> = alle Maßnahmen, mit denen ein Unternehmen als attraktiver Arbeitgeber wahrgenommen wird.<br><br><strong>3 Maßnahmen für AlpenFresh:</strong><ol><li><strong>Authentische Social-Media-Präsenz:</strong> Instagram-Einblicke in den Produktionsalltag und das Team zeigen die Unternehmenskultur (Bio, Nachhaltigkeit, Teamgeist) und sprechen werteorientierte Bewerber an.</li><li><strong>Mitarbeiterstimmen auf der Website:</strong> Echte Zitate und Fotos der Mitarbeiter wirken glaubwürdiger als Marketingtexte und stärken das Vertrauen potenzieller Bewerber.</li><li><strong>Attraktives Benefitpaket:</strong> Flexible Arbeitszeiten, Weiterbildungsbudget, Mitarbeiterrabatt auf AlpenFresh-Produkte – schafft konkreten Mehrwert über das Gehalt hinaus.</li></ol>`
     ],
 
-    interaktiv: `<div class="content-block" style="margin-top:20px">
-  <div class="block-title"><span class="block-icon">🎯</span>Quiz: Herzberg, Maslow & Personalmaßnahmen</div>
-  <div class="quiz-wrap" id="quiz-personal">
-    <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-personal">0/7</span><button class="quiz-reset" onclick="resetQuiz('personal')">↺ Neu starten</button></div>
-    <div class="quiz-card"><div class="quiz-frage">1 · Nina Berger lobt eine Mitarbeiterin öffentlich für ihre Idee. Herzberg: Motivator oder Hygienefaktor?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal',0,this,'richtig')">✨ Motivator</button><button class="quiz-option" onclick="checkQuiz('personal',0,this,'falsch')">🔧 Hygienefaktor</button></div><div class="quiz-feedback" id="qf-personal-0">✅ Richtig! Anerkennung/Lob ist ein Motivator – er schafft aktiv Zufriedenheit.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">2 · AlpenFresh zahlt pünktlich das KV-konforme Gehalt. Herzberg: Motivator oder Hygienefaktor?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal',1,this,'falsch')">✨ Motivator</button><button class="quiz-option" onclick="checkQuiz('personal',1,this,'richtig')">🔧 Hygienefaktor</button></div><div class="quiz-feedback" id="qf-personal-1">✅ Richtig! Gehalt ist ein Hygienefaktor – sein Fehlen erzeugt Unzufriedenheit, sein Vorhandensein allein schafft aber keine Zufriedenheit.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">3 · Eine Mitarbeiterin darf ab sofort eigenverantwortlich eine neue Produktlinie entwickeln. Herzberg: Motivator oder Hygienefaktor?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal',2,this,'richtig')">✨ Motivator – Verantwortung & Wachstum</button><button class="quiz-option" onclick="checkQuiz('personal',2,this,'falsch')">🔧 Hygienefaktor – Arbeitsbedingung</button></div><div class="quiz-feedback" id="qf-personal-2">✅ Richtig! Verantwortungsübertragung ist ein Motivator – sie erzeugt intrinsische Motivation.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">4 · In der Produktion ist es im Sommer sehr heiß. Herzberg: Motivator oder Hygienefaktor?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal',3,this,'falsch')">✨ Motivator</button><button class="quiz-option" onclick="checkQuiz('personal',3,this,'richtig')">🔧 Hygienefaktor – Arbeitsbedingungen</button></div><div class="quiz-feedback" id="qf-personal-3">✅ Richtig! Physische Arbeitsbedingungen sind Hygienefaktoren. Schlechte Bedingungen erzeugen Unzufriedenheit – ihre Verbesserung macht aber nicht automatisch glücklich.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">5 · Ein Mitarbeiter hat alles Nötige, wünscht sich aber mehr Teamevents. Welche Maslow-Stufe ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal',4,this,'falsch')">1 · Physiologisch</button><button class="quiz-option" onclick="checkQuiz('personal',4,this,'falsch')">2 · Sicherheit</button><button class="quiz-option" onclick="checkQuiz('personal',4,this,'richtig')">3 · Soziale Bedürfnisse</button><button class="quiz-option" onclick="checkQuiz('personal',4,this,'falsch')">4 · Wertschätzung</button></div><div class="quiz-feedback" id="qf-personal-4">✅ Richtig! Stufe 3 – soziale Bedürfnisse: Zugehörigkeit, Freundschaft, Teamgefühl.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">6 · Eine Mitarbeiterin rotiert alle 3 Monate zwischen Abfüllung, QK und Verpackung. Wie heißt diese Maßnahme?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal',5,this,'richtig')">🔄 Jobrotation</button><button class="quiz-option" onclick="checkQuiz('personal',5,this,'falsch')">➕ Jobenlargement</button><button class="quiz-option" onclick="checkQuiz('personal',5,this,'falsch')">⬆️ Jobenrichment</button></div><div class="quiz-feedback" id="qf-personal-5">✅ Richtig! Jobrotation = systematischer Wechsel zwischen gleichwertigen Stellen zur Abwechslung und Flexibilität.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">7 · AlpenFresh hat 18 Mitarbeiter. Wie viele Betriebsratsmitglieder bei einem Betriebsrat?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal',6,this,'falsch')">1 Mitglied (5–9 AN)</button><button class="quiz-option" onclick="checkQuiz('personal',6,this,'richtig')">2 Mitglieder (10–19 AN)</button><button class="quiz-option" onclick="checkQuiz('personal',6,this,'falsch')">3 Mitglieder (20–50 AN)</button></div><div class="quiz-feedback" id="qf-personal-6">✅ Richtig! 10–19 Arbeitnehmer → 2 Betriebsratsmitglieder laut ArbVG.</div></div>
+    interaktiv: `<div style="display:flex;flex-direction:column;gap:20px;margin-top:20px">
+
+  <!-- QUIZ 1: Personalbedarfsplanung -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">🎯</span>Quiz 1: Personalbedarfsplanung &amp; Personalsuche</div>
+    <div class="quiz-wrap" id="quiz-personal1">
+      <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-personal1">0/6</span><button class="quiz-reset" onclick="resetQuiz('personal1')">↺ Neu starten</button></div>
+
+      <div class="quiz-card"><div class="quiz-frage">1 · Jasmin und Matteo überlegen, wo sie geeignetes Personal für ihren Eissalon Bellini suchen können. Welchem Teilbereich des Personalmanagements entspricht das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal1',0,this,'richtig')">🔍 Personalsuche und -auswahl</button><button class="quiz-option" onclick="checkQuiz('personal1',0,this,'falsch')">📈 Personalentwicklung</button><button class="quiz-option" onclick="checkQuiz('personal1',0,this,'falsch')">📉 Personalfreisetzung</button></div><div class="quiz-feedback" id="qf-personal1-0">✅ Richtig! Personalsuche und -auswahl = gezieltes Suchen und Auswählen neuer Mitarbeiter. Weitere Teilbereiche: Personalplanung, Personalentwicklung (Weiterbildung) und Personalfreisetzung (Abbau).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">2 · Die Umdasch Group will für ihren Wachstumskurs hochqualifiziertes Personal gewinnen. Was ist dabei eine typische Herausforderung in der Baubranche?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal1',1,this,'falsch')">💰 Zu hohe Gehaltsforderungen aller Bewerber</button><button class="quiz-option" onclick="checkQuiz('personal1',1,this,'richtig')">👷 Fachkräftemangel in Technik und Bau</button><button class="quiz-option" onclick="checkQuiz('personal1',1,this,'falsch')">📋 Fehlende gesetzliche Grundlagen für Einstellungen</button></div><div class="quiz-feedback" id="qf-personal1-1">✅ Richtig! Fachkräftemangel = zu wenige qualifizierte Bewerber für offene Stellen (z.B. Bauingenieure, Projektsteuerer). Weitere Herausforderungen: demografischer Wandel (Pensionierungen), neue digitale Kompetenzen, Employer Branding.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">3 · Eine Stellenbeschreibung enthält Aufgaben, Kompetenzen und Anforderungen einer Stelle. Wofür dient sie in der Personalplanung?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal1',2,this,'falsch')">📊 Zur Festlegung des quantitativen Personalbedarfs (wie viele?)</button><button class="quiz-option" onclick="checkQuiz('personal1',2,this,'richtig')">📋 Zur Festlegung des qualitativen Personalbedarfs (welche Kompetenzen?)</button><button class="quiz-option" onclick="checkQuiz('personal1',2,this,'falsch')">💶 Zur Berechnung der Lohnkosten</button></div><div class="quiz-feedback" id="qf-personal1-2">✅ Richtig! Qualitativer Personalbedarf = welche Qualifikationen, Fähigkeiten und Kompetenzen werden gebraucht? Die Stellenbeschreibung definiert genau das. Quantitativer Bedarf = wie viele Personen werden gebraucht?</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">4 · doka schreibt eine Stelle als „Mitarbeiter*in Debitorenbuchhaltung (m/w/d)" aus. Warum ist diese Formulierung gesetzlich vorgeschrieben?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal1',3,this,'falsch')">📄 Wegen des Arbeitszeitgesetzes</button><button class="quiz-option" onclick="checkQuiz('personal1',3,this,'richtig')">⚖️ Wegen § 9 des Gleichbehandlungsgesetzes (geschlechtsneutrale Ausschreibung)</button><button class="quiz-option" onclick="checkQuiz('personal1',3,this,'falsch')">🏦 Wegen der WKO-Richtlinien</button></div><div class="quiz-feedback" id="qf-personal1-3">✅ Richtig! § 9 Gleichbehandlungsgesetz: Arbeitgeber müssen Stellen geschlechtsneutral ausschreiben. „m/w/d" = männlich/weiblich/divers. Strafe bei Verstoß: bis zu € 360 pro Inserat (nach Verwarnung).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">5 · Die Umdasch Group sucht intern nach geeignetem Personal – also unter den eigenen Mitarbeitern. Was ist ein klarer Vorteil der internen Personalsuche?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal1',4,this,'falsch')">🌍 Größerer Bewerberpool aus dem gesamten Arbeitsmarkt</button><button class="quiz-option" onclick="checkQuiz('personal1',4,this,'richtig')">⚡ Kürzere Einarbeitungszeit, da interne Kandidaten das Unternehmen kennen</button><button class="quiz-option" onclick="checkQuiz('personal1',4,this,'falsch')">💶 Günstigere Gehaltskosten</button></div><div class="quiz-feedback" id="qf-personal1-4">✅ Richtig! Interne Suche: Kandidaten kennen Prozesse, Kultur und Kollegen → kürzere Einarbeitungsphase. Nachteil: kleinerer Bewerberpool, keine frischen Ideen von außen. Externe Suche: mehr Auswahl, neue Impulse, aber länger und teurer.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">6 · Die IT-Solutions GmbH wählt aus fünf Bewerberinnen die Nachfolgerin für Frau Gruber. Welche zwei Auswahlverfahren eignen sich besonders, um Konzentrations- und Belastungsfähigkeit zu testen?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal1',5,this,'richtig')">💬 Bewerbungsgespräch mit gezielten Stressfragen + strukturierte Testverfahren</button><button class="quiz-option" onclick="checkQuiz('personal1',5,this,'falsch')">📄 Nur Analyse der Bewerbungsunterlagen</button><button class="quiz-option" onclick="checkQuiz('personal1',5,this,'falsch')">🌐 LinkedIn-Recherche und Referenzen</button></div><div class="quiz-feedback" id="qf-personal1-5">✅ Richtig! Beim Gespräch können gezielte Fragen über vergangene stressige Situationen gestellt werden. Testverfahren (Konzentrationstests) ergänzen das. Weitere Auswahlverfahren: Assessment Center, Probearbeitstag, Praktikum.</div></div>
+    </div>
   </div>
+
+  <!-- QUIZ 2: Arbeitsrecht & Pflichten -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">🎯</span>Quiz 2: Arbeitsrecht, Rechte &amp; Pflichten</div>
+    <div class="quiz-wrap" id="quiz-personal2">
+      <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-personal2">0/7</span><button class="quiz-reset" onclick="resetQuiz('personal2')">↺ Neu starten</button></div>
+
+      <div class="quiz-card"><div class="quiz-frage">1 · Wie viele Urlaubstage hat ein Arbeitnehmer in Österreich pro Jahr (Fünftagewoche)?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal2',0,this,'falsch')">20 Arbeitstage</button><button class="quiz-option" onclick="checkQuiz('personal2',0,this,'richtig')">25 Arbeitstage</button><button class="quiz-option" onclick="checkQuiz('personal2',0,this,'falsch')">30 Arbeitstage</button></div><div class="quiz-feedback" id="qf-personal2-0">✅ Richtig! In Österreich besteht gesetzlicher Anspruch auf <strong>25 Arbeitstage</strong> Urlaub pro Jahr (Fünftagewoche). Nach 25 Dienstjahren erhöht sich der Anspruch auf 30 Arbeitstage.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">2 · Wie lange ist die maximale Arbeitszeit in Österreich pro Tag (inkl. Überstunden)?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal2',1,this,'falsch')">10 Stunden</button><button class="quiz-option" onclick="checkQuiz('personal2',1,this,'richtig')">12 Stunden</button><button class="quiz-option" onclick="checkQuiz('personal2',1,this,'falsch')">14 Stunden</button></div><div class="quiz-feedback" id="qf-personal2-1">✅ Richtig! Maximum: <strong>12 Stunden/Tag</strong> und 60 Stunden/Woche (inkl. Überstunden). Normalarbeitszeit: 38,5–40 Stunden/Woche (je nach Kollektivvertrag). Überschreitungen nur in Ausnahmefällen zulässig.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">3 · Hermann Meisner gibt die Konstruktionspläne seines Arbeitgebers an einen Konkurrenten weiter. Gegen welche Arbeitnehmerpflicht verstößt er?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal2',2,this,'falsch')">⚠️ Pflicht zur persönlichen Arbeitsleistung</button><button class="quiz-option" onclick="checkQuiz('personal2',2,this,'richtig')">🔒 Verschwiegenheitspflicht bei Betriebsgeheimnissen</button><button class="quiz-option" onclick="checkQuiz('personal2',2,this,'falsch')">🚫 Konkurrenzverbot</button></div><div class="quiz-feedback" id="qf-personal2-2">✅ Richtig! Verschwiegenheitspflicht = Arbeitnehmer dürfen keine Betriebsgeheimnisse (Konstruktionspläne, Kundendaten, Kalkulationen) an Dritte weitergeben. Verletzung kann zu fristloser Entlassung und Schadenersatzpflicht führen.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">4 · Essam Kaya (Zeitungszusteller) lässt heute seine Freundin für ihn arbeiten, weil er keine Lust hat. Gegen welche Pflicht verstößt er?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal2',3,this,'falsch')">🔒 Verschwiegenheitspflicht</button><button class="quiz-option" onclick="checkQuiz('personal2',3,this,'richtig')">👤 Pflicht zur persönlichen Arbeitsleistung</button><button class="quiz-option" onclick="checkQuiz('personal2',3,this,'falsch')">🚫 Konkurrenzverbot</button></div><div class="quiz-feedback" id="qf-personal2-3">✅ Richtig! Bei einem echten Arbeitsvertrag muss die Arbeitsleistung <em>persönlich</em> erbracht werden – Substitution ist nicht erlaubt. Nur beim freien Dienstvertrag kann jemand anderes einspringen (sofern nicht anders vereinbart).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">5 · Frau Schuberth erwartet ein Kind. Voraussichtlicher Geburtstermin: 15. März. Ab wann gilt der gesetzliche Mutterschutz (Beschäftigungsverbot)?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal2',4,this,'falsch')">Ab 1. März (2 Wochen vorher)</button><button class="quiz-option" onclick="checkQuiz('personal2',4,this,'richtig')">Ab 18. Jänner (8 Wochen vorher)</button><button class="quiz-option" onclick="checkQuiz('personal2',4,this,'falsch')">Ab 15. Jänner (exakt 2 Monate vorher)</button></div><div class="quiz-feedback" id="qf-personal2-4">✅ Richtig! Mutterschutz = <strong>8 Wochen vor</strong> dem voraussichtlichen Geburtstermin und <strong>8 Wochen nach</strong> der Geburt (absolutes Beschäftigungsverbot). 15. März minus 8 Wochen = 18. Jänner.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">6 · Die Autowerkstatt zahlt den Mechanikern eine Schmutzzulage, den Mechanikerinnen aber nicht. Gegen welche Pflicht des Arbeitgebers verstößt das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal2',5,this,'falsch')">📄 Verstoß gegen die Dienstzettelpflicht</button><button class="quiz-option" onclick="checkQuiz('personal2',5,this,'richtig')">⚖️ Verstoß gegen das Gleichbehandlungsgebot (Benachteiligungsverbot)</button><button class="quiz-option" onclick="checkQuiz('personal2',5,this,'falsch')">🕐 Verstoß gegen das Arbeitszeitgesetz</button></div><div class="quiz-feedback" id="qf-personal2-5">✅ Richtig! Das Gleichbehandlungsgesetz verbietet Diskriminierung aufgrund des Geschlechts beim Entgelt. Gleiche Arbeit = gleiches Gehalt. Verstöße können zu Schadenersatzklagen und Nachzahlungen führen.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">7 · Frau Puttner ist Betriebsrätin und möchte an einer Fortbildung teilnehmen. Hat sie Anspruch auf Freistellung?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal2',6,this,'richtig')">✅ Ja – Betriebsräte sind für die Ausübung ihrer Tätigkeit freizustellen (mit Entgeltfortzahlung)</button><button class="quiz-option" onclick="checkQuiz('personal2',6,this,'falsch')">❌ Nein – Fortbildungen müssen in der Freizeit absolviert werden</button><button class="quiz-option" onclick="checkQuiz('personal2',6,this,'falsch')">⚠️ Nur mit Genehmigung des Geschäftsführers</button></div><div class="quiz-feedback" id="qf-personal2-6">✅ Richtig! Betriebsratsmitglieder haben Anspruch auf Freistellung für ihre Tätigkeit (Sitzungen, Schulungen, Behördenwege) – unter Fortzahlung des Entgelts. Der Betriebsrat ist die gesetzliche Interessenvertretung der Arbeitnehmer im Betrieb.</div></div>
+    </div>
+  </div>
+
+  <!-- QUIZ 3: Motivation, Entlohnung & Personalentwicklung -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">🎯</span>Quiz 3: Motivation, Entlohnung &amp; Personalentwicklung</div>
+    <div class="quiz-wrap" id="quiz-personal3">
+      <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-personal3">0/7</span><button class="quiz-reset" onclick="resetQuiz('personal3')">↺ Neu starten</button></div>
+
+      <div class="quiz-card"><div class="quiz-frage">1 · Herzberg unterscheidet Motivatoren und Hygienefaktoren. Das monatliche Gehalt ist ein klassisches Beispiel für …</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal3',0,this,'falsch')">💡 Motivator (erzeugt langfristige Zufriedenheit)</button><button class="quiz-option" onclick="checkQuiz('personal3',0,this,'richtig')">🧹 Hygienefaktor (verhindert Unzufriedenheit, motiviert aber nicht dauerhaft)</button></div><div class="quiz-feedback" id="qf-personal3-0">✅ Richtig! Hygienefaktoren (Herzberg): Gehalt, Arbeitsbedingungen, Sicherheit, Firmenpolitik – ihre Abwesenheit erzeugt Unzufriedenheit, ihre Anwesenheit allein motiviert nicht dauerhaft. Motivatoren: Anerkennung, Verantwortung, Karrierechancen.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">2 · Ein Mitarbeiter erhält Lob von seinem Vorgesetzten für ein erfolgreich abgeschlossenes Projekt. Herzberg würde das einordnen als …</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal3',1,this,'richtig')">💡 Motivator</button><button class="quiz-option" onclick="checkQuiz('personal3',1,this,'falsch')">🧹 Hygienefaktor</button></div><div class="quiz-feedback" id="qf-personal3-1">✅ Richtig! Anerkennung und Lob sind klassische Motivatoren nach Herzberg – sie erzeugen echte, nachhaltige Arbeitszufriedenheit. Weitere Motivatoren: interessante Aufgaben, Verantwortung, persönliches Wachstum.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">3 · Die Umdasch Group bietet ihren Mitarbeitern Sportkurse, Vitalprogramme und Gesundheitsvorträge. Welcher Maßnahmenart entspricht das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal3',2,this,'falsch')">💶 Lohnerhöhung (monetäre Maßnahme)</button><button class="quiz-option" onclick="checkQuiz('personal3',2,this,'richtig')">🏥 Angenehme Arbeitsplatzgestaltung (betriebliches Gesundheitsmanagement)</button><button class="quiz-option" onclick="checkQuiz('personal3',2,this,'falsch')">📋 Personalentwicklung (Weiterbildung)</button></div><div class="quiz-feedback" id="qf-personal3-2">✅ Richtig! Betriebliches Gesundheitsmanagement = Maßnahmen zur körperlichen und mentalen Gesundheit der Mitarbeiter (Sportkurse, Ernährungsberatung, psychologische Unterstützung). Teil der modernen Arbeitsplatzgestaltung.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">4 · Ein B2B-Vertriebsmitarbeiter (Verkauf von Haushaltsgeräten an Händler) bekommt Grundgehalt + Provision pro verkauftem Gerät. Welche Entlohnungsform ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal3',3,this,'falsch')">⏱️ Reiner Zeitlohn</button><button class="quiz-option" onclick="checkQuiz('personal3',3,this,'falsch')">🏃 Reiner Akkordlohn</button><button class="quiz-option" onclick="checkQuiz('personal3',3,this,'richtig')">🏆 Zeitlohn + Prämienlohn (Provision)</button></div><div class="quiz-feedback" id="qf-personal3-3">✅ Richtig! Prämienlohn/Provision = Grundgehalt + leistungsabhängige Komponente. Besonders sinnvoll im Vertrieb, wo Verkaufsergebnisse klar messbar sind. Rein Akkordlohn ist eher für Fließbandarbeit geeignet.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">5 · Eine neue Mitarbeiterin bei der IT-Solutions GmbH bekommt eine Kollegin als „Buddy" zugeteilt, die ihr die Abläufe erklärt. Welche Personalentwicklungsmaßnahme ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal3',4,this,'richtig')">🚀 Into-the-Job-Maßnahme (Onboarding)</button><button class="quiz-option" onclick="checkQuiz('personal3',4,this,'falsch')">📚 Off-the-Job-Maßnahme (externe Schulung)</button><button class="quiz-option" onclick="checkQuiz('personal3',4,this,'falsch')">🔄 Out-of-the-Job-Maßnahme (Vorbereitung auf Pensionierung)</button></div><div class="quiz-feedback" id="qf-personal3-4">✅ Richtig! Into-the-Job = Maßnahmen beim Einstieg ins Unternehmen (Onboarding, Buddy-System, Einarbeitung). On-the-Job = Lernen am Arbeitsplatz. Off-the-Job = externe Kurse, Seminare, Studium.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">6 · Im Bellini Eissalon sollen die Mitarbeiter im Winter als Barista für einen Punsch-Salon umgeschult werden. Welchem Teilbereich des Personalmanagements entspricht das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal3',5,this,'falsch')">🔍 Personalsuche und -auswahl</button><button class="quiz-option" onclick="checkQuiz('personal3',5,this,'richtig')">📈 Personalentwicklung (Weiterbildung/Umschulung)</button><button class="quiz-option" onclick="checkQuiz('personal3',5,this,'falsch')">📉 Personalfreisetzung</button></div><div class="quiz-feedback" id="qf-personal3-5">✅ Richtig! Personalentwicklung = gezielte Förderung und Weiterentwicklung der Mitarbeiter (Schulungen, Kurse, Job-Rotation, Coachings). Ziel: Mitarbeiter fit machen für neue oder veränderte Aufgaben.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">7 · Die FlexFit GmbH (Sportgeräte) hat 10 Babyboomer, 15 Gen X, 10 Millennials, 5 Gen Z. Was ist eine typische Herausforderung dieser Generationenvielfalt?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('personal3',6,this,'falsch')">💶 Unterschiedliche Gehaltsvorstellungen nach Alter</button><button class="quiz-option" onclick="checkQuiz('personal3',6,this,'richtig')">🔄 Unterschiedliche Erwartungen an Führung, Flexibilität und Kommunikationsstile</button><button class="quiz-option" onclick="checkQuiz('personal3',6,this,'falsch')">📋 Gesetzliche Pflicht zur Trennung nach Generationen</button></div><div class="quiz-feedback" id="qf-personal3-6">✅ Richtig! Babyboomer/Gen X erwarten Stabilität und klare Hierarchien. Millennials/Gen Z wollen Flexibilität, flache Hierarchien, digitale Tools. Lösung: flexible Arbeitszeitmodelle, generationenübergreifende Projekte, bewusstes Wissensmanagement.</div></div>
+    </div>
+  </div>
+
 </div>`,
     reflexion: [
       'Berücksichtigt die KI österreichisches Arbeitsrecht (Kollektivverträge, Betriebsratspflicht, Kündigungsschutz)?',
@@ -1702,18 +1756,96 @@ const MODULES = [
       `<strong>Führungsstile im Vergleich:</strong><br><table><tr><th>Stil</th><th>Merkmal</th><th>Vorteil</th><th>Nachteil</th></tr><tr><td>Autoritär</td><td>Chef entscheidet allein</td><td>Schnelle Entscheidungen</td><td>Wenig Motivation, kein Engagement</td></tr><tr><td>Kooperativ</td><td>Mitarbeiter werden einbezogen</td><td>Hohe Motivation, bessere Ideen</td><td>Zeitaufwändiger</td></tr><tr><td>Laissez-faire</td><td>Mitarbeiter entscheiden selbst</td><td>Maximale Freiheit & Kreativität</td><td>Risiko von Chaos, keine klare Richtung</td></tr></table><br>Für AlpenFresh als wachsendes Start-up empfiehlt sich der <strong>kooperative Führungsstil</strong>: Mitarbeiter bringen Ideen ein (z.B. neue Produkte), das fördert Innovation und Bindung – wichtig um Talente zu halten.`
     ],
 
-    interaktiv: `<div class="content-block" style="margin-top:20px">
-  <div class="block-title"><span class="block-icon">🎯</span>Quiz: SWOT, Porter & Führungsstile</div>
-  <div class="quiz-wrap" id="quiz-fuehrung">
-    <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-fuehrung">0/7</span><button class="quiz-reset" onclick="resetQuiz('fuehrung')">↺ Neu starten</button></div>
-    <div class="quiz-card"><div class="quiz-frage">1 · AlpenFresh ist als einziger Tiroler Hersteller Bio-AMA-zertifiziert. SWOT: Wo gehört das hin?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung',0,this,'richtig')">💪 Stärke (intern, positiv)</button><button class="quiz-option" onclick="checkQuiz('fuehrung',0,this,'falsch')">😟 Schwäche (intern, negativ)</button><button class="quiz-option" onclick="checkQuiz('fuehrung',0,this,'falsch')">🌟 Chance (extern, positiv)</button><button class="quiz-option" onclick="checkQuiz('fuehrung',0,this,'falsch')">⚠️ Risiko (extern, negativ)</button></div><div class="quiz-feedback" id="qf-fuehrung-0">✅ Richtig! Stärken sind interne, positive Faktoren – was das Unternehmen selbst gut kann. Eine einzigartige Zertifizierung ist ein klarer Wettbewerbsvorteil.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">2 · Die Nachfrage nach Bio-Produkten wächst in Deutschland jährlich um 8 %. SWOT: Wo gehört das hin?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung',1,this,'falsch')">💪 Stärke</button><button class="quiz-option" onclick="checkQuiz('fuehrung',1,this,'falsch')">😟 Schwäche</button><button class="quiz-option" onclick="checkQuiz('fuehrung',1,this,'richtig')">🌟 Chance (extern, positiv)</button><button class="quiz-option" onclick="checkQuiz('fuehrung',1,this,'falsch')">⚠️ Risiko</button></div><div class="quiz-feedback" id="qf-fuehrung-1">✅ Richtig! Chancen sind externe, positive Entwicklungen – Markttrends, die AlpenFresh nutzen kann, aber nicht selbst steuert.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">3 · Billa listet sein eigenes Bio-Eigenmarkenprodukt ein. Porter: Welche Kraft ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung',2,this,'falsch')">🏭 Verhandlungsmacht Lieferanten</button><button class="quiz-option" onclick="checkQuiz('fuehrung',2,this,'falsch')">🛒 Verhandlungsmacht Kunden</button><button class="quiz-option" onclick="checkQuiz('fuehrung',2,this,'richtig')">🔄 Bedrohung durch Substitutionsprodukte</button><button class="quiz-option" onclick="checkQuiz('fuehrung',2,this,'falsch')">🆕 Bedrohung durch neue Anbieter</button></div><div class="quiz-feedback" id="qf-fuehrung-2">✅ Richtig! Eigenmarken sind Substitute – sie erfüllen denselben Zweck, oft günstiger.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">4 · In Tirol gibt es nur 3 zertifizierte Bio-Hafer-Lieferanten. AlpenFresh braucht sie für 60 % der Produkte. Porter: Welche Kraft?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung',3,this,'richtig')">🏭 Verhandlungsmacht Lieferanten – hoch</button><button class="quiz-option" onclick="checkQuiz('fuehrung',3,this,'falsch')">🛒 Verhandlungsmacht Kunden</button><button class="quiz-option" onclick="checkQuiz('fuehrung',3,this,'falsch')">⚔️ Rivalität unter Wettbewerbern</button><button class="quiz-option" onclick="checkQuiz('fuehrung',3,this,'falsch')">🆕 Bedrohung durch neue Anbieter</button></div><div class="quiz-feedback" id="qf-fuehrung-3">✅ Richtig! Wenige Lieferanten + hohe Abhängigkeit = hohe Lieferantenmacht. Sie können Preise erhöhen oder Mengen reduzieren.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">5 · Nina Berger entscheidet allein und gibt klare Anweisungen ohne Rücksprache. Welcher Führungsstil?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung',4,this,'richtig')">👆 Autoritär</button><button class="quiz-option" onclick="checkQuiz('fuehrung',4,this,'falsch')">🤝 Kooperativ</button><button class="quiz-option" onclick="checkQuiz('fuehrung',4,this,'falsch')">🕊️ Laissez-faire</button></div><div class="quiz-feedback" id="qf-fuehrung-4">✅ Richtig! Autoritär = Führungskraft entscheidet allein. Vorteil: schnell. Nachteil: geringe Mitarbeitermotivation.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">6 · AlpenFresh: Geschäftsführung → Produktionsleitung → 3 Teamleiter. Jeder Mitarbeiter hat genau einen Vorgesetzten. Welche Organisationsform?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung',5,this,'richtig')">📊 Einliniensystem</button><button class="quiz-option" onclick="checkQuiz('fuehrung',5,this,'falsch')">📊 Stabliniensystem</button><button class="quiz-option" onclick="checkQuiz('fuehrung',5,this,'falsch')">📊 Mehrliniensystem</button></div><div class="quiz-feedback" id="qf-fuehrung-5">✅ Richtig! Einliniensystem = jeder hat genau einen Vorgesetzten. Klare Hierarchie, ideal für KMU.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">7 · „Wir wollen Österreichs nachhaltigster Bio-Lebensmittelhersteller sein." Welche Managementebene?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung',6,this,'richtig')">🎯 Normatives Management (Werte, Vision)</button><button class="quiz-option" onclick="checkQuiz('fuehrung',6,this,'falsch')">📅 Strategisches Management (3–5 J.)</button><button class="quiz-option" onclick="checkQuiz('fuehrung',6,this,'falsch')">⚙️ Operatives Management (Tagesgeschäft)</button></div><div class="quiz-feedback" id="qf-fuehrung-6">✅ Richtig! Normatives Management = Werte, Vision, Mission. Es beantwortet: Wofür stehen wir?</div></div>
+    interaktiv: `<div style="display:flex;flex-direction:column;gap:20px;margin-top:20px">
+
+  <!-- QUIZ 1: Managementebenen & Normatives Management -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">🎯</span>Quiz 1: Managementebenen &amp; Normatives Management</div>
+    <div class="quiz-wrap" id="quiz-fuehrung1">
+      <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-fuehrung1">0/6</span><button class="quiz-reset" onclick="resetQuiz('fuehrung1')">↺ Neu starten</button></div>
+
+      <div class="quiz-card"><div class="quiz-frage">1 · Georg Emprechtinger ist Geschäftsführer und Eigentümer von TEAM 7. Welcher Managementebene gehört er an?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung1',0,this,'richtig')">🏆 Topmanagement</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',0,this,'falsch')">📋 Middle Management</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',0,this,'falsch')">⚙️ Lower Management</button></div><div class="quiz-feedback" id="qf-fuehrung1-0">✅ Richtig! Topmanagement = oberste Führungsebene (Geschäftsführung, Vorstand). Gesamtverantwortung für das Unternehmen. Middle Management = Abteilungsleitung. Lower Management = Team- oder Gruppenleitung.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">2 · Red Bull entscheidet: „Die Produktion der ORGANICS-Linie soll umweltfreundlich gestaltet sein." Welche Managementaufgabe ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung1',1,this,'richtig')">🌿 Normatives Management (Werte/Grundsätze)</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',1,this,'falsch')">🗺️ Strategisches Management (Langfristplanung)</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',1,this,'falsch')">⚙️ Operatives Management (Tagesgeschäft)</button></div><div class="quiz-feedback" id="qf-fuehrung1-1">✅ Richtig! Normatives Management = Werte, Normen und Grundhaltungen des Unternehmens (z.B. Umweltorientierung, ethische Grundsätze). Es ist die Basis für alle strategischen Entscheidungen.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">3 · Red Bull wählt Vertriebskanäle für ORGANICS aus (Gastronomie, LEH, Online). Welche Managementebene ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung1',2,this,'falsch')">🌿 Normatives Management</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',2,this,'richtig')">🗺️ Strategisches Management</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',2,this,'falsch')">⚙️ Operatives Management</button></div><div class="quiz-feedback" id="qf-fuehrung1-2">✅ Richtig! Strategisches Management = langfristige Planung und Ausrichtung (Märkte, Produkte, Wettbewerbsstrategie). Typisch: Markteintrittsstrategie, Wettbewerbsvorteile entwickeln.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">4 · Red Bulls Controlling überprüft laufend den Einsatz des Werbebudgets für ORGANICS. Welche Managementebene?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung1',3,this,'falsch')">🌿 Normatives Management</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',3,this,'falsch')">🗺️ Strategisches Management</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',3,this,'richtig')">⚙️ Operatives Management</button></div><div class="quiz-feedback" id="qf-fuehrung1-3">✅ Richtig! Operatives Management = kurzfristige, konkrete Umsetzungsaufgaben im Tagesgeschäft (Budgetkontrolle, Personalplanung, Produktionssteuerung). Setzt strategische Vorgaben in konkrete Maßnahmen um.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">5 · Manner beschreibt: „Wiener Süßwarengenuss, der begeistert." Was ist das im Unternehmensleitbild?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung1',4,this,'richtig')">🔭 Vision (Zukunftsbild/Claim)</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',4,this,'falsch')">📋 Mission (Auftrag)</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',4,this,'falsch')">⚙️ Operative Zielsetzung</button></div><div class="quiz-feedback" id="qf-fuehrung1-4">✅ Richtig! Vision = inspirierendes Zukunftsbild, das angibt, wohin sich das Unternehmen entwickeln will. Mission = konkreter Auftrag (Was tun wir? Für wen? Wie?). Zusammen bilden sie das Fundament des Leitbildes.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">6 · FutureTech stellt fest: Mitarbeiter arbeiten isoliert, neue Kollegen kündigen früh. Was sollte das Topmanagement als erste Maßnahme ergreifen?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung1',5,this,'falsch')">💰 Gehälter sofort erhöhen</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',5,this,'richtig')">🤝 Unternehmenswerte mit Mitarbeitern neu diskutieren und Kommunikation verbessern</button><button class="quiz-option" onclick="checkQuiz('fuehrung1',5,this,'falsch')">🏖️ Mehr Urlaubstage einführen</button></div><div class="quiz-feedback" id="qf-fuehrung1-5">✅ Richtig! Eine schlechte Unternehmenskultur muss an der Wurzel angepackt werden: Werte vorleben, Kommunikation verbessern, Führungskräfte schulen, Teambuilding. Nur finanzielle Maßnahmen lösen das Problem nicht.</div></div>
+    </div>
   </div>
+
+  <!-- QUIZ 2: SWOT, Porter & Strategien -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">🎯</span>Quiz 2: SWOT-Analyse, Porter &amp; Wachstumsstrategien</div>
+    <div class="quiz-wrap" id="quiz-fuehrung2">
+      <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-fuehrung2">0/7</span><button class="quiz-reset" onclick="resetQuiz('fuehrung2')">↺ Neu starten</button></div>
+
+      <div class="quiz-card"><div class="quiz-frage">1 · TEAM 7 hat eine „eigene Produktion" und „viele Designerpreise". In welches SWOT-Feld gehört das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung2',0,this,'richtig')">💪 Stärken (Strengths)</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',0,this,'falsch')">😟 Schwächen (Weaknesses)</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',0,this,'falsch')">🌟 Chancen (Opportunities)</button></div><div class="quiz-feedback" id="qf-fuehrung2-0">✅ Richtig! Stärken und Schwächen = interne Analyse (was das Unternehmen selbst kontrolliert). Chancen und Risiken = externe Analyse (Marktumfeld, Wettbewerber, gesamtwirtschaftliche Trends).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">2 · „Kunden wollen zunehmend nachhaltige Produkte" – in welches SWOT-Feld gehört das für TEAM 7 (Naturholzmöbel, Bio-Produktion)?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung2',1,this,'falsch')">💪 Stärken</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',1,this,'falsch')">😟 Schwächen</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',1,this,'richtig')">🌟 Chancen (Opportunities)</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',1,this,'falsch')">⚠️ Risiken (Threats)</button></div><div class="quiz-feedback" id="qf-fuehrung2-1">✅ Richtig! Chancen = externe Entwicklungen, von denen das Unternehmen profitieren kann. Für TEAM 7 ist der Nachhaltigkeitstrend eine Chance, weil sie bereits auf Naturholz und ökologische Produktion setzen.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">3 · Ein Smartphone-Hersteller möchte seinen bestehenden Umsatz steigern und verstärkt dafür seine Werbemaßnahmen im Heimmarkt. Welche Wachstumsstrategie ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung2',2,this,'richtig')">📈 Marktdurchdringungsstrategie</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',2,this,'falsch')">🌍 Marktentwicklungsstrategie</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',2,this,'falsch')">💡 Produktentwicklungsstrategie</button></div><div class="quiz-feedback" id="qf-fuehrung2-2">✅ Richtig! Marktdurchdringung = bestehendes Produkt im bestehenden Markt durch mehr Werbung, Preissenkung oder bessere Verteilung stärker verkaufen. Kein neues Produkt, kein neuer Markt.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">4 · Derselbe Hersteller entwickelt ein Smartphone mit faltbarem Display – als komplett neues Modell. Welche Strategie?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung2',3,this,'falsch')">📈 Marktdurchdringung</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',3,this,'falsch')">🌍 Marktentwicklung</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',3,this,'richtig')">💡 Produktentwicklungsstrategie</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',3,this,'falsch')">🔀 Diversifikation</button></div><div class="quiz-feedback" id="qf-fuehrung2-3">✅ Richtig! Produktentwicklung = neues Produkt, bestehender Markt. Das Unternehmen nutzt seine bestehenden Kunden und Vertriebskanäle für ein neues Angebot. Erfordert meist hohe F&amp;E-Investitionen.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">5 · Lidl bietet ein begrenztes, gut ausgewähltes Sortiment zu günstigsten Preisen an. Welche Porter-Wettbewerbsstrategie ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung2',4,this,'richtig')">💰 Kostenführerschaft</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',4,this,'falsch')">✨ Differenzierung</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',4,this,'falsch')">🎯 Nischenstrategie</button></div><div class="quiz-feedback" id="qf-fuehrung2-4">✅ Richtig! Kostenführerschaft = niedrigste Kosten und Preise am Markt durch Effizienz, standardisierte Prozesse und Massenproduktion. TEAM 7 hingegen verfolgt Differenzierung (Premium-Qualität, Design, Nachhaltigkeit).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">6 · Ein Modegeschäft hat folgende Daten: Sportshirts: eigener Marktanteil 8 %, stärkster Konkurrent 4 %. Wie hoch ist der relative Marktanteil?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung2',5,this,'falsch')">0,5</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',5,this,'richtig')">2,0</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',5,this,'falsch')">4,0</button></div><div class="quiz-feedback" id="qf-fuehrung2-5">✅ Richtig! Relativer Marktanteil = eigener Marktanteil ÷ Marktanteil des stärksten Konkurrenten = 8 % ÷ 4 % = <strong>2,0</strong>. Wert &gt; 1 = Marktführerschaft. Diese Produktgruppe ist ein „Star" in der BCG-Matrix.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">7 · Nokia erkannte den Smartphone-Trend zu spät und verpasste den Anschluss. Welches Strategieinstrument hätte helfen können, zukünftige Entwicklungen besser einzuschätzen?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung2',6,this,'falsch')">📊 BCG-Portfolio-Analyse</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',6,this,'richtig')">🔮 Prognoseverfahren (z.B. Szenariotechnik, Delphi-Methode)</button><button class="quiz-option" onclick="checkQuiz('fuehrung2',6,this,'falsch')">💰 Kostenvergleichsrechnung</button></div><div class="quiz-feedback" id="qf-fuehrung2-6">✅ Richtig! Szenariotechnik = alternative Zukunftsszenarien entwickeln (Best/Worst Case). Delphi-Methode = strukturierte Expertenbefragung über zukünftige Entwicklungen. Beide helfen, Risiken früher zu erkennen.</div></div>
+    </div>
+  </div>
+
+  <!-- QUIZ 3: Führungsstile & Organisation -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">🎯</span>Quiz 3: Führungsstile &amp; Unternehmensorganisation</div>
+    <div class="quiz-wrap" id="quiz-fuehrung3">
+      <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-fuehrung3">0/6</span><button class="quiz-reset" onclick="resetQuiz('fuehrung3')">↺ Neu starten</button></div>
+
+      <div class="quiz-card"><div class="quiz-frage">1 · Gruppenleiter Kai Baumann diskutiert mit seinem Team, wie eine Aufgabe am besten erfüllt werden kann, und bezieht alle in die Entscheidung ein. Welcher Führungsstil?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung3',0,this,'falsch')">👆 Autoritär</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',0,this,'richtig')">🤝 Kooperativ</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',0,this,'falsch')">🌊 Laissez-faire</button></div><div class="quiz-feedback" id="qf-fuehrung3-0">✅ Richtig! Kooperativer Führungsstil = Mitarbeiter werden in Entscheidungen eingebunden. Vorteile: höhere Motivation, besseres Betriebsklima, kreativere Lösungen. Nachteile: zeitaufwendiger, bei Krisen weniger effizient.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">2 · Die Geschäftsführerin sagt: „Herr Yavuz, Sie bringen die Ware zu den Regalen. Frau Langthaler, Sie sortieren ein. In zwei Stunden muss alles fertig sein." Welcher Führungsstil?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung3',1,this,'richtig')">👆 Autoritär</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',1,this,'falsch')">🤝 Kooperativ</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',1,this,'falsch')">🌊 Laissez-faire</button></div><div class="quiz-feedback" id="qf-fuehrung3-1">✅ Richtig! Autoritärer Führungsstil = Führungskraft trifft alle Entscheidungen alleine, gibt klare Anweisungen. Vorteil: schnelle Entscheidungen, klare Struktur. Nachteil: geringe Motivation, wenig Eigenverantwortung.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">3 · Elisa Dvorak (Abteilungsleiterin, SIEMENS) lässt alles geschehen – kümmert sich weder um Aufgabenverteilung noch um Teamkonflikte. Welcher Führungsstil?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung3',2,this,'falsch')">👆 Autoritär</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',2,this,'falsch')">🤝 Kooperativ</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',2,this,'richtig')">🌊 Laissez-faire</button></div><div class="quiz-feedback" id="qf-fuehrung3-2">✅ Richtig! Laissez-faire = Führungskraft greift kaum ein, Mitarbeiter handeln vollkommen eigenverantwortlich. Vorteil: hohe Eigenverantwortung für erfahrene Teams. Nachteil: Chaos, fehlende Orientierung, Konflikte bleiben ungelöst.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">4 · Welche Aussage zum Führungsstil ist FALSCH?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung3',3,this,'falsch')">✅ Beim autoritären Stil werden Mitarbeiter nicht in Entscheidungen eingebunden</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',3,this,'falsch')">✅ Der kooperative Stil begünstigt ein positives Betriebsklima</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',3,this,'richtig')">❌ Der Laissez-faire-Stil gibt Mitarbeitern wenig Handlungsspielraum</button></div><div class="quiz-feedback" id="qf-fuehrung3-3">✅ Richtig erkannt! Die falsche Aussage ist die dritte: Laissez-faire gibt Mitarbeitern den <em>größten</em> Handlungsspielraum – nicht den geringsten. Beim autoritären Stil haben Mitarbeiter den geringsten Spielraum.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">5 · Die Aufbauorganisation eines Unternehmens zeigt: Geschäftsführung → Abteilungsleitung → Teamleitung → Mitarbeiter. Wie nennt man so ein Schaubild?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung3',4,this,'richtig')">📊 Organigramm</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',4,this,'falsch')">📋 Ablaufdiagramm</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',4,this,'falsch')">📈 Netzplan</button></div><div class="quiz-feedback" id="qf-fuehrung3-4">✅ Richtig! Organigramm = grafische Darstellung der Aufbauorganisation (Hierarchie, Abteilungen, Stellen). Ablaufdiagramm = zeigt Prozesse/Abläufe. Netzplan = Projektplanung mit Abhängigkeiten zwischen Aufgaben.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">6 · Management by Objectives (MbO) ist ein Führungskonzept. Was ist das Kernprinzip?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung3',5,this,'falsch')">📋 Führungskraft gibt detaillierte Arbeitsanweisungen vor</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',5,this,'richtig')">🎯 Führungskraft und Mitarbeiter vereinbaren gemeinsam Ziele</button><button class="quiz-option" onclick="checkQuiz('fuehrung3',5,this,'falsch')">🌊 Mitarbeiter entscheiden komplett eigenständig über ihre Ziele</button></div><div class="quiz-feedback" id="qf-fuehrung3-5">✅ Richtig! MbO (Führen durch Zielvereinbarung) = Führungskraft und Mitarbeiter legen gemeinsam messbare Ziele fest. Mitarbeiter entscheiden selbst, wie sie die Ziele erreichen. Kontrolle erfolgt am Ergebnis, nicht am Weg.</div></div>
+    </div>
+  </div>
+
+</div>
+<div class="content-block" style="margin-top:20px">
+  <div class="block-title"><span class="block-icon">🎯</span>Quiz: Normatives Management &amp; Führungskonzepte</div>
+  <div class="quiz-wrap" id="quiz-fuehrung4">
+    <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-fuehrung4">0/7</span><button class="quiz-reset" onclick="resetQuiz('fuehrung4')">↺ Neu starten</button></div>
+    <div class="quiz-card"><div class="quiz-frage">1 · TEAM 7 schreibt: „Wir wollen der nachhaltigste Möbelhersteller Europas sein." Was ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung4',0,this,'richtig')">🌟 Vision</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',0,this,'falsch')">🎯 Mission</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',0,this,'falsch')">📋 Operatives Ziel</button></div><div class="quiz-feedback" id="qf-fuehrung4-0">✅ Richtig! Vision = langfristiges Vorstellungsbild. Inspiriert und orientiert alle Mitarbeiter im Alltag.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">2 · Das Ziel „Werbebudget kürzen" widerspricht dem Ziel „aufwendige Produktkampagne starten". Wie nennt man diese Zielbeziehung?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung4',1,this,'falsch')">✅ Zielharmonie</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',1,this,'richtig')">⚠️ Zielkonflikt</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',1,this,'falsch')">➖ Zielunabhängigkeit</button></div><div class="quiz-feedback" id="qf-fuehrung4-1">✅ Richtig! Zielkonflikt = Ziele widersprechen sich gegenseitig. Zielharmonie = ein Ziel fördert das andere. Zielunabhängigkeit = Ziele beeinflussen sich nicht.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">3 · Was versteht man unter CSR?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung4',2,this,'falsch')">💰 Verantwortung gegenüber Aktionären (Gewinnmaximierung)</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',2,this,'richtig')">🌍 Freiwillige Verantwortung gegenüber Gesellschaft und Umwelt</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',2,this,'falsch')">📋 Gesetzliche Pflicht zur Nachhaltigkeitsberichterstattung</button></div><div class="quiz-feedback" id="qf-fuehrung4-2">✅ Richtig! CSR = Corporate Social Responsibility: freiwillige Beiträge zur nachhaltigen Entwicklung in sozialen, ökologischen und wirtschaftlichen Bereichen.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">4 · Was steht das „E" in PESTEL?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung4',3,this,'falsch')">🏭 Economische Produktion</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',3,this,'falsch')">📊 Externe Analyse</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',3,this,'richtig')">💶 Wirtschaftliche Faktoren (Economic) UND/ODER 🌿 Ökologische Faktoren (Ecological)</button></div><div class="quiz-feedback" id="qf-fuehrung4-3">✅ Richtig! In PESTEL gibt es zwei E's: Economic (Wirtschaft: Konjunktur, Wechselkurse, Inflation) und Ecological (Ökologie: Klimawandel, Ressourcen, Nachhaltigkeit).</div></div>
+    <div class="quiz-card"><div class="quiz-frage">5 · Der Geschäftsführer delegiert einen ganzen Aufgabenbereich (z.B. Einkauf) an die Leiterin – sie trägt die volle Verantwortung. Welches Führungskonzept?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung4',4,this,'richtig')">📋 Management by Delegation</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',4,this,'falsch')">🎯 Management by Objectives</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',4,this,'falsch')">🚨 Management by Exception</button></div><div class="quiz-feedback" id="qf-fuehrung4-4">✅ Richtig! Management by Delegation = eigenverantwortlicher Aufgabenbereich für Mitarbeiter. Vorgesetzter greift nur bei unlösbaren Ausnahmen ein. Fördert Eigeninitiative und Motivation.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">6 · Welcher Führungsstil nach Kurt Lewin lässt Mitarbeitern die größte Entscheidungsfreiheit?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung4',5,this,'falsch')">👆 Autoritär</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',5,this,'falsch')">🤝 Kooperativ (demokratisch)</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',5,this,'richtig')">🆓 Laissez-faire</button></div><div class="quiz-feedback" id="qf-fuehrung4-5">✅ Richtig! Laissez-faire = weitgehende Handlungsfreiheit für Mitarbeiter, Führungskraft greift kaum ein. Autoritär = Führungskraft entscheidet alles allein. Kooperativ = Mitarbeiterbeteiligung bei Entscheidungen.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">7 · Was ist der Unterschied zwischen Eigenschafts- und Verhaltenstheorien der Führung?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('fuehrung4',6,this,'richtig')">✅ Eigenschaftstheorien: angeborene/erworbene Persönlichkeitsmerkmale entscheiden. Verhaltenstheorien: der individuelle Führungsstil entscheidet.</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',6,this,'falsch')">Eigenschaftstheorien betreffen Mitarbeiter, Verhaltenstheorien betreffen Führungskräfte.</button><button class="quiz-option" onclick="checkQuiz('fuehrung4',6,this,'falsch')">Beide Theorien kommen zum selben Ergebnis – nur mit verschiedenen Begriffen.</button></div><div class="quiz-feedback" id="qf-fuehrung4-6">✅ Richtig! Eigenschaftstheorien = persönliche Merkmale der Führungskraft sind entscheidend (charismatisch, intelligent, durchsetzungsfähig). Verhaltenstheorien = der Führungsstil (wie die Führungskraft mit Mitarbeitern umgeht) ist entscheidend.</div></div>
+  </div>
+</div>
+<div class="content-block" style="margin-top:20px">
+  <div class="block-title"><span class="block-icon">📊</span>Übung: SWOT-Analyse – Zuordnen</div>
+  <p style="font-size:0.88rem;color:#4a5578;margin-bottom:14px">Ordne die AlpenFresh-Aussagen dem richtigen SWOT-Feld zu. Klicke auf das passende Feld!</p>
+  <div id="swot-karten" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+    <div onclick="swotDrop('S')" style="background:#d1fae5;border:2px solid #10b981;border-radius:10px;padding:14px;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1"><div style="font-weight:800;font-size:0.88rem;color:#065f46;margin-bottom:8px">💪 Stärken (Strengths)</div><div id="swot-S" style="min-height:50px;font-size:0.82rem;color:#065f46;line-height:1.6"></div></div>
+    <div onclick="swotDrop('W')" style="background:#fee2e2;border:2px solid #f87171;border-radius:10px;padding:14px;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1"><div style="font-weight:800;font-size:0.88rem;color:#7f1d1d;margin-bottom:8px">😟 Schwächen (Weaknesses)</div><div id="swot-W" style="min-height:50px;font-size:0.82rem;color:#7f1d1d;line-height:1.6"></div></div>
+    <div onclick="swotDrop('O')" style="background:#dbeafe;border:2px solid #60a5fa;border-radius:10px;padding:14px;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1"><div style="font-weight:800;font-size:0.88rem;color:#1e3a8a;margin-bottom:8px">🌟 Chancen (Opportunities)</div><div id="swot-O" style="min-height:50px;font-size:0.82rem;color:#1e3a8a;line-height:1.6"></div></div>
+    <div onclick="swotDrop('T')" style="background:#fef3c7;border:2px solid #fbbf24;border-radius:10px;padding:14px;cursor:pointer;transition:opacity 0.2s" onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1"><div style="font-weight:800;font-size:0.88rem;color:#78350f;margin-bottom:8px">⚡ Risiken (Threats)</div><div id="swot-T" style="min-height:50px;font-size:0.82rem;color:#78350f;line-height:1.6"></div></div>
+  </div>
+  <div id="swot-result" style="text-align:center;font-family:var(--font-head);font-weight:700;font-size:0.95rem;color:var(--navy);min-height:24px"></div>
+  <button onclick="initSwot()" class="rechner-btn" style="margin-top:12px">↺ Neu starten</button>
 </div>`,
     reflexion: [
       'Leitet die KI aus der SWOT-Analyse konkrete Strategien ab – oder bleibt sie bei einer reinen Auflistung?',
@@ -1841,31 +1973,134 @@ const MODULES = [
       `<strong>Just-in-time vs. Vorratsbeschaffung für AlpenFresh:</strong><br><table><tr><th></th><th>Just-in-time</th><th>Vorratsbeschaffung</th></tr><tr><td><strong>Prinzip</strong></td><td>Material wird erst bei Bedarf bestellt und geliefert</td><td>Großer Lagerbestand als Puffer</td></tr><tr><td><strong>Vorteile</strong></td><td>• Keine Lagerkosten<br>• Immer frische Rohstoffe (wichtig bei Bio!)</td><td>• Sicherheit bei Lieferengpässen<br>• Mengenrabatte beim Einkauf möglich</td></tr><tr><td><strong>Nachteile</strong></td><td>• Abhängig von zuverlässigem Lieferanten<br>• Kein Puffer bei Lieferverzögerungen</td><td>• Hohe Lagerkosten<br>• Verderb möglich (Haferflocken, Früchte)</td></tr></table><br><strong>Empfehlung für AlpenFresh:</strong> Da AlpenFresh mit Bio-Rohstoffen arbeitet, die leicht verderben können, und der Hauptlieferant Koflerhof regional und verlässlich ist, empfiehlt sich ein <strong>Mix</strong>: Just-in-time für frische Zutaten, kleine Vorräte (Sicherheitsbestand) für Basisrohstoffe wie Haferflocken.`
     ],
 
-    interaktiv: `<div class="content-block" style="margin-top:20px">
-  <div class="block-title"><span class="block-icon">🧮</span>Schritt-für-Schritt: Brutto- und Nettobedarf</div>
-  <p style="font-size:0.88rem;color:#4a5578;margin-bottom:14px">Ändere die Ausgangsdaten und löse dann jeden Schritt selbst – sofortiges Feedback inklusive.</p>
-  <div style="background:#f8f9ff;border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px">
-    <div style="font-family:var(--font-head);font-weight:700;font-size:0.82rem;text-transform:uppercase;color:var(--text-mid);margin-bottom:10px">Ausgangsdaten</div>
-    <div class="rechner-grid">
-      <div class="rechner-row"><label class="rechner-label">Produktionsmenge (Stk.)</label><input class="rechner-input" id="nb-menge" type="number" value="80000"></div>
-      <div class="rechner-row"><label class="rechner-label">Materialbedarf/Stk. (g)</label><input class="rechner-input" id="nb-mat" type="number" value="120"></div>
-      <div class="rechner-row"><label class="rechner-label">Lagerbestand (kg)</label><input class="rechner-input" id="nb-lager" type="number" value="4200"></div>
+    interaktiv: `<div style="display:flex;flex-direction:column;gap:20px;margin-top:20px">
+
+  <!-- RECHNER: Brutto-/Nettobedarf -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">🧮</span>Schritt-für-Schritt: Materialbedarfsplanung</div>
+    <p style="font-size:0.88rem;color:#4a5578;margin-bottom:14px">Glanzer Cosmetics produziert Tandil-Geschirrspülmittel im Auftrag der Hofer KG. Berechne den Materialbedarf Schritt für Schritt.</p>
+    <div style="background:#f8f9ff;border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px">
+      <div style="font-family:var(--font-head);font-weight:700;font-size:0.82rem;text-transform:uppercase;color:var(--text-mid);margin-bottom:10px">Ausgangsdaten</div>
+      <div class="rechner-grid">
+        <div class="rechner-row"><label class="rechner-label">Produktionsmenge (Stk.)</label><input class="rechner-input" id="prod-menge" type="number" value="80000"></div>
+        <div class="rechner-row"><label class="rechner-label">Materialbedarf pro Stk. (g)</label><input class="rechner-input" id="prod-gram" type="number" value="120"></div>
+        <div class="rechner-row"><label class="rechner-label">Lagerbestand (kg)</label><input class="rechner-input" id="prod-lager" type="number" value="4200"></div>
+      </div>
+      <button class="rechner-btn" style="margin-top:12px" onclick="startNB()">▶ Bedarfsplanung starten</button>
     </div>
-    <button class="rechner-btn" style="margin-top:12px" onclick="startNB()">▶ Rechenschritte starten</button>
+    <div id="nb-schritte" style="display:none;flex-direction:column;gap:12px"></div>
   </div>
-  <div id="nb-schritte" style="display:none;flex-direction:column;gap:12px"></div>
+
+  <!-- RECHNER: Kapazitätsauslastung -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">📊</span>Rechner: Kapazitätsauslastung</div>
+    <p style="font-size:0.88rem;color:#4a5578;margin-bottom:14px">Rosenbauer International – berechne die Kapazitätsauslastung und beurteile, in welchen Monaten Anpassungen nötig sind.</p>
+    <div style="background:#f8f9ff;border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:14px">
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85rem">
+          <thead>
+            <tr style="background:#1e3a8a;color:white;text-align:center">
+              <th style="padding:8px 12px;border-radius:6px 0 0 0">Monat</th>
+              <th style="padding:8px 12px">Kapazitätsnachfrage (h)</th>
+              <th style="padding:8px 12px">Kapazitätsangebot (h)</th>
+              <th style="padding:8px 12px;border-radius:0 6px 0 0">Auslastung (%)</th>
+            </tr>
+          </thead>
+          <tbody id="kap-tbody">
+            <tr style="background:#f8f9ff;text-align:center">
+              <td style="padding:8px;font-weight:700">Jänner</td>
+              <td style="padding:8px">11.980</td>
+              <td style="padding:8px">12.400</td>
+              <td style="padding:8px"><input id="kap-jan" type="number" step="0.01" class="rechner-input" style="max-width:100px;text-align:center"></td>
+            </tr>
+            <tr style="background:white;text-align:center">
+              <td style="padding:8px;font-weight:700">Februar</td>
+              <td style="padding:8px">11.720</td>
+              <td style="padding:8px">11.600</td>
+              <td style="padding:8px"><input id="kap-feb" type="number" step="0.01" class="rechner-input" style="max-width:100px;text-align:center"></td>
+            </tr>
+            <tr style="background:#f8f9ff;text-align:center">
+              <td style="padding:8px;font-weight:700">März</td>
+              <td style="padding:8px">12.450</td>
+              <td style="padding:8px">12.400</td>
+              <td style="padding:8px"><input id="kap-mar" type="number" step="0.01" class="rechner-input" style="max-width:100px;text-align:center"></td>
+            </tr>
+            <tr style="background:white;text-align:center">
+              <td style="padding:8px;font-weight:700">April</td>
+              <td style="padding:8px">13.470</td>
+              <td style="padding:8px">12.300</td>
+              <td style="padding:8px"><input id="kap-apr" type="number" step="0.01" class="rechner-input" style="max-width:100px;text-align:center"></td>
+            </tr>
+            <tr style="background:#f8f9ff;text-align:center">
+              <td style="padding:8px;font-weight:700">Mai</td>
+              <td style="padding:8px">11.980</td>
+              <td style="padding:8px">12.300</td>
+              <td style="padding:8px"><input id="kap-mai" type="number" step="0.01" class="rechner-input" style="max-width:100px;text-align:center"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button class="rechner-btn" style="margin-top:14px" onclick="checkKapazitaet()">✓ Auslastung prüfen</button>
+      <div id="kap-ergebnis" style="display:none;margin-top:12px"></div>
+    </div>
+  </div>
+
+  <!-- QUIZ: Produktionsbetriebe -->
+  <div class="content-block">
+    <div class="block-title"><span class="block-icon">🎯</span>Quiz: Produktionsbetriebe &amp; Leistungserstellung</div>
+    <div class="quiz-wrap" id="quiz-produktion">
+      <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-produktion">0/8</span><button class="quiz-reset" onclick="resetQuiz('produktion')">↺ Neu starten</button></div>
+
+      <div class="quiz-card"><div class="quiz-frage">1 · Glanzer Cosmetics stellt Tandil-Geschirrspülmittel im Auftrag der Hofer KG her, ohne als Produzent aufzutreten. Wie nennt man das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',0,this,'falsch')">🏭 Eigenfertigung</button><button class="quiz-option" onclick="checkQuiz('produktion',0,this,'richtig')">📋 Lohnproduktion (Auftragsproduktion)</button><button class="quiz-option" onclick="checkQuiz('produktion',0,this,'falsch')">🔄 Massenfertigung</button></div><div class="quiz-feedback" id="qf-produktion-0">✅ Richtig! Lohnproduktion = Herstellung von Produkten im Auftrag anderer Unternehmen, ohne Markenidentität oder Vertrieb zu übernehmen. Typisch für Lohnfertiger wie Glanzer Cosmetics.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">2 · In welchem Wirtschaftssektor ist Glanzer Cosmetics tätig?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',1,this,'falsch')">🌾 Primärer Sektor (Rohstoffgewinnung)</button><button class="quiz-option" onclick="checkQuiz('produktion',1,this,'richtig')">🏭 Sekundärer Sektor (Industrie/Produktion)</button><button class="quiz-option" onclick="checkQuiz('produktion',1,this,'falsch')">🏨 Tertiärer Sektor (Dienstleistungen)</button></div><div class="quiz-feedback" id="qf-produktion-1">✅ Richtig! Sekundärer Sektor = Herstellung von Gütern (Industrie, Gewerbe, Bauwirtschaft). Primär = Rohstoffe, Tertiär = Dienstleistungen (Tourismus, Banken, Handel).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">3 · BMW baut täglich mehrere Hundert Autos nach immer demselben Schema (Karosserie → Motor → Innenausstattung → Reifen). Welcher Organisationstyp der Fertigung ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',2,this,'falsch')">🔧 Werkstattfertigung</button><button class="quiz-option" onclick="checkQuiz('produktion',2,this,'falsch')">🏗️ Baustellenfertigung</button><button class="quiz-option" onclick="checkQuiz('produktion',2,this,'richtig')">⚙️ Fließbandfertigung</button></div><div class="quiz-feedback" id="qf-produktion-2">✅ Richtig! Fließbandfertigung = Produkt durchläuft immer dieselbe Reihenfolge von Arbeitsstationen. Typisch für Massenartikel (Autos, Elektronik, Lebensmittel).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">4 · Die Kramer GmbH baut eine maßgeschneiderte Theke für ein Fünfsternehotel – einmalig, nach individuellen Kundenwünschen. Welche Fertigungsart ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',3,this,'richtig')">🔨 Einzelfertigung</button><button class="quiz-option" onclick="checkQuiz('produktion',3,this,'falsch')">📦 Serienfertigung</button><button class="quiz-option" onclick="checkQuiz('produktion',3,this,'falsch')">🏭 Massenfertigung</button></div><div class="quiz-feedback" id="qf-produktion-3">✅ Richtig! Einzelfertigung = individuell gefertigte Unikate nach Kundenwunsch. Vorteil: hohe Flexibilität. Nachteil: teuer, aufwendig. Weitere Beispiele: Schiffbau, maßgeschneiderte Software.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">5 · Lego bringt eine begrenzte Stückzahl eines Safari-Baukastens heraus. Welche Fertigungsart ist optimal?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',4,this,'falsch')">🔨 Einzelfertigung</button><button class="quiz-option" onclick="checkQuiz('produktion',4,this,'richtig')">📦 Serienfertigung</button><button class="quiz-option" onclick="checkQuiz('produktion',4,this,'falsch')">🏭 Massenfertigung</button></div><div class="quiz-feedback" id="qf-produktion-4">✅ Richtig! Serienfertigung = identische Produkte in einer definierten (größeren, aber begrenzten) Stückzahl. Niedrigere Stückkosten als Einzelfertigung, aber flexibler als Massenfertigung.</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">6 · Shiftphone entwickelt ein Smartphone, das sich durch Solarpanels selbst auflädt – basierend auf einer Kundenbefragung, die „häufiges Laden" als Hauptkritik identifiziert hat. Welche Innovationsstrategie ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',5,this,'falsch')">💡 Technology-Push (Technologie treibt Entwicklung)</button><button class="quiz-option" onclick="checkQuiz('produktion',5,this,'richtig')">🛒 Market-Pull (Marktbedürfnis treibt Entwicklung)</button></div><div class="quiz-feedback" id="qf-produktion-5">✅ Richtig! Market-Pull = Produktidee entsteht aus einem konkreten Marktbedürfnis (Kundenbefragung, Marktforschung). Technology-Push = neue Technologie sucht Anwendung (z.B. GPS → Navigationssysteme).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">7 · Glanzer kauft Rohstoffe in größeren Mengen und lagert sie, damit keine Produktionsengpässe entstehen. Wie nennt man dieses Beschaffungsprinzip?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',6,this,'richtig')">📦 Vorratsbeschaffung</button><button class="quiz-option" onclick="checkQuiz('produktion',6,this,'falsch')">⚡ Just-in-Time-Beschaffung</button><button class="quiz-option" onclick="checkQuiz('produktion',6,this,'falsch')">📋 Einzelbeschaffung</button></div><div class="quiz-feedback" id="qf-produktion-6">✅ Richtig! Vorratsbeschaffung = Güter werden in größeren Mengen bestellt und auf Lager gehalten. Vorteil: keine Lieferengpässe. Nachteil: hohe Lagerkosten (Halle, Personal, Kapital gebunden).</div></div>
+
+      <div class="quiz-card"><div class="quiz-frage">8 · Procter &amp; Gamble produziert 1.000 Parfumflakons. Materialkosten: € 5,00/Stk., Maschinenstunden: 0,5 h à € 20,00, Arbeitsstunden: 0,25 h à € 45,00. Wie hoch sind die Gesamtkosten?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',7,this,'falsch')">€ 20.000,–</button><button class="quiz-option" onclick="checkQuiz('produktion',7,this,'richtig')">€ 26.250,–</button><button class="quiz-option" onclick="checkQuiz('produktion',7,this,'falsch')">€ 31.250,–</button></div><div class="quiz-feedback" id="qf-produktion-7">✅ Richtig! (5 × 1.000) + (0,5 × 1.000 × 20) + (0,25 × 1.000 × 45) = 5.000 + 10.000 + 11.250 = <strong>€ 26.250</strong>. Produktionscontrolling ermittelt so die tatsächlichen Herstellkosten.</div></div>
+    </div>
+  </div>
+
 </div>
-<div class="content-block" style="margin-top:16px">
-  <div class="block-title"><span class="block-icon">🎯</span>Quiz: Fixe/variable Kosten & Standortfaktoren</div>
-  <div class="quiz-wrap" id="quiz-produktion">
-    <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-produktion">0/6</span><button class="quiz-reset" onclick="resetQuiz('produktion')">↺ Neu starten</button></div>
-    <div class="quiz-card"><div class="quiz-frage">1 · AlpenFresh zahlt monatlich € 3.200 Miete für die Halle in Wörgl – unabhängig von der Produktionsmenge. Fix oder variabel?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',0,this,'richtig')">📌 Fixe Kosten</button><button class="quiz-option" onclick="checkQuiz('produktion',0,this,'falsch')">📈 Variable Kosten</button></div><div class="quiz-feedback" id="qf-produktion-0">✅ Richtig! Miete ist eine Fixkosten – sie fällt unabhängig von der produzierten Menge an.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">2 · Pro AlpenBar werden 120 g Haferflocken (€ 0,08) verbraucht – je mehr Bars, desto mehr Kosten. Fix oder variabel?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',1,this,'falsch')">📌 Fixe Kosten</button><button class="quiz-option" onclick="checkQuiz('produktion',1,this,'richtig')">📈 Variable Kosten</button></div><div class="quiz-feedback" id="qf-produktion-1">✅ Richtig! Rohstoffkosten sind variable Kosten – sie steigen proportional mit der Produktionsmenge.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">3 · Der Bio-Hafer-Lieferant Koflerhof ist nur 15 km vom geplanten Werk entfernt. Welcher Standortfaktor?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',2,this,'richtig')">🚜 Beschaffungsorientiert</button><button class="quiz-option" onclick="checkQuiz('produktion',2,this,'falsch')">🏭 Produktionsorientiert</button><button class="quiz-option" onclick="checkQuiz('produktion',2,this,'falsch')">🛒 Absatzorientiert</button></div><div class="quiz-feedback" id="qf-produktion-2">✅ Richtig! Nähe zu Rohstofflieferanten ist ein beschaffungsorientierter Standortfaktor.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">4 · In Salzburg gibt es mehr Fachkräfte im Lebensmittelbereich als in Tirol. Welcher Standortfaktor?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',3,this,'falsch')">🚜 Beschaffungsorientiert</button><button class="quiz-option" onclick="checkQuiz('produktion',3,this,'richtig')">🏭 Produktionsorientiert</button><button class="quiz-option" onclick="checkQuiz('produktion',3,this,'falsch')">🛒 Absatzorientiert</button></div><div class="quiz-feedback" id="qf-produktion-3">✅ Richtig! Arbeitskräfteverfügbarkeit ist ein produktionsorientierter Standortfaktor.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">5 · Von Salzburg aus sind Wien und München kürzer erreichbar als von Wörgl. Welcher Standortfaktor?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',4,this,'falsch')">🚜 Beschaffungsorientiert</button><button class="quiz-option" onclick="checkQuiz('produktion',4,this,'falsch')">🏭 Produktionsorientiert</button><button class="quiz-option" onclick="checkQuiz('produktion',4,this,'richtig')">🛒 Absatzorientiert</button></div><div class="quiz-feedback" id="qf-produktion-4">✅ Richtig! Nähe zum Absatzmarkt ist ein absatzorientierter Standortfaktor – kürzere Transportwege zu Kunden.</div></div>
-    <div class="quiz-card"><div class="quiz-frage">6 · Mit neuer Maschine: 120.000 Einheiten/Monat statt 90.000 – gleiche Mitarbeiterzahl. Was ist gestiegen?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion',5,this,'richtig')">⚡ Produktivität (Output pro Einsatzfaktor)</button><button class="quiz-option" onclick="checkQuiz('produktion',5,this,'falsch')">💰 Wirtschaftlichkeit (Ertrag/Aufwand)</button><button class="quiz-option" onclick="checkQuiz('produktion',5,this,'falsch')">📊 Rentabilität (Gewinn/Kapital)</button></div><div class="quiz-feedback" id="qf-produktion-5">✅ Richtig! Produktivität = Output ÷ Input. Mehr Output bei gleichem Personal = höhere Produktivität.</div></div>
+<div class="content-block" style="margin-top:20px">
+  <div class="block-title"><span class="block-icon">🎯</span>Quiz: Leistungserstellungsprozess</div>
+  <div class="quiz-wrap" id="quiz-produktion2">
+    <div class="quiz-score"><span>Dein Ergebnis</span><span class="quiz-score-zahl" id="score-produktion2">0/8</span><button class="quiz-reset" onclick="resetQuiz('produktion2')">↺ Neu starten</button></div>
+    <div class="quiz-card"><div class="quiz-frage">1 · AlpenFresh schätzt, wie viele AlpenBars im nächsten Monat verkauft werden, um die Produktion zu planen. Wie nennt man das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion2',0,this,'richtig')">📊 Absatzplanung</button><button class="quiz-option" onclick="checkQuiz('produktion2',0,this,'falsch')">🏭 Produktionscontrolling</button><button class="quiz-option" onclick="checkQuiz('produktion2',0,this,'falsch')">📦 Materialbedarfsplanung</button></div><div class="quiz-feedback" id="qf-produktion2-0">✅ Richtig! Absatzplanung = Schätzung, welche Produkte in welcher Menge verkauft werden. Darauf aufbauend folgen Produktions- und Materialplanung.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">2 · AlpenFresh produziert erst, wenn ein konkreter Auftrag vorliegt – nie auf Vorrat. Wie nennt man das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion2',1,this,'richtig')">📋 Auftragsproduktion</button><button class="quiz-option" onclick="checkQuiz('produktion2',1,this,'falsch')">📦 Vorratsproduktion</button><button class="quiz-option" onclick="checkQuiz('produktion2',1,this,'falsch')">🔄 Serienproduktion</button></div><div class="quiz-feedback" id="qf-produktion2-1">✅ Richtig! Auftragsproduktion = Produktion erst bei echtem Kundenauftrag. Vorratsproduktion = auf Lager produzieren auf Basis von Prognosen.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">3 · Bruttobedarf: 10.000 Stk. Lagerbestand: 2.000 Stk. Wie hoch ist der Nettobedarf?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion2',2,this,'falsch')">12.000 Stk.</button><button class="quiz-option" onclick="checkQuiz('produktion2',2,this,'richtig')">8.000 Stk.</button><button class="quiz-option" onclick="checkQuiz('produktion2',2,this,'falsch')">10.000 Stk.</button></div><div class="quiz-feedback" id="qf-produktion2-2">✅ Richtig! Nettobedarf = Bruttobedarf − Lagerbestand = 10.000 − 2.000 = 8.000 Stk. Das ist die tatsächlich zu beschaffende Menge.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">4 · Bearbeitungszeit 10 Min. + Rüstzeit 5 Min. + Transport/Liegezeit 15 Min. Was ist die Durchlaufzeit?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion2',3,this,'falsch')">10 Minuten</button><button class="quiz-option" onclick="checkQuiz('produktion2',3,this,'falsch')">15 Minuten</button><button class="quiz-option" onclick="checkQuiz('produktion2',3,this,'richtig')">30 Minuten</button></div><div class="quiz-feedback" id="qf-produktion2-3">✅ Richtig! Durchlaufzeit = Durchführungszeit (Rüstzeit + Bearbeitungszeit = 15 Min.) + Übergangszeit (Liegezeit + Transportzeit = 15 Min.) = 30 Min. gesamt.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">5 · AlpenFresh produziert täglich tausende gleiche Riegel am Fließband. Welche Fertigungsart?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion2',4,this,'falsch')">🔧 Einzelfertigung</button><button class="quiz-option" onclick="checkQuiz('produktion2',4,this,'richtig')">🏭 Massenfertigung (Fließfertigung)</button><button class="quiz-option" onclick="checkQuiz('produktion2',4,this,'falsch')">📦 Serienfertigung</button></div><div class="quiz-feedback" id="qf-produktion2-4">✅ Richtig! Massenfertigung = große Mengen standardisierter Produkte am Fließband. Serienfertigung = begrenzte Stückzahl einer Variante. Einzelfertigung = individuelle Einzelstücke.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">6 · AlpenFresh vergleicht Soll-Produktionsmenge mit der tatsächlich produzierten Menge und leitet Korrekturen ab. Was ist das?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion2',5,this,'falsch')">📋 Absatzplanung</button><button class="quiz-option" onclick="checkQuiz('produktion2',5,this,'richtig')">📊 Produktionscontrolling</button><button class="quiz-option" onclick="checkQuiz('produktion2',5,this,'falsch')">🏭 Produktionsprogrammplanung</button></div><div class="quiz-feedback" id="qf-produktion2-5">✅ Richtig! Produktionscontrolling: Planung → Soll-Vorgabe → Soll-Ist-Vergleich → Problemanalyse → Korrekturmaßnahmen → Überprüfung. Ein kontinuierlicher Kreislauf.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">7 · AlpenFresh entwickelt eine neue Maschine, die 30 % effizienter produziert. Welche Innovationsstrategie steckt dahinter?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion2',6,this,'richtig')">🔬 Technology-Push (Technologie treibt Innovation)</button><button class="quiz-option" onclick="checkQuiz('produktion2',6,this,'falsch')">🛒 Market-Pull (Kundenwunsch treibt Innovation)</button></div><div class="quiz-feedback" id="qf-produktion2-6">✅ Richtig! Technology-Push = neue Technologie löst Innovation aus. Market-Pull = unbefriedigte Kundenwünsche oder Marktrends sind der Auslöser.</div></div>
+    <div class="quiz-card"><div class="quiz-frage">8 · Welchen Vorteil hat Werkstattfertigung gegenüber Fließbandfertigung?</div><div class="quiz-optionen"><button class="quiz-option" onclick="checkQuiz('produktion2',7,this,'falsch')">⚡ Schnellere Produktion und geringere Kosten pro Stück</button><button class="quiz-option" onclick="checkQuiz('produktion2',7,this,'richtig')">🔧 Flexiblere Anpassung an unterschiedliche Produkte und Kundenwünsche</button><button class="quiz-option" onclick="checkQuiz('produktion2',7,this,'falsch')">📦 Einfachere Lagerhaltung</button></div><div class="quiz-feedback" id="qf-produktion2-7">✅ Richtig! Werkstattfertigung ist flexibler – kann verschiedene Produkte bearbeiten. Nachteil: längere Durchlaufzeiten und Transportwege zwischen Werkstätten.</div></div>
   </div>
+</div>
+<div class="content-block" style="margin-top:20px">
+  <div class="block-title"><span class="block-icon">📍</span>Rechner: Standortbewertung</div>
+  <p style="font-size:0.88rem;color:#4a5578;margin-bottom:14px">AlpenFresh prüft zwei Produktionsstandorte: <strong>Wörgl (Tirol)</strong> vs. <strong>Salzburg-Stadt</strong>. Bewerte die Standortfaktoren nach Gewichtung (%) und Eignung (Punkte 1–10).</p>
+  <div style="overflow-x:auto;margin-bottom:14px">
+    <table style="width:100%;border-collapse:collapse;font-size:0.87rem">
+      <thead><tr style="background:#1e3a8a;color:white"><th style="padding:10px;text-align:left">Standortfaktor</th><th style="padding:10px;text-align:center">Gewichtung (%)</th><th style="padding:10px;text-align:center">Wörgl (1–10)</th><th style="padding:10px;text-align:center">Salzburg (1–10)</th></tr></thead>
+      <tbody>
+        <tr style="background:#f8f9ff"><td style="padding:9px 10px;border-bottom:1px solid #e2e8f0">🚂 Verkehrsanbindung</td><td style="text-align:center"><input type="number" min="0" max="100" value="25" class="rechner-input" style="width:65px;text-align:center" id="sf-g1"></td><td style="text-align:center"><input type="number" min="1" max="10" value="9" class="rechner-input" style="width:65px;text-align:center" id="sf-w1"></td><td style="text-align:center"><input type="number" min="1" max="10" value="8" class="rechner-input" style="width:65px;text-align:center" id="sf-s1"></td></tr>
+        <tr><td style="padding:9px 10px;border-bottom:1px solid #e2e8f0">👷 Verfügbarkeit Arbeitskräfte</td><td style="text-align:center"><input type="number" min="0" max="100" value="20" class="rechner-input" style="width:65px;text-align:center" id="sf-g2"></td><td style="text-align:center"><input type="number" min="1" max="10" value="7" class="rechner-input" style="width:65px;text-align:center" id="sf-w2"></td><td style="text-align:center"><input type="number" min="1" max="10" value="9" class="rechner-input" style="width:65px;text-align:center" id="sf-s2"></td></tr>
+        <tr style="background:#f8f9ff"><td style="padding:9px 10px;border-bottom:1px solid #e2e8f0">🏭 Grundstückskosten</td><td style="text-align:center"><input type="number" min="0" max="100" value="20" class="rechner-input" style="width:65px;text-align:center" id="sf-g3"></td><td style="text-align:center"><input type="number" min="1" max="10" value="8" class="rechner-input" style="width:65px;text-align:center" id="sf-w3"></td><td style="text-align:center"><input type="number" min="1" max="10" value="5" class="rechner-input" style="width:65px;text-align:center" id="sf-s3"></td></tr>
+        <tr><td style="padding:9px 10px;border-bottom:1px solid #e2e8f0">🌿 Nähe zu Rohstofflieferanten</td><td style="text-align:center"><input type="number" min="0" max="100" value="20" class="rechner-input" style="width:65px;text-align:center" id="sf-g4"></td><td style="text-align:center"><input type="number" min="1" max="10" value="9" class="rechner-input" style="width:65px;text-align:center" id="sf-w4"></td><td style="text-align:center"><input type="number" min="1" max="10" value="6" class="rechner-input" style="width:65px;text-align:center" id="sf-s4"></td></tr>
+        <tr style="background:#f8f9ff"><td style="padding:9px 10px">⚖️ Behörden / Bürokratie</td><td style="text-align:center"><input type="number" min="0" max="100" value="15" class="rechner-input" style="width:65px;text-align:center" id="sf-g5"></td><td style="text-align:center"><input type="number" min="1" max="10" value="7" class="rechner-input" style="width:65px;text-align:center" id="sf-w5"></td><td style="text-align:center"><input type="number" min="1" max="10" value="6" class="rechner-input" style="width:65px;text-align:center" id="sf-s5"></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="rechner-btn" onclick="calcStandort()">▶ Standort berechnen</button>
+  <div id="standort-ergebnis" style="display:none;margin-top:16px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:18px"></div>
 </div>`,
     reflexion: [
       'Berücksichtigt die KI die Bio-Zertifizierungspflicht und was ein Standortwechsel dafür bedeutet?',
@@ -3100,6 +3335,142 @@ function kalkCheck(key) {
     fb.style.cssText = 'margin-top:6px;font-size:0.85rem;border-radius:6px;padding:7px 10px;background:#fff1f2;border:1px solid #fecdd3;color:#881337';
     fb.innerHTML = '\u274c Nicht ganz. <strong>L\u00f6sungsweg:</strong> ' + (kalkHints[key] || '');
   }
+}
+
+
+/* ==============================================
+   KAPAZITÄTSAUSLASTUNG RECHNER
+============================================== */
+function checkKapazitaet() {
+  var data = [
+    { id: 'kap-jan', nachfrage: 11980, angebot: 12400, correct: 96.61 },
+    { id: 'kap-feb', nachfrage: 11720, angebot: 11600, correct: 101.03 },
+    { id: 'kap-mar', nachfrage: 12450, angebot: 12400, correct: 100.40 },
+    { id: 'kap-apr', nachfrage: 13470, angebot: 12300, correct: 109.51 },
+    { id: 'kap-mai', nachfrage: 11980, angebot: 12300, correct: 97.40 }
+  ];
+  var names = ['Jänner','Februar','März','April','Mai'];
+  var allOk = true;
+  var resultHtml = '<div style="display:flex;flex-direction:column;gap:8px">';
+  data.forEach(function(d, i) {
+    var inp = document.getElementById(d.id);
+    if (!inp) return;
+    var val = parseFloat(inp.value);
+    var ok = !isNaN(val) && Math.abs(val - d.correct) < 0.1;
+    inp.style.borderColor = ok ? '#10b981' : '#f43f5e';
+    var formula = '(' + d.nachfrage.toLocaleString('de-AT') + ' ÷ ' + d.angebot.toLocaleString('de-AT') + ') × 100 = ' + d.correct.toFixed(2) + ' %';
+    var overload = d.nachfrage > d.angebot;
+    resultHtml += '<div style="background:' + (ok ? '#f0fdf4' : '#fff1f2') + ';border:1px solid ' + (ok ? '#bbf7d0' : '#fecdd3') + ';border-radius:8px;padding:10px 14px;font-size:0.85rem">'
+      + '<strong>' + names[i] + ':</strong> ' + (ok ? '✅' : '❌ ' + formula)
+      + (overload ? ' <span style="color:#dc2626;font-weight:700">⚠️ Überauslastung!</span>' : '')
+      + '</div>';
+    if (!ok) allOk = false;
+  });
+  resultHtml += '</div>';
+  if (allOk) {
+    resultHtml += '<div style="margin-top:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px;font-size:0.88rem">'
+      + '<strong>✅ Alle Werte korrekt!</strong> April ist mit 109,51 % <strong>überausgelastet</strong> – Rosenbauer muss Anpassungsmaßnahmen ergreifen (z.B. Überstunden, Kapazitäten vorgezogen aufbauen).</div>';
+  }
+  var el = document.getElementById('kap-ergebnis');
+  if (el) { el.innerHTML = resultHtml; el.style.display = 'block'; }
+}
+
+
+/* ==============================================
+   STANDORTBEWERTUNG
+============================================== */
+function calcStandort() {
+  var totalG = 0, scoreW = 0, scoreS = 0;
+  for (var i = 1; i <= 5; i++) {
+    var g = parseFloat(document.getElementById('sf-g' + i).value) || 0;
+    var w = parseFloat(document.getElementById('sf-w' + i).value) || 0;
+    var s = parseFloat(document.getElementById('sf-s' + i).value) || 0;
+    totalG += g;
+    scoreW += g * w;
+    scoreS += g * s;
+  }
+  var ergebnis = document.getElementById('standort-ergebnis');
+  ergebnis.style.display = 'block';
+  var wNorm = (totalG > 0) ? (scoreW / totalG).toFixed(2) : 0;
+  var sNorm = (totalG > 0) ? (scoreS / totalG).toFixed(2) : 0;
+  var winner = parseFloat(wNorm) >= parseFloat(sNorm) ? 'Wörgl 🏔️' : 'Salzburg 🏙️';
+  var warnung = Math.abs(totalG - 100) > 1 ? '<div style="color:#f59e0b;font-size:0.82rem;margin-top:8px">⚠️ Gewichtungen ergeben ' + totalG.toFixed(0) + ' % – idealerweise sollten sie 100 % ergeben.</div>' : '';
+  ergebnis.innerHTML = '<div style="font-family:var(--font-head);font-weight:800;font-size:1rem;color:#065f46;margin-bottom:10px">📊 Ergebnis der Standortbewertung</div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">'
+    + '<div style="background:white;border-radius:8px;padding:12px;text-align:center"><div style="font-weight:700;color:#1e3a8a;margin-bottom:4px">Wörgl 🏔️</div><div style="font-size:1.5rem;font-weight:800;color:#065f46">' + wNorm + '</div><div style="font-size:0.78rem;color:#4a5578">gewichtete Punktzahl</div></div>'
+    + '<div style="background:white;border-radius:8px;padding:12px;text-align:center"><div style="font-weight:700;color:#1e3a8a;margin-bottom:4px">Salzburg 🏙️</div><div style="font-size:1.5rem;font-weight:800;color:#065f46">' + sNorm + '</div><div style="font-size:0.78rem;color:#4a5578">gewichtete Punktzahl</div></div>'
+    + '</div>'
+    + '<div style="background:white;border-radius:8px;padding:12px;text-align:center"><strong>Empfehlung:</strong> ' + winner + ' schneidet mit deiner Gewichtung besser ab.</div>'
+    + warnung
+    + '<div style="font-size:0.8rem;color:#4a5578;margin-top:10px">💡 In der Realität sind Standortentscheidungen komplexer – qualitative Faktoren (z.B. Unternehmenskultur, persönliche Netzwerke) spielen ebenfalls eine Rolle.</div>';
+}
+
+/* ==============================================
+   SWOT-ANALYSE ÜBUNG
+============================================== */
+var swotItems = [
+  { text: '🌱 AlpenFresh verwendet ausschließlich Bio-Zutaten aus der Region', feld: 'S' },
+  { text: '💰 AlpenFresh hat nur begrenzte finanzielle Mittel für Werbung', feld: 'W' },
+  { text: '📈 Bio-Lebensmittel liegen im Trend – der Markt wächst jährlich um 8 %', feld: 'O' },
+  { text: '🏪 Große Supermarktketten drängen mit eigenen Bio-Labels in den Markt', feld: 'T' },
+  { text: '👥 Das Team besteht aus erfahrenen Lebensmittelexperten mit 10+ Jahren Erfahrung', feld: 'S' },
+  { text: '🚗 AlpenFresh hat noch keine eigene Distributionslogistik – abhängig von Dritten', feld: 'W' },
+  { text: '🌍 EU-weite Bio-Förderungsprogramme bieten neue Fördermöglichkeiten', feld: 'O' },
+  { text: '⚡ Steigende Rohstoffpreise für Bio-Zutaten gefährden die Marge', feld: 'T' }
+];
+var swotAktuell = null;
+var swotPunkte = 0;
+var swotGesamt = 0;
+var swotQueue = [];
+
+function initSwot() {
+  swotPunkte = 0; swotGesamt = 0;
+  swotQueue = swotItems.slice().sort(function() { return Math.random() - 0.5; });
+  document.getElementById('swot-S').innerHTML = '';
+  document.getElementById('swot-W').innerHTML = '';
+  document.getElementById('swot-O').innerHTML = '';
+  document.getElementById('swot-T').innerHTML = '';
+  document.getElementById('swot-result').textContent = '';
+  document.getElementById('swot-karten').innerHTML = '';
+  swotNaechste();
+}
+
+function swotNaechste() {
+  if (swotQueue.length === 0) {
+    document.getElementById('swot-karten').innerHTML = '';
+    document.getElementById('swot-result').innerHTML = (swotPunkte === swotGesamt)
+      ? '🎉 Perfekt! Alle ' + swotGesamt + ' Aussagen richtig zugeordnet!'
+      : '✅ ' + swotPunkte + ' von ' + swotGesamt + ' Aussagen richtig zugeordnet. Versuche es nochmal!';
+    return;
+  }
+  swotAktuell = swotQueue.shift();
+  var karte = document.getElementById('swot-karten');
+  karte.innerHTML = '<div style="background:#f8f9ff;border:2px solid #c7d2fe;border-radius:12px;padding:16px;text-align:center">'
+    + '<div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;color:var(--text-mid);margin-bottom:8px">Welches SWOT-Feld passt? → Klicke auf das richtige Feld unten</div>'
+    + '<div style="font-size:0.97rem;font-weight:600;color:var(--navy)">' + swotAktuell.text + '</div>'
+    + '</div>';
+  document.getElementById('swot-result').textContent = '';
+}
+
+function swotDrop(feld) {
+  if (!swotAktuell) return;
+  swotGesamt++;
+  var result = document.getElementById('swot-result');
+  if (feld === swotAktuell.feld) {
+    swotPunkte++;
+    var target = document.getElementById('swot-' + feld);
+    target.innerHTML += (target.innerHTML ? '<br>' : '') + '✅ ' + swotAktuell.text;
+    result.style.color = '#065f46';
+    result.textContent = '✅ Richtig!';
+  } else {
+    var richtig = { S: '💪 Stärken', W: '😟 Schwächen', O: '🌟 Chancen', T: '⚡ Risiken' };
+    result.style.color = '#dc2626';
+    result.textContent = '❌ Falsch. Diese Aussage gehört zu: ' + richtig[swotAktuell.feld];
+    var target = document.getElementById('swot-' + swotAktuell.feld);
+    target.innerHTML += (target.innerHTML ? '<br>' : '') + '❌ ' + swotAktuell.text;
+  }
+  swotAktuell = null;
+  setTimeout(swotNaechste, 1200);
 }
 
 /* ==============================================

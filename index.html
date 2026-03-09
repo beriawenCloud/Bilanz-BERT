@@ -533,6 +533,27 @@
     <div style="text-align:center;margin-top:16px;color:#4b5563;font-size:0.75rem;">Nur für autorisierte Benutzer · GALS</div>
   </div>
 </div>
+  <!-- KLASSEN-AUSWAHL SCREEN -->
+  <div id="klassenScreen" class="hidden">
+    <div class="klassen-title">
+      📒 Bilanz-Bert
+      <span>Welche Klasse besuchst du?</span>
+    </div>
+    <div class="klassen-buttons">
+      <button class="klassen-btn" onclick="waehleKlasse('HAK')">
+        <div class="klassen-icon">🏦</div>
+        4. HAK
+        <div class="klassen-sub">Handelsakademie</div>
+      </button>
+      <button class="klassen-btn" onclick="waehleKlasse('HLW')">
+        <div class="klassen-icon">🌿</div>
+        4. HLW
+        <div class="klassen-sub">Höhere Lehranstalt</div>
+      </button>
+    </div>
+  </div>
+
+
 
 <!-- ADMIN PANEL -->
 <div id="adminPanel" style="position:fixed;inset:0;z-index:8888;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;">
@@ -558,7 +579,6 @@
     <div>
       <div class="logo-text">Bilanz-Bert 🧾 <span style="font-weight:400;opacity:0.6;font-size:0.75em;">© GALS</span></div>
       <div class="logo-sub">Dein KI-Assistent für Rechnungswesen</div>
-      <div id="limitDisplay" style="font-size:0.72rem;color:rgba(200,169,110,0.6);margin-top:2px;">💬 20/20 Anfragen heute</div>
       <button id="adminMenuBtn" onclick="openAdmin()" style="display:none;margin-top:6px;padding:4px 10px;background:#2d3550;border:1px solid #3d4560;border-radius:6px;color:#c8a96e;font-size:0.75rem;cursor:pointer;">👤 Benutzer verwalten</button>
       <div id="requestCounter" style="display:none;margin-top:6px;font-size:0.75rem;color:var(--text-muted);">
         💬 <span id="counterText">...</span>
@@ -1443,28 +1463,7 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
 
   let currentToken = null;
   let currentUser = null;
-  const MAX_DAILY = 20;
 
-  function getTodayKey() {
-    return 'bb_count_' + new Date().toISOString().slice(0,10);
-  }
-  function getMsgCount() {
-    return parseInt(localStorage.getItem(getTodayKey()) || '0');
-  }
-  function incMsgCount() {
-    localStorage.setItem(getTodayKey(), getMsgCount() + 1);
-    updateLimitDisplay();
-  }
-  function getRemainingMsg() {
-    return Math.max(0, MAX_DAILY - getMsgCount());
-  }
-  function updateLimitDisplay() {
-    const el = document.getElementById('limitDisplay');
-    if (!el) return;
-    const rem = getRemainingMsg();
-    el.textContent = '💬 ' + rem + '/' + MAX_DAILY + ' Anfragen heute';
-    el.style.color = rem <= 5 ? '#f87171' : 'rgba(200,169,110,0.6)';
-  }
 
   // Admin-Email (du!) – hier eintragen
   const ADMIN_EMAIL = 'sandra.gall@hak-reutte.ac.at';
@@ -1479,6 +1478,16 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
           currentToken = session.token;
           currentUser = { email: session.email };
           document.getElementById('loginScreen').style.display = 'none';
+          // Schultyp wiederherstellen
+          const savedTyp = localStorage.getItem('bb_schultyp');
+          if (savedTyp) {
+            const sel = document.getElementById('schulTypSelect');
+            if (sel) sel.value = savedTyp;
+            schulTyp = savedTyp;
+          } else {
+            const ks = document.getElementById('klassenScreen');
+            if (ks) { ks.style.display = 'flex'; ks.classList.remove('hidden'); }
+          }
           if (session.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
             document.getElementById('adminMenuBtn').style.display = 'flex';
           }
@@ -1499,10 +1508,10 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
 
   // Beim Laden prüfen
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => { restoreSession(); setTimeout(updateLimitDisplay, 200); });
+    document.addEventListener('DOMContentLoaded', () => { restoreSession();  });
   } else {
     restoreSession();
-    setTimeout(updateLimitDisplay, 300);
+    
   }
 
   // ── Wöchentlicher Anfragen-Zähler (Supabase) ───────────────────
@@ -1653,6 +1662,15 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
         const ls = document.getElementById('loginScreen');
         ls.style.display = 'none';
         ls.classList.add('hidden');
+        // Schultyp bereits gespeichert?
+        const savedTyp = localStorage.getItem('bb_schultyp');
+        if (savedTyp) {
+          waehleKlasse(savedTyp);
+        } else {
+          const ks = document.getElementById('klassenScreen');
+          ks.style.display = 'flex';
+          ks.classList.remove('hidden');
+        }
       }, 500);
       // Admin-Button einblenden falls Admin
       if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
@@ -1729,6 +1747,18 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
     await sbFetch('/auth/v1/admin/users/' + id, 'DELETE', null, currentToken);
     document.getElementById('adminMsg').textContent = '🗑️ ' + email + ' gelöscht';
     loadUsers();
+  }
+
+  function waehleKlasse(typ) {
+    // Schultyp speichern
+    localStorage.setItem('bb_schultyp', typ);
+    // Selector setzen
+    const sel = document.getElementById('schulTypSelect');
+    if (sel) sel.value = typ;
+    schulTyp = typ;
+    // Screen ausblenden
+    document.getElementById('klassenScreen').classList.add('hidden');
+    document.getElementById('klassenScreen').style.display = 'none';
   }
 
   function openAdmin() {
@@ -1948,12 +1978,6 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
     const text = input.value.trim();
     if (!text || isLoading) return;
 
-    // Tages-Limit prüfen
-    if (getMsgCount() >= MAX_DAILY) {
-      addMessage('assistant', '⚠️ Du hast dein Tageslimit von ' + MAX_DAILY + ' Anfragen erreicht. Morgen kannst du wieder fragen! 😊');
-      return;
-    }
-
     // Hide welcome
     const wb = document.getElementById('welcomeBlock');
     if (wb) wb.style.display = 'none';
@@ -2011,13 +2035,7 @@ Kapitel 1: Bewertung von Forderungen und Verbindlichkeiten
       const reply = data.content?.map(b => b.text || '').join('') || 'Entschuldigung, ich konnte keine Antwort generieren.';
       messages.push({ role: 'assistant', content: reply });
       addMessage('assistant', reply);
-      incMsgCount();
-      
-      // Restliche Anfragen anzeigen wenn weniger als 5
-      const remaining = getRemainingMsg();
-      if (remaining <= 5 && remaining > 0) {
-        addMessage('assistant', `ℹ️ Noch ${remaining} Anfragen heute verfügbar.`);
-      }
+
 
     } catch (err) {
       removeTyping(typingId);

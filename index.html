@@ -698,7 +698,12 @@
 <script>
   const SYSTEM_PROMPT = `Du bist Bilanz-Bert – ein KI-Assistent für Rechnungswesen für HAK und HLW Schüler in Österreich (© GALS).
 
-STIL: Freundlich, geduldig, ermutigend. Erkläre immer das WARUM. Verwende Emojis sparsam. Antworte auf Deutsch. Beziehe dich auf österreichisches Rechnungswesen (Hölzel Verlag, UGB).
+STIL: Freundlich, geduldig, ermutigend. Antworte KURZ und DIREKT. Verwende Emojis sparsam. Antworte auf Deutsch. Beziehe dich auf österreichisches Rechnungswesen (Hölzel Verlag, UGB).
+
+ANTWORTLÄNGE (sehr wichtig!):
+- Standard: kurze, klare Antworten. Buchungssatz + 1 Satz Erklärung genügt.
+- Nur wenn explizit gefragt ("Warum?", "Erkläre", "Wie funktioniert das?"): ausführlicher.
+- Keine langen Einleitungen, keine Wiederholungen, kein Auffüllen.
 
 BUCHUNGSSÄTZE – FORMATIERUNG (sehr wichtig!):
 Verwende für JEDEN Buchungssatz dieses Format:
@@ -1380,7 +1385,7 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
     fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1500, system: SYSTEM_PROMPT, messages: messages.slice(-2) })
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 2000, system: SYSTEM_PROMPT, messages: messages.slice(-10) })
     }).then(function(r) { return r.json(); }).then(function(data) {
       removeTyping(typingId);
       const reply = data.content ? data.content.map(function(b) { return b.text || ''; }).join('') : 'Fehler.';
@@ -1485,9 +1490,9 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 1500,
+          max_tokens: 2000,
           system: SYSTEM_PROMPT,
-          messages: messages.slice(-2)
+          messages: messages.slice(-10)
         })
       });
 

@@ -478,9 +478,10 @@
     background: rgba(200,169,110,0.08);
     border-bottom: 1px solid rgba(200,169,110,0.2);
   }
-  .buchung-table thead th:nth-child(1) { text-align: right; padding-right: 20px; }
-  .buchung-table thead th:nth-child(2) { width: 32px; text-align: center; }
-  .buchung-table thead th:nth-child(3) { text-align: left; padding-left: 20px; }
+  .buchung-table thead th:nth-child(1) { text-align: left; padding-left: 16px; width: 38%; }
+  .buchung-table thead th:nth-child(2) { text-align: right; padding-right: 16px; width: 12%; }
+  .buchung-table thead th:nth-child(3) { text-align: left; padding-left: 16px; width: 38%; }
+  .buchung-table thead th:nth-child(4) { text-align: right; padding-right: 16px; width: 12%; }
   .buchung-table tbody td {
     padding: 6px 16px;
     vertical-align: top;
@@ -488,18 +489,27 @@
   }
   .buchung-table tbody tr:last-child td { border-bottom: none; }
   .buchung-table tbody td:nth-child(1) {
-    text-align: right;
-    padding-right: 20px;
+    text-align: left;
+    padding-left: 16px;
+    width: 38%;
   }
   .buchung-table tbody td:nth-child(2) {
-    width: 32px;
-    text-align: center;
-    color: rgba(200,169,110,0.4);
-    padding: 6px 4px;
-    font-size: 15px;
+    text-align: right;
+    padding-right: 16px;
+    width: 12%;
+    color: rgba(200,169,110,0.9);
+    font-weight: 500;
   }
   .buchung-table tbody td:nth-child(3) {
-    padding-left: 20px;
+    padding-left: 16px;
+    width: 38%;
+  }
+  .buchung-table tbody td:nth-child(4) {
+    text-align: right;
+    padding-right: 16px;
+    width: 12%;
+    color: rgba(200,169,110,0.9);
+    font-weight: 500;
   }
   .konto-ertrag  { color: #4cd282; font-weight: 600; }
   .konto-aufwand { color: #f87171; font-weight: 600; }
@@ -697,7 +707,7 @@ Regeln: Kontonummer + Name + Betrag VOR dem /. Mehrere Haben-Konten: neue Zeile 
 
 AUFGABEN-VERHALTEN:
 - Bei Schulbuchaufgaben (Ü X.Y oder K X.Y): Erkläre schrittweise, zeige nicht sofort die komplette Lösung
-- Wenn du eine [SYSTEM: Offizielle Schulbuchlösung...] erhältst: Vertraue ihr vollständig, erkläre sie schrittweise
+- Wenn du eine [SYSTEM: Offizielle Schulbuchlösung...] erhältst: Übernimm sie 1:1 ohne eigene Neuberechnung – erkläre nur, warum die Lösung so ist
 - Bei allgemeinen Fragen: Erkläre das Konzept mit einem kurzen Beispiel
 
 BEWERTUNGSREGELN (wichtig!):
@@ -812,7 +822,13 @@ SACHBEZUG KFZ: 2 % der AK, max. € 960,00/Monat
 TELEARBEITSPAUSCHALE: abgabenfrei bis € 3,00/Tag, max. € 300,00/Jahr
 GEWERKSCHAFTSBEITRAG: 1 % des Bruttogehalts, max. € 42,30
 
-BOOKLET-VERTRAUEN: Wenn du eine [SYSTEM: Offizielle Schulbuchlösung aus MEHR! ... Booklet] erhältst, ist diese Lösung VERBINDLICH. Erkläre sie schrittweise ohne sie anzuzweifeln.
+BOOKLET-VERTRAUEN (ABSOLUT BINDEND):
+Wenn du eine [SYSTEM: Offizielle Schulbuchlösung aus MEHR! ... Booklet] erhältst, GILT FOLGENDES UNBEDINGT:
+1. Diese Lösung ist die einzig gültige Schulbuchlösung – übernimm sie 1:1, ohne sie zu verändern, nachzurechnen oder neu zu interpretieren.
+2. Zeige dem Schüler NUR diese offizielle Lösung – erfinde KEINE eigene Lösung und berechne NICHTS selbst.
+3. Erkläre dann schrittweise, WARUM die einzelnen Schritte der offiziellen Lösung so sind wie sie sind.
+4. Wenn die Lösung Zahlen enthält, übernimm diese Zahlen exakt – auch wenn du selbst zu einem anderen Ergebnis kämest.
+5. Niemals: „ich würde …", „meine Berechnung ergibt …", „alternativ könnte man …".
 
 Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
 

@@ -1368,7 +1368,7 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
     fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1500, system: getSystemPrompt(), messages: messages.slice(-2) })
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 2500, system: getSystemPrompt(), messages: messages.slice(-10) })
     }).then(function(r) { return r.json(); }).then(function(data) {
       removeTyping(typingId);
       const reply = data.content ? data.content.map(function(b) { return b.text || ''; }).join('') : 'Fehler.';
@@ -1489,9 +1489,9 @@ WICHTIG: Der Schüler/die Schülerin heißt ${vorname}. Sprich ihn/sie mit dem V
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 1500,
+          max_tokens: 2500,
           system: getSystemPrompt(),
-          messages: messages.slice(-2)
+          messages: messages.slice(-10)
         })
       });
 

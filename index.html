@@ -532,6 +532,8 @@ Danach separat (als normaler Text, KEIN HTML): EB-Berechnung, Schwund, Abwertung
 
 WICHTIG: Mehrere Buchungszeilen = mehrere Objekte im Array. Niemals HTML ausgeben!
 
+WICHTIG: habenBetrag MUSS immer den korrekten Betrag enthalten – NIEMALS 0,00 oder leer lassen! Bei Aufloesung einer Rueckstellung: habenBetrag = Betrag der Bankzahlung. Bei Buchungen mit mehreren Zeilen: jede Zeile bekommt ihren eigenen korrekten Betrag.
+
 HOELZEL KONTENPLAN 2025:
 Kl.0: 0120 DV-Programme | 0210 Bebaute Grundstuecke | 0300 Gebaeude | 0400 Maschinen | 0600 BGA | 0640 Lkw
 Kl.1: 1360 Vorrat Heizoel | 1600 HW-Vorrat

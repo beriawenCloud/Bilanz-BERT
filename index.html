@@ -799,7 +799,7 @@ async function sendMessage() {
     // Inject solution data if user references an exercise
   const solutionContext = findSolutionContext(text);
   const systemWithSolutions = solutionContext 
-    ? buildSystemPrompt() + '\n\nRELEVANTE LOESUNGSDATEN AUS DEM MEHR!-BUCH:' + solutionContext
+    ? buildSystemPrompt() + '\n\nWICHTIG: Uebernimm ALLE Buchungssaetze EXAKT aus den Loesungsdaten – erfinde KEINE eigenen, lass KEINE weg, verwende EXAKT die Kontonummern und Betraege!\n\nRELEVANTE LOESUNGSDATEN AUS DEM MEHR!-BUCH:' + solutionContext
     : buildSystemPrompt();
 
   const res=await fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev',{

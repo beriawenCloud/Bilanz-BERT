@@ -512,6 +512,17 @@ function buildSystemPrompt() {
 KAPITELSTRUKTUR HAK IV: Kap.1 Forderungsbewertung | Kap.2 Rechnungsabgrenzung | Kap.3 Rueckstellungen (KoeSt-RS, Garantie-RS, Urlaubs-RS) | Kap.4 Jahresabschluss (e.U., OG/KG, GmbH)
 KAPITELSTRUKTUR HLW IV: Kap.1 Grundlagen | Kap.2 Anlagenbewertung | Kap.3 Warenbewertung | Kap.4 Forderungsbewertung | Kap.5 Rechnungsabgrenzung | Kap.6 Rueckstellungen | Kap.7 Jahresabschluss
 
+WARENBEWERTUNG – TABELLENFORMAT:
+Bei Identitaetspreisverfahren und FIFO-Verfahren IMMER eine HTML-Tabelle ausgeben (dies ist die einzige Ausnahme wo HTML erlaubt ist!):
+<WARENTABELLE>
+{"verfahren":"Identitaet","zeilen":[
+  {"pos":"AB","stueck":"4","preis":"200","gesamt":"800","abgang":"","sollEB":"","istEB":"","schwund":""},
+  {"pos":"1. Zukauf","stueck":"22","preis":"220","gesamt":"4840","abgang":"","sollEB":"","istEB":"","schwund":""}
+]}
+</WARENTABELLE>
+Spalten immer: Position | Stück | Preis | Gesamt | Abgänge | SOLL-EB | IST-EB | Schwund
+Darunter separat: Schwund-Berechnung, Abwertung (SNP), Buchungssätze im gewohnten JSON-Format.
+
 BUCHUNGSSATZ-FORMAT – KRITISCH WICHTIG:
 Du darfst NIEMALS HTML-Code ausgeben! Keine <div>, <table>, <span> oder andere HTML-Tags!
 Buchungssaetze IMMER und AUSSCHLIESSLICH in diesem JSON-Format:
@@ -708,6 +719,24 @@ function renderText(text) {
     }
   });
 
+  // Parse WARENTABELLE blocks
+const wtRegex = new RegExp('<WARENTABELLE>([\\s\\S]*?)<\\/WARENTABELLE>', 'g');
+h = h.replace(wtRegex, function(_, json) {
+  try {
+    let clean = json.trim().replace(/^```[a-z]*\n?/i,'').replace(/\n?```$/,'').replace(/\*/g,'');
+    clean = clean.replace(/[\u201c\u201d\u201e]/g,'"').replace(/[\u2018\u2019]/g,"'");
+    clean = clean.replace(/,\s*([}\]])/g,'$1');
+    const d = JSON.parse(clean);
+    const cols = ['Position','Stück','Preis €','Gesamt €','Abgänge €','SOLL-EB','IST-EB','Schwund'];
+    const keys = ['pos','stueck','preis','gesamt','abgang','sollEB','istEB','schwund'];
+    const ths = cols.map(c=>'<th style="background:var(--surface2);color:var(--text-dim);padding:6px 10px;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);text-align:left">'+c+'</th>').join('');
+    const trs = d.zeilen.map(z=>'<tr>'+keys.map(k=>'<td style="padding:6px 10px;border-bottom:1px solid rgba(46,50,80,0.3);font-size:0.82rem">'+(z[k]||'')+'</td>').join('')+'</tr>').join('');
+    return '<div style="overflow-x:auto;border-radius:8px;border:1px solid var(--border);margin:8px 0"><table style="width:100%;border-collapse:collapse"><thead><tr>'+ths+'</tr></thead><tbody>'+trs+'</tbody></table></div>';
+  } catch(e) {
+    return '<em style="color:var(--red)">Fehler beim Parsen der Warentabelle</em>';
+  }
+});
+  
   // Markdown tables → HTML table
   if (h.includes('|')) {
     const tableRegex = new RegExp('(\\|[^\n]+\\|\n?)+', 'g');

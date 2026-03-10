@@ -463,14 +463,13 @@
     overflow: hidden;
     table-layout: fixed;
   }
-  /* 4-Spalten-Layout: Soll-Konto | Soll-Betrag | Haben-Konto | Haben-Betrag */
-  .buchung-table col:nth-child(1) { width: 40%; }
-  .buchung-table col:nth-child(2) { width: 12%; }
-  .buchung-table col:nth-child(3) { width: 36%; }
-  .buchung-table col:nth-child(4) { width: 12%; }
+  .buchung-table td:nth-child(1) { width: 38%; }
+  .buchung-table td:nth-child(2) { width: 12%; text-align: right; }
+  .buchung-table td:nth-child(3) { width: 38%; }
+  .buchung-table td:nth-child(4) { width: 12%; text-align: right; }
   .buchung-table thead { display: table-header-group; }
   .buchung-table thead th {
-    padding: 6px 12px;
+    padding: 6px 16px;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -479,44 +478,33 @@
     background: rgba(200,169,110,0.08);
     border-bottom: 1px solid rgba(200,169,110,0.2);
   }
-  .buchung-table thead th:nth-child(1) { text-align: left; padding-left: 12px; }
-  .buchung-table thead th:nth-child(2) { text-align: right; padding-right: 12px; }
-  .buchung-table thead th:nth-child(3) { text-align: left; padding-left: 16px; border-left: 1px solid rgba(200,169,110,0.2); }
-  .buchung-table thead th:nth-child(4) { text-align: right; padding-right: 12px; }
+  .buchung-table thead th:nth-child(1) { text-align: right; padding-right: 20px; }
+  .buchung-table thead th:nth-child(2) { width: 32px; text-align: center; }
+  .buchung-table thead th:nth-child(3) { text-align: left; padding-left: 20px; }
   .buchung-table tbody td {
-    padding: 6px 12px;
+    padding: 6px 16px;
     vertical-align: top;
     border-bottom: 1px solid rgba(255,255,255,0.04);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .buchung-table tbody tr:last-child td { border-bottom: none; }
   .buchung-table tbody td:nth-child(1) {
-    text-align: left;
-    padding-left: 12px;
+    text-align: right;
+    padding-right: 20px;
   }
   .buchung-table tbody td:nth-child(2) {
-    text-align: right;
-    padding-right: 12px;
-    color: #9ca3af;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
+    width: 32px;
+    text-align: center;
+    color: rgba(200,169,110,0.4);
+    padding: 6px 4px;
+    font-size: 15px;
   }
   .buchung-table tbody td:nth-child(3) {
-    padding-left: 16px;
-    border-left: 1px solid rgba(200,169,110,0.15);
-  }
-  .buchung-table tbody td:nth-child(4) {
-    text-align: right;
-    padding-right: 12px;
-    color: #9ca3af;
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
+    padding-left: 20px;
   }
   .konto-ertrag  { color: #4cd282; font-weight: 600; }
   .konto-aufwand { color: #f87171; font-weight: 600; }
   .konto-neutral { color: rgba(229,160,80,0.9); }
+  .buchung-table tbody tr:last-child td { border-bottom: none; }
 
 
   /* ── KLASSEN-SIDEBAR ── */
@@ -698,12 +686,7 @@
 <script>
   const SYSTEM_PROMPT = `Du bist Bilanz-Bert – ein KI-Assistent für Rechnungswesen für HAK und HLW Schüler in Österreich (© GALS).
 
-STIL: Freundlich, geduldig, ermutigend. Antworte KURZ und DIREKT. Verwende Emojis sparsam. Antworte auf Deutsch. Beziehe dich auf österreichisches Rechnungswesen (Hölzel Verlag, UGB).
-
-ANTWORTLÄNGE (sehr wichtig!):
-- Standard: kurze, klare Antworten. Buchungssatz + 1 Satz Erklärung genügt.
-- Nur wenn explizit gefragt ("Warum?", "Erkläre", "Wie funktioniert das?"): ausführlicher.
-- Keine langen Einleitungen, keine Wiederholungen, kein Auffüllen.
+STIL: Freundlich, geduldig, ermutigend. Erkläre immer das WARUM. Verwende Emojis sparsam. Antworte auf Deutsch. Beziehe dich auf österreichisches Rechnungswesen (Hölzel Verlag, UGB).
 
 BUCHUNGSSÄTZE – FORMATIERUNG (sehr wichtig!):
 Verwende für JEDEN Buchungssatz dieses Format:
@@ -1385,7 +1368,7 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
     fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 2000, system: SYSTEM_PROMPT, messages: messages.slice(-10) })
+      body: JSON.stringify({ model: 'claude-haiku-4-5-20251001', max_tokens: 1500, system: getSystemPrompt(), messages: messages.slice(-2) })
     }).then(function(r) { return r.json(); }).then(function(data) {
       removeTyping(typingId);
       const reply = data.content ? data.content.map(function(b) { return b.text || ''; }).join('') : 'Fehler.';
@@ -1399,6 +1382,22 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
       isLoading = false;
       document.getElementById('sendBtn').disabled = false;
     });
+  }
+
+  function getVorname() {
+    if (!currentUser || !currentUser.email) return '';
+    const local = currentUser.email.split('@')[0];
+    const parts = local.split('.');
+    if (!parts[0]) return '';
+    return parts[0].charAt(0).toUpperCase() + parts[0].slice(1).toLowerCase();
+  }
+
+  function getSystemPrompt() {
+    const vorname = getVorname();
+    if (!vorname) return SYSTEM_PROMPT;
+    return SYSTEM_PROMPT + `
+
+WICHTIG: Der Schüler/die Schülerin heißt ${vorname}. Sprich ihn/sie mit dem Vornamen an – z.B. bei Begrüßungen, Ermutigungen oder wenn du Feedback gibst. Nicht bei jeder Antwort, aber gelegentlich und natürlich.`;
   }
 
   let messages = [];
@@ -1490,9 +1489,9 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'claude-haiku-4-5-20251001',
-          max_tokens: 2000,
-          system: SYSTEM_PROMPT,
-          messages: messages.slice(-10)
+          max_tokens: 1500,
+          system: getSystemPrompt(),
+          messages: messages.slice(-2)
         })
       });
 
@@ -1560,26 +1559,30 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
       }
     }
 
-    function kontoClass(kontoText, seite) {
-      // Klasse 8 Ertragskonten
+    function kontoTyp(kontoText) {
+      // Gibt 'ertrag', 'aufwand' oder 'neutral' zurück
       const k8ertrag = [8010,8030,8031,8035,8036,8050,8051,8052,8053,8055,8056,8057,
                         8070,8080,8090,8140,8141,8142,8170,8180,8520,8750];
       const nr = parseInt(kontoText.trim().slice(0,4));
-      if (isNaN(nr)) return 'konto-neutral';
+      if (isNaN(nr)) return 'neutral';
       const kl = Math.floor(nr / 1000);
-      let isErtrag;
-      if (kl === 8) {
-        isErtrag = k8ertrag.includes(nr);
-      } else if (kl === 4) {
-        isErtrag = true;
-      } else if (kl >= 5 && kl <= 7) {
-        isErtrag = false;
-      } else {
-        return 'konto-neutral'; // Klassen 0,1,2,3,9
-      }
-      // Alle Ertrags- und Aufwandskonten: im Soll = Gewinn sinkt (rot), im Haben = Gewinn steigt (grün)
-      if (seite === 'soll') return 'konto-aufwand';
-      else                  return 'konto-ertrag';
+      if (kl === 4) return 'ertrag';
+      if (kl >= 5 && kl <= 7) return 'aufwand';
+      if (kl === 8) return k8ertrag.includes(nr) ? 'ertrag' : 'aufwand';
+      return 'neutral'; // Klassen 0,1,2,3,9
+    }
+
+    function kontoClass(kontoText, seite, gegenTyp) {
+      // gegenTyp: Typ der Gegenseite ('ertrag', 'aufwand', 'neutral')
+      // Wenn beide Seiten gleichen Typ haben → neutraler Buchungssatz
+      const typ = kontoTyp(kontoText);
+      if (typ === 'neutral') return 'konto-neutral';
+      // Aufwand / Aufwand  oder  Ertrag / Ertrag → erfolgsneutral
+      if (gegenTyp && typ === gegenTyp) return 'konto-neutral';
+      // Normale Erfolgsauswirkung
+      if (typ === 'aufwand') return seite === 'soll' ? 'konto-aufwand' : 'konto-ertrag';
+      if (typ === 'ertrag')  return seite === 'soll' ? 'konto-aufwand' : 'konto-ertrag';
+      return 'konto-neutral';
     }
 
     function splitKontoBetrag(text) {
@@ -1593,17 +1596,19 @@ Bleibe immer beim Thema Rechnungswesen, Buchhaltung und Betriebswirtschaft.`;
 
     function closeBuchung() {
       if (inBuchung && buchungRows.length > 0) {
-        html += '<table class="buchung-table"><colgroup><col style="width:40%"><col style="width:11%"><col style="width:38%"><col style="width:11%"></colgroup><thead><tr><th>Soll</th><th style="text-align:right">Betrag (€)</th><th style="border-left:1px solid rgba(200,169,110,0.2)">Haben</th><th style="text-align:right">Betrag (€)</th></tr></thead><tbody>';
+        html += '<table class="buchung-table"><thead><tr><th>Soll</th><th>Betrag (€)</th><th>Haben</th><th>Betrag (€)</th></tr></thead><tbody>';
         buchungRows.forEach(row => {
           const s = splitKontoBetrag(row.soll || '');
           const h = splitKontoBetrag(row.haben || '');
-          const sollClass = s.konto ? kontoClass(s.konto, 'soll') : 'konto-neutral';
-          const habenClass = h.konto ? kontoClass(h.konto, 'haben') : 'konto-neutral';
+          const sollTyp  = s.konto ? kontoTyp(s.konto)  : 'neutral';
+          const habenTyp = h.konto ? kontoTyp(h.konto) : 'neutral';
+          const sollClass  = s.konto ? kontoClass(s.konto,  'soll',  habenTyp) : 'konto-neutral';
+          const habenClass = h.konto ? kontoClass(h.konto, 'haben',  sollTyp)  : 'konto-neutral';
           html += `<tr>` +
             `<td class="${sollClass}">${inlineFormat(s.konto)}</td>` +
-            `<td>${s.betrag}</td>` +
+            `<td style="text-align:right;color:#9ca3af;">${s.betrag}</td>` +
             `<td class="${habenClass}">${inlineFormat(h.konto)}</td>` +
-            `<td>${h.betrag}</td>` +
+            `<td style="text-align:right;color:#9ca3af;">${h.betrag}</td>` +
             `</tr>`;
         });
         html += '</tbody></table>';

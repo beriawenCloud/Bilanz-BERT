@@ -512,20 +512,17 @@ function buildSystemPrompt() {
 KAPITELSTRUKTUR HAK IV: Kap.1 Forderungsbewertung | Kap.2 Rechnungsabgrenzung | Kap.3 Rueckstellungen (KoeSt-RS, Garantie-RS, Urlaubs-RS) | Kap.4 Jahresabschluss (e.U., OG/KG, GmbH)
 KAPITELSTRUKTUR HLW IV: Kap.1 Grundlagen | Kap.2 Anlagenbewertung | Kap.3 Warenbewertung | Kap.4 Forderungsbewertung | Kap.5 Rechnungsabgrenzung | Kap.6 Rueckstellungen | Kap.7 Jahresabschluss
 
-WARENBEWERTUNG – TABELLENFORMAT:
-Bei Identitaetspreisverfahren und FIFO-Verfahren IMMER eine HTML-Tabelle ausgeben (dies ist die einzige Ausnahme wo HTML erlaubt ist!):
+WARENBEWERTUNG – TABELLENFORMAT – KRITISCH WICHTIG:
+Bei Identitaetspreisverfahren und FIFO-Verfahren IMMER und AUSSCHLIESSLICH dieses Format verwenden – KEINE andere Tabellenstruktur, KEIN Markdown, KEINE eigene Tabelle!
 <WARENTABELLE>
 {"verfahren":"Identitaet","zeilen":[
-  {"pos":"AB","stueck":"4","preis":"200","gesamt":"800","abgang":"","sollEB":"","istEB":"","schwund":""},
-  {"pos":"1. Zukauf","stueck":"22","preis":"220","gesamt":"4840","abgang":"","sollEB":"","istEB":"","schwund":""}
+  {"pos":"AB","stueck":"4","preis":"200,00","gesamt":"800,00","abgang":"2","sollEB":"2","istEB":"1","schwund":"1"},
+  {"pos":"1. Zukauf","stueck":"22","preis":"220,00","gesamt":"4.840,00","abgang":"20","sollEB":"2","istEB":"2","schwund":"0"},
+  {"pos":"2. Zukauf","stueck":"30","preis":"250,00","gesamt":"7.500,00","abgang":"25","sollEB":"5","istEB":"5","schwund":"0"}
 ]}
 </WARENTABELLE>
-Spalten immer: Position | Stück | Preis | Gesamt | Abgänge | SOLL-EB | IST-EB | Schwund
-Darunter separat: Schwund-Berechnung, Abwertung (SNP), Buchungssätze im gewohnten JSON-Format.
-
-BUCHUNGSSATZ-FORMAT – KRITISCH WICHTIG:
-Du darfst NIEMALS HTML-Code ausgeben! Keine <div>, <table>, <span> oder andere HTML-Tags!
-Buchungssaetze IMMER und AUSSCHLIESSLICH in diesem JSON-Format:
+Spalten: pos=Position, stueck=Stück, preis=Preis€, gesamt=Gesamt€, abgang=Abfassungen, sollEB=SOLL-EB, istEB=IST-EB, schwund=Schwund
+Danach separat (als normaler Text, KEIN HTML): EB-Berechnung, Schwund, Abwertung, dann Buchungssaetze im JSON-Format.
 
 <BUCHUNGSSAETZE>
 [

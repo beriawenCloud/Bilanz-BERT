@@ -474,7 +474,7 @@ async function sendHiddenPrompt(prompt) {
     const res = await fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev', {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        model:'claude-haiku-4-5-20251001', max_tokens:2000,
+        model:'claude-haiku-4-5-20251001', max_tokens:3000,
         system: systemWithSolutions,
         messages: [...conversationHistory, {role:'user', content: prompt}]
       })
@@ -804,7 +804,7 @@ async function sendMessage() {
 
   const res=await fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:2000,system:systemWithSolutions,messages:conversationHistory})
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:3000,system:systemWithSolutions,messages:conversationHistory})
     });
     const data=await res.json();removeTyping();
     if(data.content&&data.content[0]){

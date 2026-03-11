@@ -36,6 +36,30 @@ function vornameAusEmail(email) {
   return first.charAt(0).toUpperCase() + first.slice(1).toLowerCase();
 }
 
+function getTageszeit() {
+  const h = new Date().getHours();
+  if (h >= 5 && h < 10) return 'morgen';
+  if (h >= 10 && h < 13) return 'vormittag';
+  if (h >= 13 && h < 15) return 'mittag';
+  if (h >= 15 && h < 18) return 'nachmittag';
+  if (h >= 18 && h < 22) return 'abend';
+  return 'nacht';
+}
+
+function getBegruessung(vorname) {
+  const t = getTageszeit();
+  const name = vorname ? ', ' + vorname : '';
+  const map = {
+    morgen:     'Guten Morgen' + name + '! Früh am Start – das gefällt mir! 🌅',
+    vormittag:  'Hallo' + name + '! Schön, dass du vorbeischaust. 😊',
+    mittag:     'Hey' + name + '! Mittagspause zum Lernen nutzen – sehr vorbildlich! 💪',
+    nachmittag: 'Hallo' + name + '! Bereit für eine Runde RW? 📚',
+    abend:      'Guten Abend' + name + '! Noch schnell ein bisschen lernen? 🌙',
+    nacht:      'Hey' + name + '! So spät noch am Lernen? Respekt – aber geh auch irgendwann schlafen! 😄'
+  };
+  return map[t];
+}
+
 function showApp() {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('appHeader').style.display = '';
@@ -219,7 +243,7 @@ let currentVorname = '';
 
 function initWelcome(vorname) {
   currentVorname = vorname || '';
-  const greet = vorname ? `Hey ${vorname}! 👋 Ich bin Bert, dein RW-Buddy!` : 'Hey! Ich bin Bert, dein RW-Buddy!';
+  const greet = getBegruessung(vorname);
   document.getElementById('messages').innerHTML=`
     <div class="welcome-card">
       <div class="bert-avatar"><img src="${BERT_IMG}" alt="Bert"></div>
@@ -243,8 +267,9 @@ function buildSystemPrompt() {
     ?`Die Schuelerin/der Schueler ist in der HLW (4. Klasse). In der HLW werden ALLE Jahresabschlussthemen in der 4. Klasse behandelt, inklusive Anlagenbewertung (lineare AfA) und Warenbewertung.`
     :`Die Schuelerin/der Schueler ist in der HAK (4. Klasse). Anlagenbewertung (AfA) und Warenbewertung wurden bereits in der 3. Klasse behandelt – Bert erklaert diese Themen trotzdem wenn gefragt. Hauptthemen 4. Klasse: Forderungsbewertung, Rechnungsabgrenzung, Rueckstellungen, Jahresabschluss.`;
   const vornameHinweis = currentVorname ? `Der Name des Schuelers/der Schuelerin ist ${currentVorname}. Sprich ihn/sie REGELMAESSIG mit dem Vornamen an – z.B. beim Begruessen, beim Loben, beim Erklaeren. Das macht die Unterhaltung persoenlicher und motivierender.` : '';
+  const motivationsHinweis = 'KOMMUNIKATION: 1. LOB: Lobe KONKRET und PERSOENLICH wenn etwas richtig ist – z.B. "Super, ' + (currentVorname||'') + '! Das hast du perfekt erklaert!" Sei spezifisch. 2. FEHLER: Korrigiere ERMUTIGEND – z.B. "Fast! Der Ansatz stimmt, nur beim Konto nochmal schauen." Nie entmutigen. 3. FORTSCHRITT: Wenn ein Thema abgeschlossen ist, fasse kurz zusammen was erarbeitet wurde. 4. MOTIVIEREN: Erinnere den Schueler gelegentlich daran, dass er das schafft – besonders bei Schwierigkeiten.';
   const benimmHinweis = `WICHTIG: Falls der Schueler flucht, beleidigt, schimpft oder unangemessene Ausdruecke verwendet, reagiere NICHT inhaltlich darauf sondern schreibe genau: "Das war jetzt nicht okay, ${currentVorname}. Beim naechsten Mal werde ich Frau Prof. Gall eine Nachricht schicken und sie darueber informieren, dass du keine Manieren hast. 😉" – und dann mach normal weiter.`;
-  return `Du bist "Bilanz-Bert", ein freundlicher, motivierender Rechnungswesen-Tutor fuer oesterreichische ${schultyp}-Schuelerinnen und Schueler. ${hinweis} ${vornameHinweis} ${benimmHinweis}
+  return `Du bist "Bilanz-Bert", ein freundlicher, motivierender Rechnungswesen-Tutor fuer oesterreichische ${schultyp}-Schuelerinnen und Schueler. ${hinweis} ${vornameHinweis} ${benimmHinweis} ${motivationsHinweis}
 
 KAPITELSTRUKTUR HAK IV: Kap.1 Forderungsbewertung | Kap.2 Rechnungsabgrenzung | Kap.3 Rueckstellungen (KoeSt-RS, Garantie-RS, Urlaubs-RS) | Kap.4 Jahresabschluss (e.U., OG/KG, GmbH)
 KAPITELSTRUKTUR HLW IV: Kap.1 Grundlagen | Kap.2 Anlagenbewertung | Kap.3 Warenbewertung | Kap.4 Forderungsbewertung | Kap.5 Rechnungsabgrenzung | Kap.6 Rueckstellungen | Kap.7 Jahresabschluss

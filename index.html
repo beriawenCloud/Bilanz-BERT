@@ -1,167 +1,143 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bilanz-Bert – Gleich zurück!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilanz-Bert</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-    :root {
-      --bg: #0f1923;
-      --card: #1a2736;
-      --accent: #f5a623;
-      --accent2: #4ecdc4;
-      --text: #e8f0f7;
-      --muted: #7a9ab8;
-    }
+<link rel="stylesheet" href="style.css">
 
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    /* animated background dots */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(245,166,35,0.06) 1px, transparent 1px);
-      background-size: 32px 32px;
-      animation: drift 20s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes drift {
-      from { background-position: 0 0; }
-      to   { background-position: 32px 32px; }
-    }
-
-    .card {
-      background: var(--card);
-      border: 2px solid rgba(245,166,35,0.2);
-      border-radius: 24px;
-      padding: 3rem 3.5rem;
-      max-width: 520px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-      animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.85) translateY(20px); }
-      to   { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .bert-wrap {
-      width: 110px;
-      height: 110px;
-      margin: 0 auto 1.5rem;
-      border-radius: 50%;
-      background: rgba(245,166,35,0.12);
-      border: 3px solid var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3.5rem;
-      animation: wobble 3s ease-in-out infinite;
-    }
-
-    @keyframes wobble {
-      0%, 100% { transform: rotate(-3deg); }
-      50%       { transform: rotate(3deg); }
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: var(--accent);
-      margin-bottom: 0.4rem;
-      letter-spacing: -0.5px;
-    }
-
-    .subtitle {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 2rem;
-    }
-
-    .message {
-      background: rgba(78,205,196,0.08);
-      border-left: 4px solid var(--accent2);
-      border-radius: 0 12px 12px 0;
-      padding: 1rem 1.2rem;
-      text-align: left;
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      color: var(--text);
-    }
-
-    .message strong {
-      color: var(--accent2);
-    }
-
-    .tools {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
-
-    .tool {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 0.4rem 1rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    .tool:nth-child(2) { animation-delay: 0.3s; }
-    .tool:nth-child(3) { animation-delay: 0.6s; }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 0.6; }
-      50%       { opacity: 1; border-color: rgba(245,166,35,0.4); }
-    }
-
-    .footer {
-      font-size: 0.78rem;
-      color: rgba(122,154,184,0.5);
-      margin-top: 0.5rem;
-    }
-  </style>
 </head>
 <body>
-  <div class="card">
-    <div class="bert-wrap">🔧</div>
-    <h1>Gleich wieder da!</h1>
-    <p class="subtitle">Bilanz-Bert wird gerade verbessert</p>
 
-    <div class="message">
-      Hallo! Ich bin kurz offline für ein <strong>Update</strong>. 
-      Bis zum nächsten Unterricht bin ich wieder für euch da – 
-      mit noch besseren Erklärungen! 😊
-    </div>
-
-    <div class="tools">
-      <span class="tool">⚙️ wird aktualisiert</span>
-      <span class="tool">✨ neue Inhalte</span>
-      <span class="tool">🚀 bald verfügbar</span>
-    </div>
-
-    <div class="footer">© GALS · Bilanz-Bert</div>
+<!-- LOGIN (hidden for testing) -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-bert"><img id="loginBertImg" src="" alt="Bert"></div>
+    <h1>Bilanz-Bert</h1>
+    <p>Dein pers&ouml;nlicher RW-Tutor f&uuml;r HAK &amp; HLW</p>
+    <input class="login-field" type="email" id="loginEmail" placeholder="E-Mail" autocomplete="username">
+    <input class="login-field" type="password" id="loginPassword" placeholder="Passwort" autocomplete="current-password">
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Anmelden &rarr;</button>
+    <div id="loginError"></div>
+    <div class="login-footer">&copy; GALS &middot; Bilanz-Bert</div>
   </div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminPanel">
+  <div class="admin-card">
+    <h2>&#9881;&#65039; Admin &ndash; Benutzerverwaltung</h2>
+    <div class="admin-row">
+      <input class="admin-input" type="email" id="newUserEmail" placeholder="E-Mail">
+      <input class="admin-input" type="password" id="newUserPass" placeholder="Passwort (min. 6 Zeichen)">
+      <button class="admin-add-btn" onclick="addUser()">+ Hinzuf&uuml;gen</button>
+    </div>
+    <div id="adminMsg"></div>
+    <div id="userList"></div>
+    <button class="admin-close" onclick="closeAdmin()">Schlie&szlig;en</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="appHeader" style="display:none">
+  <div class="logo">
+    <div class="logo-icon"><img id="headerBertImg" src="" alt="Bert"></div>
+    <div class="logo-name">
+      <div class="logo-title">Bilanz-Bert</div>
+      <div class="logo-copy">&copy; GALS</div>
+    </div>
+  </div>
+  <div class="schultyp-toggle">
+    <button class="schultyp-btn active" id="btnHAK" onclick="setSchultyp('HAK')">HAK</button>
+    <button class="schultyp-btn" id="btnHLW" onclick="setSchultyp('HLW')">HLW</button>
+  </div>
+  <div class="header-right">
+    <div class="counter-badge" id="counterBadge"><span id="counterText"></span></div>
+    <button class="admin-btn" id="adminMenuBtn" onclick="openAdmin()">&#9881; Admin</button>
+    <button class="clear-btn" onclick="clearChat()">&#10005; Neu</button>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main" id="appMain" style="display:none">
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Themen</div>
+      <div class="nav-item active" onclick="navClick(this,'jahresabschluss','Erkl&auml;re mir das Thema Jahresabschluss &ndash; was sind die wichtigsten Schritte?')">
+        <span class="nav-icon">&#128203;</span> Jahresabschluss
+
+      </div>
+      <div class="nav-item" onclick="navClick(this,'anlagenbewertung','Frage den Schueler freundlich, welches Thema der Anlagenbewertung erklaert werden soll. Biete folgende Optionen an: 1) Abschreibung berechnen (lineare AfA) 2) Zugaenge im Anlagevermoegen 3) Instandhaltung und Instandsetzung 4) Ausscheiden von Anlagen. Warte auf die Antwort und erklaere erst dann das gewaehlte Thema.', true)">
+        <span class="nav-icon">&#127981;</span> Anlagenbewertung
+        <span class="nav-badge" id="badge-anlage"></span>
+      </div>
+      <div class="nav-item" onclick="navClick(this,'warenbewertung','Frage den Schueler freundlich, welches Bewertungsverfahren erklaert werden soll. Beachte dabei den Schultyp: HAK-Schueler koennen waehlen zwischen 1) Identitaetspreisverfahren 2) FIFO-Verfahren 3) Gewogenes Durchschnittspreisverfahren. HLW-Schueler koennen waehlen zwischen 1) Identitaetspreisverfahren 2) FIFO-Verfahren. Warte auf die Antwort und erklaere erst dann das gewaehlte Verfahren.', true)">
+        <span class="nav-icon">&#128230;</span> Warenbewertung
+        <span class="nav-badge" id="badge-waren"></span>
+      </div>
+      <div class="nav-item" onclick="navClick(this,'forderungsbewertung','Erkl&auml;re mir die Forderungsbewertung im Inland &ndash; Einzelwertberichtigung und Forderungsabschreibung (nur inl&auml;ndische Forderungen, kein Fremdw&auml;hrungsthema)')">
+        <span class="nav-icon">&#128196;</span> Forderungsbewertung
+      </div>
+      <div class="nav-parent" onclick="toggleSubmenu(this,'submenu-fw')">
+        <span class="nav-icon">&#127758;</span> Fremdw&auml;hrung
+        <span class="nav-arrow">&#9654;</span>
+      </div>
+      <div class="nav-submenu" id="submenu-fw">
+        <div class="nav-item" onclick="navClick(this,'fw_zahlungsverkehr','Frage den Schueler zuerst freundlich, welches Thema er erklaert haben moechte. Biete folgende Optionen an: 1) Innergemeinschaftliche Lieferung 2) Innergemeinschaftlicher Erwerb (inkl. Erwerbsteuer!) 3) Export 4) Import. Warte dann auf die Antwort des Schuelers und erklaere erst dann das gewaehlte Thema.', true)">
+          <span class="nav-icon">&#128196;</span> Zahlungsverkehr
+        </div>
+        <div class="nav-item" onclick="navClick(this,'fw_bewertung','Frage den Schueler freundlich, was erklaert werden soll: 1) Bewertung von Fremdwaehrungsforderungen (Niederstwertprinzip) oder 2) Bewertung von Fremdwaehrungsverbindlichkeiten (Hoechstwertprinzip). Warte auf die Antwort und erklaere erst dann das gewaehlte Thema.', true)">
+          <span class="nav-icon">&#128200;</span> Bewertung
+        </div>
+      </div>
+      <div class="nav-item" onclick="navClick(this,'rechnungsabgrenzung','Frage den Schueler freundlich, was erklaert werden soll: 1) Allgemeine Erklaerung (kurzer Ueberblick) 2) Vorauszahlungen (ARA/PRA) 3) Rueckstaende. Warte auf die Antwort und erklaere erst dann das gewaehlte Thema.', true)">
+        <span class="nav-icon">&#128197;</span> Rechnungsabgrenzung
+      </div>
+      <div class="nav-item" onclick="navClick(this,'rueckstellungen','Gib dem Schueler zuerst eine kurze Erklaerung was Rueckstellungen sind und welche Arten es gibt (KoeSt-Rueckstellung, Garantierueckstellung, Urlaubsrueckstellung). Frage ihn dann freundlich, ob er eine bestimmte Rueckstellung genauer erklaert haben moechte, oder ob er selbst eine Frage hat.', true)">
+        <span class="nav-icon">&#128274;</span> R&uuml;ckstellungen
+      </div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Abschluss</div>
+      <div class="nav-item" onclick="navClick(this,'abschluss_eu','Erkl&auml;re mir den Jahresabschluss bei einer e.U. &ndash; Schritt f&uuml;r Schritt')">
+        <span class="nav-icon">&#128100;</span> Abschluss e.U.
+      </div>
+      <div class="nav-item" onclick="navClick(this,'abschluss_og_kg','Erkl&auml;re mir den Jahresabschluss bei einer OG und KG inkl. Erfolgsaufteilung')">
+        <span class="nav-icon">&#129309;</span> Abschluss OG/KG
+      </div>
+      <div class="nav-item" onclick="navClick(this,'abschluss_gmbh','Erkl&auml;re mir den Jahresabschluss bei einer GmbH inkl. K&ouml;St-R&uuml;ckstellung')">
+        <span class="nav-icon">&#127970;</span> Abschluss GmbH
+      </div>
+    </div>
+  </nav>
+
+  <div class="chat-area">
+    <div class="messages" id="messages">
+      <div class="welcome-card">
+        <div class="bert-avatar"><img id="welcomeBertImg" src="" alt="Bert"></div>
+        <h2>Hey! Ich bin Bert, dein RW-Buddy!</h2>
+        <p>Egal ob Anlagen, Forderungen, R&uuml;ckstellungen oder Rechnungsabgrenzung &ndash; wir arbeiten uns Schritt f&uuml;r Schritt durch den Jahresabschluss 🙂<br>W&auml;hle oben <strong>HAK</strong> oder <strong>HLW</strong>, dann starten wir.</p>
+      </div>
+    </div>
+    <div class="input-bar">
+      <div class="input-wrap">
+        <textarea id="userInput" rows="1"
+          placeholder="Frag mich alles &uuml;ber Jahresabschluss... (Enter = senden)"
+          onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      </div>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">&#8594;</button>
+    </div>
+  </div>
+</div>
+
+<script src="loesungenhak4.js"></script>
+<script src="loesungenhlw4.js"></script>
+<script src="zusatzbeispiele_ja.js"></script>
+<script src="buchungsanweisungen.js"></script>
+<script src="anweisungen.js"></script>
+<script src="app.js"></script>
+  
 </body>
 </html>

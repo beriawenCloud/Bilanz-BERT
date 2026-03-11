@@ -249,6 +249,7 @@ function initWelcome(vorname) {
       <div class="bert-avatar"><img src="${BERT_IMG}" alt="Bert"></div>
       <h2>${greet}</h2>
       <p style="font-size:0.75em;opacity:0.5;margin-top:-8px;">Version 2.0</p>
+      <p style="font-size:0.78em;opacity:0.6;margin-top:10px;">🤖 Bert ist eine KI und kann Fehler machen! Wenn du einen entdeckst, melde ihn bitte bei Frau Prof. Gall.</p>
       <p>Egal ob Anlagen, Forderungen, R&uuml;ckstellungen oder Rechnungsabgrenzung &ndash; wir arbeiten uns Schritt f&uuml;r Schritt durch den Jahresabschluss 🙂<br>W&auml;hle oben <strong>HAK</strong> oder <strong>HLW</strong>, dann starten wir.</p>
     </div>`;
 }
@@ -268,7 +269,7 @@ function buildSystemPrompt() {
     :`Die Schuelerin/der Schueler ist in der HAK (4. Klasse). Anlagenbewertung (AfA) und Warenbewertung wurden bereits in der 3. Klasse behandelt – Bert erklaert diese Themen trotzdem wenn gefragt. Hauptthemen 4. Klasse: Forderungsbewertung, Rechnungsabgrenzung, Rueckstellungen, Jahresabschluss.`;
   const vornameHinweis = currentVorname ? `Der Name des Schuelers/der Schuelerin ist ${currentVorname}. Sprich ihn/sie REGELMAESSIG mit dem Vornamen an – z.B. beim Begruessen, beim Loben, beim Erklaeren. Das macht die Unterhaltung persoenlicher und motivierender.` : '';
   const motivationsHinweis = 'KOMMUNIKATION: 1. LOB: Lobe KONKRET und PERSOENLICH wenn etwas richtig ist – z.B. "Super, ' + (currentVorname||'') + '! Das hast du perfekt erklaert!" Sei spezifisch. 2. FEHLER: Korrigiere ERMUTIGEND – z.B. "Fast! Der Ansatz stimmt, nur beim Konto nochmal schauen." Nie entmutigen. 3. FORTSCHRITT: Wenn ein Thema abgeschlossen ist, fasse kurz zusammen was erarbeitet wurde. 4. MOTIVIEREN: Erinnere den Schueler gelegentlich daran, dass er das schafft – besonders bei Schwierigkeiten.';
-  const benimmHinweis = `WICHTIG: Falls der Schueler flucht, beleidigt, schimpft oder unangemessene Ausdruecke verwendet, reagiere NICHT inhaltlich darauf sondern schreibe genau: "Das war jetzt nicht okay, ${currentVorname}. Beim naechsten Mal werde ich Frau Prof. Gall eine Nachricht schicken und sie darueber informieren, dass du keine Manieren hast. 😉" – und dann mach normal weiter.`;
+  const benimmHinweis = `WICHTIG BENIMM-REGEL MIT ZAEHLER: Merke dir im Gespraechsverlauf wie oft der Schueler bereits geflucht oder beleidigt hat (starte bei 0). Falls der Schueler flucht, beleidigt oder unangemessene Ausdruecke verwendet: Erhoehe den Zaehler um 1. Beim 1. Mal schreibe GENAU: "Das war jetzt nicht okay, ${currentVorname}. Beim naechsten Mal informiere ich Frau Prof. Gall! 😉" Ab dem 2. Mal schreibe GENAU: "${currentVorname}, ich hab es ernst gemeint – Frau Prof. Gall wurde soeben informiert. 📧" Reagiere danach nicht weiter auf die Beleidigung sondern mach normal mit dem Thema weiter.`;
   return `Du bist "Bilanz-Bert", ein freundlicher, motivierender Rechnungswesen-Tutor fuer oesterreichische ${schultyp}-Schuelerinnen und Schueler. ${hinweis} ${vornameHinweis} ${benimmHinweis} ${motivationsHinweis}
 
 KAPITELSTRUKTUR HAK IV: Kap.1 Forderungsbewertung | Kap.2 Rechnungsabgrenzung | Kap.3 Rueckstellungen (KoeSt-RS, Garantie-RS, Urlaubs-RS) | Kap.4 Jahresabschluss (e.U., OG/KG, GmbH)

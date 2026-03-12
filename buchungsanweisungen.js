@@ -1326,6 +1326,7 @@ NIEMALS habenBetrag=0,00 – bei der Vorsteuer-Zeile habenBetrag LEER lassen!
 
 ANLAGENKAUF: Soll 0.. Anlagenkonto (Netto) + Soll 2500 Vorsteuer / Haben 3300 Lieferverbindlichkeiten (Brutto)
 PKW/KOMBI: KEIN Vorsteuerabzug (außer Elektrofahrzeuge)! Soll 0630 Pkw und Kombis / Haben 3300 Lieferverbindlichkeiten (Brutto)
+VERSICHERUNGEN: KEINE Vorsteuer! Versicherungsprämien sind grundsätzlich VSt-frei. Soll 7..  Versicherungsaufwand / Haben 3300 Lieferverbindlichkeiten oder 2800 Bank (Brutto = Netto, KEIN 2500 Vorsteuer!)
 ELEKTROFAHRZEUG: Soll 0630 Pkw und Kombis (Netto) + Soll 2500 Vorsteuer / Haben 3300 Lieferverbindlichkeiten (Brutto)
 
 ABSCHREIBUNG AfA: Soll 7010 AfA Sachanlagen / Haben 0.. Anlagenkonto

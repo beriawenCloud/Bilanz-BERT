@@ -248,7 +248,6 @@ function initWelcome(vorname) {
     <div class="welcome-card">
       <div class="bert-avatar"><img src="${BERT_IMG}" alt="Bert"></div>
       <h2>${greet}</h2>
-      <p style="font-size:0.75em;opacity:0.5;margin-top:-8px;">Version 2.0</p>
       <p>Egal ob Anlagen, Forderungen, R&uuml;ckstellungen oder Rechnungsabgrenzung &ndash; wir arbeiten uns Schritt f&uuml;r Schritt durch den Jahresabschluss 🙂<br>W&auml;hle oben <strong>HAK</strong> oder <strong>HLW</strong>, dann starten wir.</p>
     </div>`;
 }

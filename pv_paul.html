@@ -898,8 +898,24 @@
 let D = {
   year: 2026,
   sv: {
-    kv: 0.0387, pv: 0.1025, alv: 0.03, wbf: 0.005,
-    gesamt: 0.1762, hbgl_monatlich: 6060, geringfuegigkeitsgrenze: 551.10
+    basis:  0.1412,   // KV + PV + sonstige Basisanteile (ohne ALV, KU, WF)
+    ku:     0.0050,   // Krankenurlaubsbeitrag
+    wf:     0.0050,   // Wohnbauförderungsbeitrag
+    // ALV-Staffelung ab 1.1.2026 (monatliche Beitragsgrundlage)
+    alv_stufen: [
+      { bis: 2225.00, satz: 0.0000 },
+      { bis: 2427.00, satz: 0.0100 },
+      { bis: 2630.00, satz: 0.0200 },
+      { bis: Infinity, satz: 0.0295 }
+    ],
+    // Gesamtsätze je Stufe (Basis + KU + WF + ALV)
+    // Stufe 1: 14,12 + 0,50 + 0,50 + 0,00 = 15,12 %
+    // Stufe 2: 14,12 + 0,50 + 0,50 + 1,00 = 16,12 %
+    // Stufe 3: 14,12 + 0,50 + 0,50 + 2,00 = 17,12 %
+    // Stufe 4: 14,12 + 0,50 + 0,50 + 2,95 = 18,07 %
+    dg_gesamt: 0.2098,  // DG-Anteil (20,38 + 0,50 + 0,10 = 20,98 %)
+    hbgl_monatlich: 6060.00,
+    geringfuegigkeitsgrenze: 551.10
   },
   lohnsteuer: {
     grenzen_jahr: [0, 12816, 20818, 34513, 66612, 99266],
@@ -946,6 +962,7 @@ const STATE = {
   step: 0,             // aktueller Schritt (0-5)
   tries: [0,0,0,0,0,0],// Versuche pro Schritt
   solutionUsed: [false,false,false,false,false,false], // Lösung gezeigt → keine Punkte
+  step0Sub: 0,  // Unter-Schritt in Schritt 1: 0=ÜS-Grundlohn, 1=ÜS-Zuschlag, 2=Bruttobezug
   diag: null,          // Diagnosedaten
   diagSel: new Set()   // markierte Zeilen
 };
@@ -959,7 +976,10 @@ function rnd(n) { return Math.round(n * 100) / 100; }
 
 /** Betrag als Währungsstring formatieren */
 function fmt(n) {
-  return n.toFixed(2).replace('.', ',') + '\u202f€';
+  // Deutsches Format mit Tausendertrennpunkt: 1.234,56 €
+  const abs = Math.abs(n).toFixed(2).split('.');
+  abs[0]    = abs[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return (n < 0 ? '\u2212' : '') + abs.join(',') + '\u202f€';
 }
 
 /** Komma → Punkt für parseFloat */
@@ -991,6 +1011,21 @@ function calcLSt(jahresBmgl) {
     steuer += (Math.min(jahresBmgl, high) - low) * rate;
   }
   return steuer;
+}
+
+/** DN-SV-Satz und Abzug berechnen (staffelnd nach ALV-Stufe) */
+function calcSV(bmgl) {
+  const sv    = D.sv;
+  const stufe = sv.alv_stufen.find(s => bmgl <= s.bis);
+  const alv   = stufe ? stufe.satz : 0.0295;
+  const satz  = sv.basis + sv.ku + sv.wf + alv;
+  return { satz: rnd(satz * 10000) / 10000, betrag: rnd(bmgl * satz) };
+}
+
+/** Gibt lesbaren SV-Satz-String zurück, z. B. "17,12 %" */
+function svSatzText(bmgl) {
+  const { satz } = calcSV(bmgl);
+  return (satz * 100).toFixed(2).replace('.', ',') + ' %';
 }
 
 /* ============================================================
@@ -1054,8 +1089,11 @@ function genTask() {
 
   /* --- SCHRITT 2: SV-Abzug (DN-Anteil, auf vollem Brutto!) --- */
   // § 68: SV-Pflicht bleibt auf dem GESAMTEN Bruttobezug (inkl. steuerfreier Zuschlag)
-  const svBemgl = Math.min(brutto, D.sv.hbgl_monatlich);
-  const svAbzug = rnd(svBemgl * D.sv.gesamt);
+  // ALV-Staffelung: Satz hängt von der Beitragsgrundlage ab!
+  const svBemgl  = Math.min(brutto, D.sv.hbgl_monatlich);
+  const svCalc   = calcSV(svBemgl);
+  const svSatz   = svCalc.satz;
+  const svAbzug  = svCalc.betrag;
 
   /* --- Gewerkschaftsbeitrag --- */
   const gwAbzug = hatGW ? rnd(brutto * D.gewerkschaftsbeitrag.prozent) : 0;
@@ -1089,7 +1127,7 @@ function genTask() {
   /* --- State speichern --- */
   STATE.task = {
     vorname: nm[0], nachname: nm[1], avatar: nm[2],
-    grundgehalt, uestunden, ueVerg, stundenLohn: rnd(stundenLohn * 10000) / 10000,
+    grundgehalt, uestunden, ueVerg, stundenLohn: rnd(stundenLohn * 10000) / 10000, svSatz,
     ueGrundlohn, ueZuschlag, ueZuschlagFrei, ueSTPfl, freieUeStd,
     kinder, hatGW, gwAbzug, pp, ppBetrag,
     brutto, svBemgl, svAbzug,
@@ -1097,6 +1135,7 @@ function genTask() {
     svDgAb, dbAb, dzAb, kommAb
   };
   STATE.step = 0;
+  STATE.step0Sub = 0;
   STATE.tries = [0,0,0,0,0,0];
   STATE.solutionUsed = [false,false,false,false,false,false];
 
@@ -1142,7 +1181,11 @@ function renderEmployee() {
     </div>
     <div class="data-chip">
       <div class="chip-label">SV-Satz DN</div>
-      <div class="chip-value">${(D.sv.gesamt * 100).toFixed(2)} %</div>
+      <div class="chip-value">${(t.svSatz * 100).toFixed(2).replace('.',',')} %</div>
+    </div>
+    <div class="data-chip">
+      <div class="chip-label">ALV-Stufe</div>
+      <div class="chip-value normal">${svStufeText(t.svBemgl)}</div>
     </div>
   `;
 }
@@ -1150,9 +1193,17 @@ function renderEmployee() {
 /* ============================================================
    7. SCHRITT-DEFINITIONEN (gibt jeweils aktuellen Task zurück)
 ============================================================ */
+function svStufeText(bmgl) {
+  const stufe = D.sv.alv_stufen.find(s => bmgl <= s.bis);
+  const alv   = stufe ? stufe.satz : 0.0295;
+  if (alv === 0)    return 'bis 2.225 € (ALV 0 %)';
+  if (alv === 0.01) return '2.225 €– 2.427 € (ALV 1 %)';
+  if (alv === 0.02) return '2.427 €– 2.630 € (ALV 2 %)';
+  return 'über 2.630 € (ALV 2,95 %)';
+}
+
 function getSteps() {
   const t = STATE.task;
-  const svPct = (D.sv.gesamt * 100).toFixed(2);
 
   // Lohnsteuer-Klassen (monatlich) für Beschreibungstext
   const g = D.lohnsteuer.grenzen_jahr;
@@ -1187,13 +1238,20 @@ function getSteps() {
       title: 'Schritt 2 – SV-Abzug (Dienstnehmeranteil)',
       field: 'SV-Abzug (€)',
       correct: t.svAbzug,
-      desc: `SV-Satz DN gesamt: ${svPct}% (KV ${(D.sv.kv*100).toFixed(2)}% + PV ${(D.sv.pv*100).toFixed(2)}% + ALV ${(D.sv.alv*100).toFixed(2)}% + WBF ${(D.sv.wbf*100).toFixed(2)}%)\n`
-          + `Höchstbeitragsgrundlage: ${fmt(D.sv.hbgl_monatlich)}/Monat\n`
-          + `SV-Beitrag = SV-Bemessungsgrundlage × ${svPct}%`,
+      desc: (() => {
+        const sv    = D.sv;
+        const stufe = sv.alv_stufen.find(s => t.svBemgl <= s.bis);
+        const alv   = stufe ? stufe.satz : 0.0295;
+        const satzStr = (t.svSatz * 100).toFixed(2).replace('.',',');
+        return `SV-Satz DN = Basis ${(sv.basis*100).toFixed(2).replace('.',',')}% + KU ${(sv.ku*100).toFixed(2).replace('.',',')}% + WF ${(sv.wf*100).toFixed(2).replace('.',',')}% + ALV ${(alv*100).toFixed(2).replace('.',',')}% = ${satzStr}%\n`
+          + `⚠️ ALV-Staffelung: bis 2.225 €: 0% | bis 2.427 €: 1% | bis 2.630 €: 2% | darüber: 2,95%\n`
+          + `Beitragsgrundlage hier: ${fmt(t.svBemgl)} → ALV-Satz: ${(alv*100).toFixed(2).replace('.',',')}%\n`
+          + `Höchstbeitragsgrundlage: ${fmt(D.sv.hbgl_monatlich)}/Monat`;
+      })(),
       hints: [
-        `Prüfe: Ist der Bruttobezug (${fmt(t.brutto)}) unter der Höchstbeitragsgrundlage (${fmt(D.sv.hbgl_monatlich)})?`,
-        `SV-Bemessungsgrundlage = ${fmt(t.svBemgl)} (da Brutto ${t.brutto <= D.sv.hbgl_monatlich ? 'unter' : 'über'} HBGL)`,
-        `✅ Ergebnis: ${fmt(t.svBemgl)} × ${svPct}% = ${fmt(t.svAbzug)}`
+        `Ermittle zuerst die Beitragsgrundlage (Brutto, max. HBGL ${fmt(D.sv.hbgl_monatlich)}). Hier: ${fmt(t.svBemgl)}.`,
+        `ALV-Staffelung prüfen: ${fmt(t.svBemgl)} → ALV = ${((D.sv.alv_stufen.find(s=>t.svBemgl<=s.bis)||{satz:0.0295}).satz*100).toFixed(2).replace('.',',')}% → SV-Satz gesamt: ${(t.svSatz*100).toFixed(2).replace('.',',')}%`,
+        `✅ Ergebnis: ${fmt(t.svBemgl)} × ${(t.svSatz*100).toFixed(2).replace('.',',')}% = ${fmt(t.svAbzug)}`
       ]
     },
     /* ── Schritt 3: LSTBMGL ── */
@@ -1277,6 +1335,112 @@ function getSteps() {
   ];
 }
 
+
+/* ============================================================
+   8b. SCHRITT 1 – UNTER-SCHRITTE für ÜS-Berechnung
+   Gibt HTML-String für die 3 sequenziellen ÜS-Eingabefelder zurück
+============================================================ */
+function renderStep0SubFields() {
+  const t   = STATE.task;
+  const sub = STATE.step0Sub; // 0=Grundlohn, 1=Zuschlag, 2=Bruttobezug
+
+  const rows = [
+    {
+      id:     'inp-0-gl',
+      label:  'ÜS-Grundlohn',
+      desc:   `${t.uestunden} ÜS × ${fmt(t.stundenLohn)} × 1,0 =`,
+      hint:   'Stundenlohn × Anzahl Überstunden × 1,0 (nur Grundlohn, kein Zuschlag)',
+      correct: t.ueGrundlohn
+    },
+    {
+      id:     'inp-0-zs',
+      label:  'ÜS-Zuschlag (50 %)',
+      desc:   `${t.uestunden} ÜS × ${fmt(t.stundenLohn)} × 0,5 =`,
+      hint:   'Stundenlohn × Anzahl Überstunden × 0,5 (der 50%-Zuschlag)',
+      correct: t.ueZuschlag
+    },
+    {
+      id:     'inp-0-br',
+      label:  'Bruttobezug gesamt',
+      desc:   `Grundgehalt + ÜS-Grundlohn + ÜS-Zuschlag =`,
+      hint:   `${fmt(t.grundgehalt)} + ${fmt(t.ueGrundlohn)} + ${fmt(t.ueZuschlag)}`,
+      correct: t.brutto
+    }
+  ];
+
+  return rows.map((r, j) => {
+    const done   = j < sub;
+    const active = j === sub;
+    const locked = j > sub;
+    return `
+      <div style="margin-bottom:10px; padding:12px 14px; border-radius:8px;
+                  border: 1.5px solid ${done ? 'var(--success)' : active ? 'var(--accent)' : 'var(--border)'};
+                  background: ${done ? 'var(--success-dim)' : active ? 'var(--accent-dim)' : 'rgba(0,0,0,0.1)'};
+                  opacity: ${locked ? '0.45' : '1'}; pointer-events: ${locked ? 'none' : 'all'};">
+        <div style="font-size:0.78rem; font-weight:700; color:${done ? 'var(--success)' : active ? 'var(--accent)' : 'var(--text-muted)'}; margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">
+          ${done ? '✓ ' : ''}${r.label}
+        </div>
+        ${done ? `
+          <div style="font-family:var(--mono); font-size:0.95rem; font-weight:700; color:var(--success)">
+            ${r.desc} <strong>${fmt(r.correct)}</strong>
+          </div>` : active ? `
+          <div style="font-size:0.82rem; color:var(--text-dim); margin-bottom:8px">${r.desc} ?</div>
+          <div class="input-row">
+            <input type="number" step="0.01" placeholder="0,00" id="${r.id}"
+                   onkeydown="if(event.key==='Enter') checkStep0Sub(${j})">
+            <span class="input-unit">€</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-sm" onclick="checkStep0Sub(${j})">✅ Prüfen</button>
+            <button class="btn btn-ghost   btn-sm" onclick="showFb(document.getElementById('fb-0'),'f-hint','💡 ${r.hint}')">💡 Hinweis</button>
+          </div>` : `
+          <div style="font-size:0.82rem; color:var(--text-muted)">${r.desc} ?</div>`}
+      </div>`;
+  }).join('');
+}
+
+/* ÜS-Unter-Schritt prüfen */
+function checkStep0Sub(subIdx) {
+  const t   = STATE.task;
+  const fbEl = document.getElementById('fb-0');
+  const rows = [
+    { id: 'inp-0-gl', correct: t.ueGrundlohn, label: 'ÜS-Grundlohn'    },
+    { id: 'inp-0-zs', correct: t.ueZuschlag,  label: 'ÜS-Zuschlag'     },
+    { id: 'inp-0-br', correct: t.brutto,       label: 'Bruttobezug'     }
+  ];
+  const row = rows[subIdx];
+  const inp = document.getElementById(row.id);
+  if (!inp) return;
+  const val = parseNum(inp.value);
+
+  if (isNaN(val)) { showFb(fbEl, 'f-hint', '⚠️ Bitte einen Zahlenwert eingeben.'); return; }
+
+  if (Math.abs(val - row.correct) <= 0.05) {
+    // Richtig – Punkte nur wenn kein solutionUsed[0]
+    if (!STATE.solutionUsed[0]) givePoints(1); // je Unter-Schritt 1 Punkt
+    STATE.step0Sub = subIdx + 1;
+    if (STATE.step0Sub >= 3) {
+      // Alle 3 Unter-Schritte fertig → Schritt 1 abgeschlossen
+      STATE.step = 1;
+      STATE.step0Sub = 0;
+      showFb(fbEl, 'f-ok', '✅ Bruttobezug vollständig berechnet! Weiter zu Schritt 2.');
+      setTimeout(renderSteps, 900);
+    } else {
+      showFb(fbEl, 'f-ok', `✅ ${row.label}: ${fmt(row.correct)} – richtig!`);
+      renderSteps();
+      setTimeout(() => {
+        const next = document.getElementById(rows[subIdx + 1].id);
+        if (next) next.focus();
+      }, 80);
+    }
+  } else {
+    STATE.tries[0]++;
+    showFb(fbEl, 'f-hint', `❌ Nicht ganz. Prüfe die Formel für „${row.label}".`);
+    inp.classList.add('inp-wrong');
+    setTimeout(() => { const i2 = document.getElementById(row.id); if(i2){ i2.classList.remove('inp-wrong'); i2.focus(); }}, 600);
+  }
+}
+
 /* ============================================================
    8. SCHRITTE RENDERN
 ============================================================ */
@@ -1314,6 +1478,7 @@ function renderSteps() {
       ${isActive ? `
       <div class="step-body">
         <div class="step-desc">${s.desc.replace(/\n/g,'<br>')}</div>
+        ${i === 0 && STATE.task.uestunden > 0 ? renderStep0SubFields() : `
         <div class="input-row">
           <span class="input-label">${s.field}:</span>
           <input type="number" step="0.01" placeholder="0,00" id="inp-${i}"
@@ -1324,7 +1489,7 @@ function renderSteps() {
           <button class="btn btn-primary"   onclick="checkStep(${i})">✅ Prüfen</button>
           <button class="btn btn-secondary" onclick="giveHint(${i})">💡 Hinweis</button>
           <button class="btn btn-ghost"     onclick="giveSolution(${i})">👁 Lösung</button>
-        </div>
+        </div>`}
         <div id="fb-${i}" class="feedback"></div>
       </div>` : ''}
     `;
@@ -1434,8 +1599,8 @@ function errorTypes(t) {
       rowId: 'sv',
       label: 'SV-Abzug (DN-Anteil)',
       errLabel: 'Falscher SV-Satz',
-      explain: `Falscher SV-Satz: Es wurden ${((D.sv.gesamt + 0.05)*100).toFixed(2)}% statt der korrekten ${(D.sv.gesamt*100).toFixed(2)}% verwendet.`,
-      inject: () => rnd(t.svBemgl * (D.sv.gesamt + 0.05))
+      explain: `Falscher SV-Satz: Es wurden ${((t.svSatz + 0.05)*100).toFixed(2)}% statt der korrekten ${(t.svSatz*100).toFixed(2).replace('.',',')}% verwendet. Beachte die ALV-Staffelung!`,
+      inject: () => rnd(t.svBemgl * (t.svSatz + 0.05))
     },
     {
       id: 'sv_hbgl',
@@ -1525,9 +1690,11 @@ function genDiagnose() {
   const ueZuschlagFrei = Math.min(rnd(stundenLohn * 0.5 * freieUeStd), par68.max_freibetrag_monat);
   const brutto         = rnd(grundgehalt + ueVerg);
 
-  // SV auf vollem Brutto (§ 68: SV-Pflicht bleibt!)
+  // SV auf vollem Brutto (§ 68: SV-Pflicht bleibt!) – ALV-Staffelung!
   const svBemgl  = Math.min(brutto, D.sv.hbgl_monatlich);
-  const svAbzug  = rnd(svBemgl * D.sv.gesamt);
+  const svCalc   = calcSV(svBemgl);
+  const svSatz   = svCalc.satz;
+  const svAbzug  = svCalc.betrag;
   const gwAbzug  = hatGW ? rnd(brutto * D.gewerkschaftsbeitrag.prozent) : 0;
   const ppBetrag = pp.betrag;
 
@@ -1541,7 +1708,7 @@ function genDiagnose() {
 
   const baseTask = {
     vorname: nm[0], nachname: nm[1], avatar: nm[2],
-    grundgehalt, uestunden, ueVerg, ueGrundlohn, ueZuschlag, ueZuschlagFrei, freieUeStd,
+    grundgehalt, uestunden, ueVerg, ueGrundlohn, ueZuschlag, ueZuschlagFrei, freieUeStd, svSatz,
     kinder, hatGW, gwAbzug, pp, ppBetrag,
     brutto, svBemgl, svAbzug, lstbmgl,
     monatLst, verkehr, famBonus, nettoLst, netto
@@ -1571,7 +1738,7 @@ function genDiagnose() {
   // Richtige Werte (für Anzeige) mit Fehlern überschreiben
   const rows = [
     { id: 'brutto',   label: `Bruttobezug${uestunden > 0 ? ` (inkl. ${uestunden} ÜS)` : ''}`, val: brutto, isErr: false },
-    { id: 'sv',       label: `SV-Abzug DN (${(D.sv.gesamt*100).toFixed(2)}%, auf Brutto)`, val: svAbzug, isErr: false },
+    { id: 'sv',       label: `SV-Abzug DN (${(svSatz*100).toFixed(2).replace('.',',')}%, auf Brutto)`, val: svAbzug, isErr: false },
     ...(ueZuschlagFrei > 0 ? [{ id: 'par68', label: `§ 68 – steuerfr. ÜS-Zuschlag (${freieUeStd} ÜS)`, val: -ueZuschlagFrei, isErr: false }] : []),
     { id: 'pp',       label: `Pendlerpauschale (${pp.art}, ${pp.strecke})`,    val: -ppBetrag, isErr: false },
     { id: 'gw',       label: 'Gewerkschaftsbeitrag (1%)',           val: hatGW ? -gwAbzug : null, isErr: false },

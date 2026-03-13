@@ -325,7 +325,7 @@ function renderBuchungssaetze(items) {
       return sep+`<tr>
       <td>${ktoSpan(b.sollKto)}</td><td>${bezSpan(b.sollKto,b.sollBez)}</td><td class="betrag">${fmtEuro(b.sollBetrag)}</td>
       <td class="bs-divider-col">/</td>
-      <td>${ktoSpan(b.habenKto)}</td><td>${bezSpan(b.habenKto,b.habenBez)}</td><td class="betrag">${fmtEuro(b.habenBetrag)}</td>
+      ${(()=>{const hb=String(b.habenBetrag||'').replace(/[^0-9,.]/g,'').replace(/\./g,'').replace(',','.');const isZero=!b.habenBetrag||b.habenBetrag===''||parseFloat(hb)===0;return isZero?'<td></td><td></td><td></td>':`<td>${ktoSpan(b.habenKto)}</td><td>${bezSpan(b.habenKto,b.habenBez)}</td><td class="betrag">${fmtEuro(b.habenBetrag)}</td>`})()}
     </tr>`;
     }).join('');
     const hint=g.hinweis?`<div class="bs-hinweis">&#128161; ${g.hinweis}</div>`:'';

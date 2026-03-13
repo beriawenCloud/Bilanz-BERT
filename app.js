@@ -488,7 +488,7 @@ h = h.replace(wtRegex, function(_, json) {
  // List items
   h = h.replace(/^- (.+)$/gm, '<li>$1</li>');
   // a) b) c) d) each on own line
-  h = h.replace(/([^\n])([b-e]\))/g, '$1<br>$2');
+  h = h.replace(/(\s)([b-e]\))/g, '<br>$2');
   h = h.replace(/^<br>/, '');
   // Remove excessive blank lines
   h = h.replace(/\n{3,}/g, '\n\n');

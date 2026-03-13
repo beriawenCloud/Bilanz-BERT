@@ -483,8 +483,11 @@ h = h.replace(wtRegex, function(_, json) {
   h = h.replace(/^# (.+)$/gm, '<h3>$1</h3>');
   h = h.replace(/^### (.+)$/gm, '<h3>$1</h3>');
   h = h.replace(/^## (.+)$/gm, '<h3>$1</h3>');
-  // List items
-  h = h.replace(/^- (.+)$/gm, '<li>$1</li>');
+  // List items (skip lines starting with emoji numbers like 1⃣ 2⃣)
+  h = h.replace(/^- (.+)$/gm, function(match, p1) {
+    if (p1.includes('\u20E3')) return p1;
+    return '<li>' + p1 + '</li>';
+  });
   // Remove excessive blank lines
   h = h.replace(/\n{3,}/g, '\n\n');
   // Paragraphs

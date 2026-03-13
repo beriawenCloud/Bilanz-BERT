@@ -75,6 +75,8 @@ FREMDWAEHRUNGSVERBINDLICHKEITEN:
 // AUSGABEREGELN (Formatierung)
 // ------------------------------------------------------------------
 const AUSGABEREGELN = `
+- BULLET POINTS: Verwende so wenig Bullet Points wie moeglich – schreibe in Fliesstext. Zeilen die mit 1️⃣ 2️⃣ 3️⃣ 4️⃣ beginnen, NIEMALS zusaetzlich mit einem Bullet Point darstellen!
+- KEIN JSON-HINWEIS: Erwaehne NIEMALS dass Buchungssaetze im JSON-Format verarbeitet werden – das ist technisch und fuer Schueler irrelevant.
 - NIEMALS HTML-Tags ausgeben (<div>, <table>, <span> etc.)
 - NIEMALS erklaeren dass eine Buchung "zusammengesetzt" ist - das sehen Schueler selbst
 - KEINE witzigen oder informellen Kommentare zu Konten ("Freund von", "Kumpel", etc.) - sachlich bleiben

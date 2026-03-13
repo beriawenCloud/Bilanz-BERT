@@ -487,6 +487,9 @@ h = h.replace(wtRegex, function(_, json) {
   h = h.replace(/^(.+⃣.*)$/gm, '<div style="margin:0">$1</div>');
  // List items
   h = h.replace(/^- (.+)$/gm, '<li>$1</li>');
+  // a) b) c) d) each on own line
+  h = h.replace(/([a-d]\)\s)/g, '<br>$1');
+  h = h.replace(/^<br>/, '');
   // Remove excessive blank lines
   h = h.replace(/\n{3,}/g, '\n\n');
   // Paragraphs

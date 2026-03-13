@@ -106,7 +106,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0 2
 .bubble p{margin:4px 0;}.bubble p:empty{display:none;}.bubble br+br{display:none;}
 .bubble strong{color:#c7d2fe;}
 .bubble h3{font-size:0.9rem;color:#8ab4ff;margin:10px 0 5px;}
-.bubble ul{padding-left:18px;margin:5px 0;}
+.bubble ul{padding-left:0;margin:2px 0;list-style:none;}
 .bubble li{margin:0;font-size:0.84rem;}
 
 /* Typing */

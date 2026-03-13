@@ -1174,7 +1174,7 @@ function getSteps() {
           + `Stundenlohn = ${fmt(t.grundgehalt)} ÷ 173 = ${t.stundenLohn.toFixed(4).replace('.',',')} €/Std.\n`
           + `ÜS-Grundlohn: ${t.uestunden} × ${t.stundenLohn.toFixed(4).replace('.',',')} €  = ${fmt(t.ueGrundlohn)}\n`
           + `ÜS-Zuschlag (50%): ${t.uestunden} × ${t.stundenLohn.toFixed(4).replace('.',',')} € × 0,5 = ${fmt(t.ueZuschlag)}\n`
-          + `⚠️ § 68 EStG: Der Zuschlag der ersten ${t.freieUeStd} ÜS ist steuerfrei (${fmt(t.ueZuschlagFrei)}) – aber erst ab Schritt 3! Im Bruttobezug steht ALLES.`
+          + `⚠️ § 68 EStG: Die Zuschläge der ersten 10 Überstunden/Monat sind steuerfrei (max. 86,00 €/Monat). ${t.uestunden <= 10 ? `Da hier nur ${t.uestunden} ÜS vorliegen, sind alle ${t.uestunden} Zuschläge steuerfrei = ${fmt(t.ueZuschlagFrei)}.` : `Von den ${t.uestunden} ÜS zählen nur die ersten 10 – steuerfreier Betrag = ${fmt(t.ueZuschlagFrei)}.`} Dieser Betrag wird erst in Schritt 3 bei der LSTBMGL abgezogen – im Bruttobezug steht immer der volle Betrag!`
         : `Dieser Monat gibt es keine Überstunden. Der Bruttobezug entspricht dem Grundgehalt: ${fmt(t.grundgehalt)}.`,
       hints: [
         `Bruttobezug = Grundgehalt + ÜS-Grundlohn + ÜS-Zuschlag (der steuerfreie Anteil kommt erst in Schritt 3 heraus!).`,

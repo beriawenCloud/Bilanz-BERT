@@ -350,7 +350,7 @@ function fmtEuro(v){
   if(s.includes(',')){ s=s.replace(/\./g,'').replace(',','.'); }
   const n=parseFloat(s);
   if(isNaN(n))return String(v);
-  return '&euro; '+n.toLocaleString('de-AT',{minimumFractionDigits:2,maximumFractionDigits:2});
+  return n.toLocaleString('de-AT',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
 }
 
 // Convert Bert's raw HTML table output to proper BUCHUNGSSAETZE JSON format

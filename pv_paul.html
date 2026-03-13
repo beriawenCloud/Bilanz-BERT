@@ -1446,6 +1446,14 @@ function errorTypes(t) {
       inject: () => rnd(t.brutto * D.sv.gesamt * 1.08) // künstlich höher
     },
     {
+      id: 'par68_vergessen',
+      rowId: 'par68',
+      label: `§ 68 – steuerfr. ÜS-Zuschlag`,
+      errLabel: '§ 68 fehlt in LSTBMGL',
+      explain: `Der steuerfreie ÜS-Zuschlag nach § 68 EStG (${fmt(t.ueZuschlagFrei)}) wurde nicht von der Lohnsteuerbemessungsgrundlage abgezogen – die LSTBMGL ist dadurch zu hoch.`,
+      inject: () => rnd(-(t.ueZuschlagFrei * 0)) // zeigt 0,00 € statt korrektem Betrag
+    },
+    {
       id: 'pp_falsch',
       rowId: 'pp',
       label: 'Pendlerpauschale',
@@ -1497,30 +1505,45 @@ function errorTypes(t) {
 }
 
 function genDiagnose() {
-  /* Basis-Aufgabe generieren (vereinfacht: kein GW, kein ÜS für Klarheit) */
+  /* Basis-Aufgabe generieren – identische Berechnungslogik wie Rechentrainer (inkl. § 68) */
   const nr = Math.floor(Math.random() * NAMES.length);
   const nm = NAMES[nr];
   const grundgehalt = rnd(Math.round((2000 + Math.random() * 1800) / 50) * 50);
+  const uestunden   = Math.floor(Math.random() * 5);   // 0–4 Überstunden
   const kinder      = Math.floor(Math.random() * 3);
   const hatGW       = Math.random() > 0.5;
   const ppOpts      = ppOptions().filter(Boolean);
   const pp          = ppOpts[Math.floor(Math.random() * ppOpts.length)];
 
-  const svBemgl  = Math.min(grundgehalt, D.sv.hbgl_monatlich);
+  // ÜS-Berechnung mit § 68 (gleiche Logik wie genTask)
+  const stundenLohn    = grundgehalt / 173;
+  const ueGrundlohn    = rnd(stundenLohn * 1.0 * uestunden);
+  const ueZuschlag     = rnd(stundenLohn * 0.5 * uestunden);
+  const ueVerg         = rnd(ueGrundlohn + ueZuschlag);
+  const par68          = D.par68 || { max_freie_uestunden: 10, max_freibetrag_monat: 86 };
+  const freieUeStd     = Math.min(uestunden, par68.max_freie_uestunden);
+  const ueZuschlagFrei = Math.min(rnd(stundenLohn * 0.5 * freieUeStd), par68.max_freibetrag_monat);
+  const brutto         = rnd(grundgehalt + ueVerg);
+
+  // SV auf vollem Brutto (§ 68: SV-Pflicht bleibt!)
+  const svBemgl  = Math.min(brutto, D.sv.hbgl_monatlich);
   const svAbzug  = rnd(svBemgl * D.sv.gesamt);
-  const gwAbzug  = hatGW ? rnd(grundgehalt * D.gewerkschaftsbeitrag.prozent) : 0;
+  const gwAbzug  = hatGW ? rnd(brutto * D.gewerkschaftsbeitrag.prozent) : 0;
   const ppBetrag = pp.betrag;
-  const lstbmgl  = rnd(grundgehalt - svAbzug - ppBetrag - gwAbzug);
+
+  // LSTBMGL: steuerfreier ÜS-Zuschlag wird herausgerechnet
+  const lstbmgl  = rnd(brutto - ueZuschlagFrei - svAbzug - ppBetrag - gwAbzug);
   const monatLst = rnd(calcLSt(lstbmgl * 12) / 12);
   const verkehr  = rnd(D.absetzbetraege.verkehrsabsetzbetrag_jahr / 12);
   const famBonus = rnd(kinder * D.absetzbetraege.familienbonus_u18_jahr / 12);
   const nettoLst = Math.max(0, rnd(monatLst - verkehr - famBonus));
-  const netto    = rnd(grundgehalt - svAbzug - nettoLst - gwAbzug);
+  const netto    = rnd(brutto - svAbzug - nettoLst - gwAbzug);
 
   const baseTask = {
     vorname: nm[0], nachname: nm[1], avatar: nm[2],
-    grundgehalt, kinder, hatGW, gwAbzug, pp, ppBetrag,
-    brutto: grundgehalt, svBemgl, svAbzug, lstbmgl,
+    grundgehalt, uestunden, ueVerg, ueGrundlohn, ueZuschlag, ueZuschlagFrei, freieUeStd,
+    kinder, hatGW, gwAbzug, pp, ppBetrag,
+    brutto, svBemgl, svAbzug, lstbmgl,
     monatLst, verkehr, famBonus, nettoLst, netto
   };
 
@@ -1528,6 +1551,7 @@ function genDiagnose() {
   let pool = errorTypes(baseTask).filter(e => {
     if (e.id === 'fb_halb' && kinder === 0) return false;
     if (e.id === 'netto_gw' && !hatGW) return false;
+    if (e.id === 'par68_vergessen' && ueZuschlagFrei === 0) return false;
     return true;
   });
   // Mische und nimm 2–3
@@ -1546,8 +1570,9 @@ function genDiagnose() {
 
   // Richtige Werte (für Anzeige) mit Fehlern überschreiben
   const rows = [
-    { id: 'brutto',   label: 'Bruttogehalt',                       val: grundgehalt,           isErr: false },
-    { id: 'sv',       label: `SV-Abzug DN (${(D.sv.gesamt*100).toFixed(2)}%)`, val: svAbzug, isErr: false },
+    { id: 'brutto',   label: `Bruttobezug${uestunden > 0 ? ` (inkl. ${uestunden} ÜS)` : ''}`, val: brutto, isErr: false },
+    { id: 'sv',       label: `SV-Abzug DN (${(D.sv.gesamt*100).toFixed(2)}%, auf Brutto)`, val: svAbzug, isErr: false },
+    ...(ueZuschlagFrei > 0 ? [{ id: 'par68', label: `§ 68 – steuerfr. ÜS-Zuschlag (${freieUeStd} ÜS)`, val: -ueZuschlagFrei, isErr: false }] : []),
     { id: 'pp',       label: `Pendlerpauschale (${pp.art}, ${pp.strecke})`,    val: -ppBetrag, isErr: false },
     { id: 'gw',       label: 'Gewerkschaftsbeitrag (1%)',           val: hatGW ? -gwAbzug : null, isErr: false },
     { id: 'lstbmgl',  label: 'Lohnsteuer-Bemessungsgrundlage',      val: lstbmgl,               isErr: false },
@@ -1595,7 +1620,7 @@ function renderDiagnose() {
     <div class="payslip-top">
       <div>
         <h3>📄 Gehaltsabrechnung – ${task.vorname} ${task.nachname}</h3>
-        <p>März 2026 · Kinder: ${task.kinder} · PP: ${task.pp.art} (${task.pp.strecke})</p>
+        <p>März 2026 · Kinder: ${task.kinder} · PP: ${task.pp.art} (${task.pp.strecke})${task.uestunden > 0 ? ` · ${task.uestunden} ÜS (§ 68: ${fmt(task.ueZuschlagFrei)} stfrei)` : ''}</p>
       </div>
       <div style="font-size:0.8rem;color:var(--text-muted)">${numErr} Fehler versteckt</div>
     </div>

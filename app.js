@@ -484,12 +484,14 @@ h = h.replace(wtRegex, function(_, json) {
   h = h.replace(/^### (.+)$/gm, '<h3>$1</h3>');
   h = h.replace(/^## (.+)$/gm, '<h3>$1</h3>');
   // Emoji number lines (1️⃣ 2️⃣ etc.) → each on its own line as a div
-  h = h.replace(/^(.+⃣.*)$/gm, '<div style="margin:2px 0">$1</div>');
+  h = h.replace(/^(.+⃣.*)$/gm, '<div style="margin:0">$1</div>');
  // List items
   h = h.replace(/^- (.+)$/gm, '<li>$1</li>');
   // Remove excessive blank lines
   h = h.replace(/\n{3,}/g, '\n\n');
   // Paragraphs
+  // Collapse blank lines between emoji-div lines to avoid extra paragraph spacing
+  h = h.replace(/(<\/div>)\s*\n\n\s*(<div)/g, '$1\n$2');
   h = h.replace(/\n\n/g, '</p><p>');
   h = h.replace(/\n/g, '<br>');
   return '<p>' + h + '</p>';

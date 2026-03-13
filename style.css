@@ -107,7 +107,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:0 2
 .bubble strong{color:#c7d2fe;}
 .bubble h3{font-size:0.9rem;color:#8ab4ff;margin:10px 0 5px;}
 .bubble ul{padding-left:18px;margin:5px 0;}
-.bubble li{margin:3px 0;font-size:0.84rem;}
+.bubble li{margin:0;font-size:0.84rem;}
 
 /* Typing */
 .typing{display:flex;align-items:center;gap:4px;padding:14px 16px;}

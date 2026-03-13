@@ -1,0 +1,87 @@
+{
+  "year": 2026,
+  "bemerkung": "PV-Paul Datenbasis – bitte jährlich aktualisieren. Monatsbeträge außer anders angegeben.",
+  "sv": {
+    "kv": 0.0387,
+    "pv": 0.1025,
+    "alv": 0.03,
+    "wbf": 0.005,
+    "gesamt": 0.1762,
+    "hbgl_monatlich": 6060.0,
+    "geringfuegigkeitsgrenze": 551.1,
+    "kommentar": "DN-SV-Satz: KV 3,87% + PV 10,25% + ALV 3,00% + WBF 0,50% = 17,62%"
+  },
+  "lohnsteuer": {
+    "kommentar": "Jahresgrenzen – werden intern mit 12 multipliziert/dividiert",
+    "grenzen_jahr": [
+      0,
+      12816,
+      20818,
+      34513,
+      66612,
+      99266
+    ],
+    "saetze": [
+      0,
+      0.2,
+      0.3,
+      0.41,
+      0.48,
+      0.5
+    ]
+  },
+  "absetzbetraege": {
+    "kommentar": "Jahresbeträge; monatlich = Jahreswert ÷ 12",
+    "verkehrsabsetzbetrag_jahr": 421.0,
+    "familienbonus_u18_jahr": 2000.16,
+    "familienbonus_ue18_jahr": 650.16,
+    "alleinverdienerabsetzbetrag_1kind_jahr": 520.0,
+    "alleinverdienerabsetzbetrag_2kinder_jahr": 704.0
+  },
+  "pendlerpauschale": {
+    "kommentar": "Monatliche Beträge (€)",
+    "klein": {
+      "2-20km": 29.4,
+      "20-40km": 56.76,
+      "40-60km": 84.14,
+      "ueber60km": 111.52
+    },
+    "gross": {
+      "2-20km": 50.78,
+      "20-40km": 101.56,
+      "40-60km": 152.36,
+      "ueber60km": 203.14
+    }
+  },
+  "pendlereuro": {
+    "betrag_pro_km_jahr": 2,
+    "kommentar": "€ je km einfache Strecke pro Jahr; monatlich = (km × 2) ÷ 12"
+  },
+  "gewerkschaftsbeitrag": {
+    "prozent": 0.01,
+    "kommentar": "Typisch 1% des Bruttobezugs – variiert je nach Gewerkschaft/Branche"
+  },
+  "dg_abgaben": {
+    "kommentar": "Dienstgeberanteile und lohnabhängige Abgaben",
+    "sv_dg": {
+      "kv": 0.0378,
+      "pv": 0.1255,
+      "alv": 0.03,
+      "wbf": 0.005,
+      "uv": 0.012,
+      "gesamt": 0.2103,
+      "kommentar": "DG-SV: KV 3,78% + PV 12,55% + ALV 3,00% + WBF 0,50% + UV 1,20% = 21,03%"
+    },
+    "db": 0.041,
+    "dz": 0.0036,
+    "kommunalsteuer": 0.03,
+    "db_kommentar": "Dienstgeberbeitrag zum FLAF: 4,10%",
+    "dz_kommentar": "Zuschlag zum DB (Tirol): 0,36% – je nach Bundesland unterschiedlich",
+    "komm_kommentar": "Kommunalsteuer: 3,00% vom Bruttolohn"
+  },
+  "par68": {
+    "max_freie_uestunden": 10,
+    "max_freibetrag_monat": 86.0,
+    "kommentar": "§ 68 EStG: Zuschlag für erste 10 ÜS/Monat steuerfrei, max. 86 €/Monat. Grundlohn bleibt stpfl. SV-Pflicht bleibt auf vollem Brutto."
+  }
+}

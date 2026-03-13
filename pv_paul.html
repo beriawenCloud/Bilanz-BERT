@@ -915,6 +915,11 @@ let D = {
     gross: { '2-20km':50.78, '20-40km':101.56,'40-60km':152.36,'ueber60km':203.14 }
   },
   gewerkschaftsbeitrag: { prozent: 0.01 },
+  par68: {
+    max_freie_uestunden: 10,
+    max_freibetrag_monat: 86.00,
+    kommentar: "§ 68 EStG: Zuschlag für erste 10 ÜS/Monat steuerfrei, max. 86 €/Monat. Grundlohn der ÜS bleibt steuerpflichtig. SV-Pflicht bleibt auf vollem Brutto."
+  },
   dg_abgaben: {
     sv_dg: {
       kv: 0.0378, pv: 0.1255, alv: 0.0300, wbf: 0.0050, uv: 0.0120,
@@ -1033,11 +1038,22 @@ function genTask() {
 
   /* --- SCHRITT 1: Bruttobezug --- */
   // Stundenlohn: Grundgehalt ÷ 173 Normalstunden/Monat
-  const stundenLohn = grundgehalt / 173;
-  const ueVerg      = rnd(stundenLohn * 1.5 * uestunden); // 50% Überstundenzuschlag
+  const stundenLohn    = grundgehalt / 173;
+  const ueGrundlohn    = rnd(stundenLohn * 1.0 * uestunden);  // Grundlohn der ÜS (stpfl.)
+  const ueZuschlag     = rnd(stundenLohn * 0.5 * uestunden);  // 50%-Zuschlag (§ 68 – ggf. stfrei)
+  const ueVerg         = rnd(ueGrundlohn + ueZuschlag);       // Gesamt-ÜS-Vergütung
+
+  // § 68 EStG: Steuerfreiheit des Zuschlags (max. 10 ÜS, max. 86 €/Monat)
+  const par68          = D.par68 || { max_freie_uestunden: 10, max_freibetrag_monat: 86 };
+  const freieUeStd     = Math.min(uestunden, par68.max_freie_uestunden);
+  const ueZuschlagFrei = Math.min(rnd(stundenLohn * 0.5 * freieUeStd), par68.max_freibetrag_monat);
+  // Steuerpflichtiger ÜS-Anteil = Grundlohn + nicht-steuerfreier Zuschlagsteil
+  const ueSTPfl        = rnd(ueGrundlohn + (ueZuschlag - ueZuschlagFrei));
+
   const brutto      = rnd(grundgehalt + ueVerg);
 
-  /* --- SCHRITT 2: SV-Abzug (DN-Anteil) --- */
+  /* --- SCHRITT 2: SV-Abzug (DN-Anteil, auf vollem Brutto!) --- */
+  // § 68: SV-Pflicht bleibt auf dem GESAMTEN Bruttobezug (inkl. steuerfreier Zuschlag)
   const svBemgl = Math.min(brutto, D.sv.hbgl_monatlich);
   const svAbzug = rnd(svBemgl * D.sv.gesamt);
 
@@ -1047,8 +1063,9 @@ function genTask() {
   /* --- Pendlerpauschale --- */
   const ppBetrag = pp ? pp.betrag : 0;
 
-  /* --- SCHRITT 3: LSTBMGL --- */
-  const lstbmgl = rnd(brutto - svAbzug - ppBetrag - gwAbzug);
+  /* --- SCHRITT 3: LSTBMGL (steuerfreier ÜS-Zuschlag wird herausgerechnet!) --- */
+  // LSTBMGL = Brutto − steuerfreier ÜS-Zuschlag (§68) − SV-DN − PP − GW
+  const lstbmgl = rnd(brutto - ueZuschlagFrei - svAbzug - ppBetrag - gwAbzug);
 
   /* --- SCHRITT 4: Lohnsteuer (vor Absetzbeträgen) --- */
   const jahresLst  = calcLSt(lstbmgl * 12);
@@ -1073,6 +1090,7 @@ function genTask() {
   STATE.task = {
     vorname: nm[0], nachname: nm[1], avatar: nm[2],
     grundgehalt, uestunden, ueVerg, stundenLohn: rnd(stundenLohn * 10000) / 10000,
+    ueGrundlohn, ueZuschlag, ueZuschlagFrei, ueSTPfl, freieUeStd,
     kinder, hatGW, gwAbzug, pp, ppBetrag,
     brutto, svBemgl, svAbzug,
     lstbmgl, monatLst, verkehr, famBonus, nettoLst, netto,
@@ -1105,6 +1123,11 @@ function renderEmployee() {
       <div class="chip-label">Überstunden</div>
       <div class="chip-value">${t.uestunden} Std.</div>
     </div>
+    ${t.uestunden > 0 ? `
+    <div class="data-chip">
+      <div class="chip-label">§ 68 steuerfrei</div>
+      <div class="chip-value">${fmt(t.ueZuschlagFrei)}</div>
+    </div>` : ''}
     <div class="data-chip">
       <div class="chip-label">Kinder (u. 18)</div>
       <div class="chip-value">${t.kinder}</div>
@@ -1147,14 +1170,16 @@ function getSteps() {
       field: 'Bruttobezug (€)',
       correct: t.brutto,
       desc: t.uestunden > 0
-        ? `Berechne den Bruttobezug = Grundgehalt + Überstundenvergütung.\n`
+        ? `Berechne den Bruttobezug = Grundgehalt + gesamte Überstundenvergütung.\n`
           + `Stundenlohn = ${fmt(t.grundgehalt)} ÷ 173 = ${t.stundenLohn.toFixed(4).replace('.',',')} €/Std.\n`
-          + `${t.uestunden} Überstunden × Stundenlohn × 1,5 (50% Zuschlag) = ${fmt(t.ueVerg)}`
+          + `ÜS-Grundlohn: ${t.uestunden} × ${t.stundenLohn.toFixed(4).replace('.',',')} €  = ${fmt(t.ueGrundlohn)}\n`
+          + `ÜS-Zuschlag (50%): ${t.uestunden} × ${t.stundenLohn.toFixed(4).replace('.',',')} € × 0,5 = ${fmt(t.ueZuschlag)}\n`
+          + `⚠️ § 68 EStG: Der Zuschlag der ersten ${t.freieUeStd} ÜS ist steuerfrei (${fmt(t.ueZuschlagFrei)}) – aber erst ab Schritt 3! Im Bruttobezug steht ALLES.`
         : `Dieser Monat gibt es keine Überstunden. Der Bruttobezug entspricht dem Grundgehalt: ${fmt(t.grundgehalt)}.`,
       hints: [
-        `Bruttobezug = Grundgehalt ${fmt(t.grundgehalt)}` + (t.uestunden > 0 ? ` + Überstunden ${fmt(t.ueVerg)}` : ''),
-        `Überstundenvergütung = Stundenlohn × Anzahl × 1,5. Stundenlohn = Grundgehalt ÷ 173 Stunden.`,
-        `✅ Ergebnis: ${fmt(t.grundgehalt)} ${t.uestunden > 0 ? `+ ${fmt(t.ueVerg)}` : ''} = ${fmt(t.brutto)}`
+        `Bruttobezug = Grundgehalt + ÜS-Grundlohn + ÜS-Zuschlag (der steuerfreie Anteil kommt erst in Schritt 3 heraus!).`,
+        `${fmt(t.grundgehalt)} + ${fmt(t.ueGrundlohn)} + ${fmt(t.ueZuschlag)} = ?`,
+        `✅ Ergebnis: ${fmt(t.grundgehalt)} + ${fmt(t.ueVerg)} = ${fmt(t.brutto)}`
       ]
     },
     /* ── Schritt 2: SV-Abzug ── */
@@ -1176,18 +1201,31 @@ function getSteps() {
       title: 'Schritt 3 – Lohnsteuer-Bemessungsgrundlage',
       field: 'LSTBMGL (€)',
       correct: t.lstbmgl,
-      desc: `LSTBMGL = Bruttobezug − SV-DN-Anteil`
+      desc: `LSTBMGL = Bruttobezug`
+          + (t.ueZuschlagFrei > 0 ? ` − steuerfreier ÜS-Zuschlag (§ 68)` : '')
+          + ` − SV-DN-Anteil`
           + (t.ppBetrag > 0 ? ` − Pendlerpauschale` : '')
           + (t.hatGW       ? ` − Gewerkschaftsbeitrag` : '')
-          + `\n${fmt(t.brutto)} − ${fmt(t.svAbzug)}`
+          + `\n= ${fmt(t.brutto)}`
+          + (t.ueZuschlagFrei > 0 ? ` − ${fmt(t.ueZuschlagFrei)}` : '')
+          + ` − ${fmt(t.svAbzug)}`
           + (t.ppBetrag > 0 ? ` − ${fmt(t.ppBetrag)}` : '')
-          + (t.hatGW       ? ` − ${fmt(t.gwAbzug)}` : ''),
+          + (t.hatGW       ? ` − ${fmt(t.gwAbzug)}` : '')
+          + (t.ueZuschlagFrei > 0 ? `\n⚠️ § 68 EStG: Der steuerfreie Zuschlag (${fmt(t.ueZuschlagFrei)}) wird erst hier – bei der LSTBMGL – abgezogen, NICHT schon beim Bruttobezug!` : ''),
       hints: [
-        `Alle Abzüge vor Lohnsteuer: SV-DN (${fmt(t.svAbzug)})`
+        `Abzüge: SV-DN (${fmt(t.svAbzug)})`
+          + (t.ueZuschlagFrei > 0 ? `, steuerfreier ÜS-Zuschlag § 68 (${fmt(t.ueZuschlagFrei)})` : '')
           + (t.ppBetrag > 0 ? `, PP (${fmt(t.ppBetrag)})` : '')
           + (t.hatGW ? `, GW (${fmt(t.gwAbzug)})` : ''),
-        `Vergiss nicht: Pendlerpauschale und Gewerkschaftsbeitrag verringern die LSTBMGL.`,
-        `✅ Ergebnis: ${fmt(t.brutto)} − ${fmt(t.svAbzug)}` + (t.ppBetrag>0?` − ${fmt(t.ppBetrag)}`:'') + (t.hatGW?` − ${fmt(t.gwAbzug)}`:'') + ` = ${fmt(t.lstbmgl)}`
+        t.ueZuschlagFrei > 0
+          ? `§ 68: Die ersten ${t.freieUeStd} ÜS-Zuschläge (= ${fmt(t.ueZuschlagFrei)}) sind steuerfrei. Aber: SV wurde trotzdem auf das volle Brutto berechnet!`
+          : `Vergiss nicht: Pendlerpauschale und Gewerkschaftsbeitrag verringern die LSTBMGL.`,
+        `✅ Ergebnis: ${fmt(t.brutto)}`
+          + (t.ueZuschlagFrei > 0 ? ` − ${fmt(t.ueZuschlagFrei)}` : '')
+          + ` − ${fmt(t.svAbzug)}`
+          + (t.ppBetrag > 0 ? ` − ${fmt(t.ppBetrag)}` : '')
+          + (t.hatGW ? ` − ${fmt(t.gwAbzug)}` : '')
+          + ` = ${fmt(t.lstbmgl)}`
       ]
     },
     /* ── Schritt 4: Lohnsteuer (vor Absetzbeträgen) ── */

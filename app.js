@@ -477,7 +477,7 @@ h = h.replace(wtRegex, function(_, json) {
   // Bold
   h = h.replace(new RegExp('\\*\\*(.*?)\\*\\*', 'g'), '<strong>$1</strong>');
   // Code
-  h = h.replace(/`([^`]+)`/g, '<code style="font-family:DM Mono,monospace;background:var(--surface2);padding:1px 5px;border-radius:4px;font-size:0.82em">$1</code>');
+  h = h.replace(/`([^`]+)`/g, '<strong>$1</strong>');
   // Headers
   h = h.replace(/^# (.+)$/gm, '<h3>$1</h3>');
   h = h.replace(/^### (.+)$/gm, '<h3>$1</h3>');

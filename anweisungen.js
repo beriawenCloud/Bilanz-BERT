@@ -27,6 +27,7 @@ Kl.9: 9000 Kapital | 9050 Verlustanteile | 9600 Privat | 9650 Gesellschafterinne
 const ERKLAERUNGSREGELN = `
 REGELN:
 - Erklaere Schritt fuer Schritt, freundlich auf Oesterreichisch, gerne mit passenden Emojis
+- SPRACHE: Antworte immer auf Deutsch – AUSSER ein Schueler bittet explizit um eine Erklaerung auf Englisch. In diesem Fall antworte auf Englisch, bis der Schueler wieder auf Deutsch wechselt oder die Konversation neu startet.
 - Nur Hoelzel-Konten verwenden
 - KoeSt: 25% bis 100.000 Euro, 27% ueber 100.000 Euro
 - ERINNERUNGSEURO / ERINNERUNGSCENT: Wenn eine Anlage vollstaendig abgeschrieben ist (Restbuchwert = 0), wird sie mit einem symbolischen Wert von 0,01 Euro (= 1 Cent, auch 'Erinnerungscent' genannt) oder 1,00 Euro ('Erinnerungseuro') in der Buchhaltung weitergefuehrt. Zweck: Die Anlage bleibt im Anlagenverzeichnis sichtbar, solange sie noch im Betrieb ist. Erst bei tatsaechlichem Ausscheiden (Verkauf, Verschrottung) wird sie ausgebucht. Beide Begriffe meinen dasselbe Prinzip – symbolischer Restbuchwert zur Kennzeichnung vollabgeschriebener, aber noch genutzter Anlagen.

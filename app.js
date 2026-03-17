@@ -527,7 +527,7 @@ async function sendMessage() {
   const zusatzContext = findZusatzContext(text);
   let systemWithSolutions = buildSystemPrompt();
   if (solutionContext) {
-    systemWithSolutions += '\n\nWICHTIG: Uebernimm ALLE Buchungssaetze EXAKT aus den Loesungsdaten – erfinde KEINE eigenen, lass KEINE weg, verwende EXAKT die Kontonummern und Betraege!\n\nRELEVANTE LOESUNGSDATEN AUS DEM MEHR!-BUCH:' + solutionContext;
+    systemWithSolutions += '\n\nABSOLUT KRITISCH – LOESUNGSDATEN SIND VERBINDLICH:\n1. Uebernimm ALLE Buchungssaetze EXAKT aus den Loesungsdaten – erfinde KEINE eigenen, lass KEINE weg, verwende EXAKT die Kontonummern und Betraege!\n2. Uebernimm ALLE Berechnungen (Wareneinsatz, Abwertung, Schwund, Bestandsveraenderung etc.) EXAKT aus den Loesungsdaten – NIEMALS selbst nachrechnen oder korrigieren!\n3. Wenn die Loesung einen Buchungssatz enthaelt, zeige ihn VOLLSTAENDIG – lasse KEINEN einzigen Buchungssatz weg!\n4. Wenn die Loesung mehrere Buchungssaetze enthaelt (z.B. Bestandsveraenderung UND Abwertung UND Schwund), zeige ALLE – KEINEN weglassen!\n\nRELEVANTE LOESUNGSDATEN AUS DEM MEHR!-BUCH:' + solutionContext;
   }
   if (zusatzContext) {
     systemWithSolutions += '\n\n' + zusatzContext;

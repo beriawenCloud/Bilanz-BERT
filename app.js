@@ -536,7 +536,7 @@ async function sendMessage() {
 
   const res=await fetch('https://bilanz-bert-proxy.sandygall1412.workers.dev',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:2000,system:systemWithSolutions,messages:conversationHistory})
+      body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:solutionContext||zusatzContext?4000:2000,system:systemWithSolutions,messages:conversationHistory})
     });
     const data=await res.json();removeTyping();
     if(data.content&&data.content[0]){

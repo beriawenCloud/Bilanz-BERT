@@ -255,6 +255,7 @@ function initWelcome(vorname) {
 
 function clearChat() {
   conversationHistory=[];
+  lastFoundExerciseContext='';
   initWelcome(currentVorname);
 }
 
@@ -554,32 +555,77 @@ async function sendMessage() {
 // Lösungen werden aus loesungen.js geladen (const SOLUTIONS)
 
 // Detect exercise references like "Ü 3.3", "U 3.3", "Ü 3.3 a)", "K 2.1"
+
+const LONG_THRESHOLD = 3000; // Zeichen – ab hier wird nachgefragt
+let lastFoundExerciseContext = ''; // Merkt sich letzte Aufgabe für Folgefragen
+
+function buildLongSolutionInstruction(keys, fullContext) {
+  const partList = keys.join(', ');
+  return `\n\nHINWEIS FUER BERT – LANGE AUFGABE:
+Diese Aufgabe hat mehrere Teile: ${partList}.
+Frage den Schueler ZUERST freundlich, welchen Teil er benoetigt – schlage z.B. vor:
+"Diese Aufgabe ist ziemlich umfangreich! 📋 Welchen Teil brauchst du?
+1️⃣ Um- und Nachbuchungen (a + b)
+2️⃣ Erfolgsermittlung / KöSt (c)
+3️⃣ Bilanz & GuV (e)
+4️⃣ Erfolgsaufteilung (f)"
+Warte auf die Antwort – zeige NOCH KEINE Loesung!
+Die vollstaendigen Loesungsdaten (fuer spaeter):
+${fullContext}`;
+}
+
 function findSolutionContext(userMsg) {
   const pattern = /[ÜU]\s*(\d+\.\d+)|K\s*(\d+\.\d+)/gi;
   const matches = [...userMsg.matchAll(pattern)];
-  if (!matches.length) return '';
-  
+
+  // ── FIRMENNAMEN-FALLBACK ──────────────────────────────────────
+  if (!matches.length) {
+    const lowerMsg = userMsg.toLowerCase();
+    let context = '';
+    let matchedKeys = [];
+    for (const [key, value] of Object.entries(SOLUTIONS)) {
+      if (!key.startsWith(schultyp)) continue;
+      const firstLine = value.split('\n')[1] || '';
+      const words = firstLine.toLowerCase().split(/\s+/).filter(w => w.length > 3);
+      if (words.filter(w => lowerMsg.includes(w)).length >= 2) {
+        context += '\n\n=== Loesung ' + key + ' ===\n' + value;
+        matchedKeys.push(key);
+      }
+    }
+    if (context) {
+      const result = context.length > LONG_THRESHOLD
+        ? buildLongSolutionInstruction(matchedKeys, context)
+        : context;
+      lastFoundExerciseContext = result;
+      return result;
+    }
+    // Keine neue Aufgabe erkannt → letzte Aufgabe erneut einblenden (für Folgefragen)
+    return lastFoundExerciseContext;
+  }
+
+  // ── ÜBUNGSNUMMER-SUCHE ────────────────────────────────────────
   let context = '';
   for (const m of matches) {
     const num = m[1] || m[2];
     const prefix = m[0].trim().toUpperCase().startsWith('K') ? 'K' : 'Ü';
-    // Try current schultyp first, then other
-    const keys = [
-      schultyp + ' ' + prefix + ' ' + num,
-      schultyp + ' ' + prefix + ' ' + num + ' a)',
-      schultyp + ' ' + prefix + ' ' + num + ' a) b) c)',
-    ];
-    // Also find all matching sheets (multi-part exercises)
-    const allMatching = Object.keys(SOLUTIONS).filter(k => 
+    const allMatching = Object.keys(SOLUTIONS).filter(k =>
       k.startsWith(schultyp + ' ' + prefix + ' ' + num)
     );
+    let exerciseContext = '';
+    const exerciseKeys = [];
     for (const key of allMatching) {
       if (SOLUTIONS[key]) {
-        context += '\n\n=== Loesung ' + key + ' ===\n' + SOLUTIONS[key];
+        exerciseContext += '\n\n=== Loesung ' + key + ' ===\n' + SOLUTIONS[key];
+        exerciseKeys.push(key);
       }
     }
+    context += exerciseContext.length > LONG_THRESHOLD
+      ? buildLongSolutionInstruction(exerciseKeys, exerciseContext)
+      : exerciseContext;
   }
-  return context;
+
+  if (context) lastFoundExerciseContext = context;
+  return context || lastFoundExerciseContext;
 }
 
 // Zusatzbeispiele – themenbasierte Suche

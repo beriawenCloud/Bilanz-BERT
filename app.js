@@ -653,5 +653,11 @@ WICHTIG FÜR BERT:
 - Wenn der Schüler später "Lösung zeigen" oder "stimmt das?" schreibt, zeige diese offizielle Lösung und erkläre sie: ${entry.loesung}`;
 }
 
+// Lösungen aus allen Dateien zusammenführen
+const SOLUTIONS = {
+  ...(typeof SOLUTIONS_HAK4 !== 'undefined' ? SOLUTIONS_HAK4 : {}),
+  ...(typeof SOLUTIONS_HLW4 !== 'undefined' ? SOLUTIONS_HLW4 : {}),
+};
+
 // Initialize schultyp badges on load
 document.addEventListener('DOMContentLoaded', function(){ setSchultyp('HAK'); });

@@ -152,9 +152,7 @@ function updateCounterDisplay() {
   const badge=document.getElementById('counterBadge'),text=document.getElementById('counterText');
   if(!badge||!text||!currentUser||isAdmin()) return;
   const remaining=WEEKLY_LIMIT-cachedCount;
-  badge.style.display='block';
-  if(remaining<=0){text.textContent='0 Anfragen - erneuert am '+getNextMonday();badge.className='counter-badge danger';}
-  else{text.textContent=remaining+' / '+WEEKLY_LIMIT+' Anfragen';badge.className=remaining<=5?'counter-badge warning':'counter-badge';}
+  badge.style.display='none';
 }
 function isLimitReached(){return currentUser&&!isAdmin()&&cachedCount>=WEEKLY_LIMIT;}
 
